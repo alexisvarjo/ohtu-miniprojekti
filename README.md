@@ -1,5 +1,5 @@
-## Ohtu miniprojekti boilerplate
+Ryhmä Kvokaalit ohtu miniprojekti TKT20006
 
-Lue [täältä](https://ohjelmistotuotanto-hy.github.io/flask/) lisää.
+Kuvaus: Tehdään järjestelmä, jonka avulla voidaan hallinnoida viitteitä helposti.
 
-Muutamia vihjeitä projektin alkuun [täällä](https://github.com/ohjelmistotuotanto-hy/miniprojekti-boilerplate/blob/main/misc/ohjeita.md).
+User story: https://docs.google.com/spreadsheets/d/1tK9AVzTZSkeHgW1EZFT_ms2w0wZbGu9LWFU_PPOqzLw/edit?gid=1#gid=1
