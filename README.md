@@ -1,3 +1,5 @@
+[![CI badge](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml)
+
 Ryhmä: Kvokaalit, ohtu miniprojekti syksy 2025 TKT20006
 
 Kuvaus: Tehdään järjestelmä, jonka avulla voidaan hallinnoida viitteitä helposti.
