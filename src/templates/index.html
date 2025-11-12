@@ -1,34 +1,53 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Todo app
+Database Viewer
 {% endblock %}
 
 {% block body %}
 
-<h2>Todo app</h2>
+<h2>Tietokanta haku</h2>
 
-<div>
-  things still unfinished: {{ unfinished }}
+<!-- Hakukenttä -->
+<form method="get" action="">
+  <label for="search">Search:</label>
+  <input type="text" id="search" name="search" placeholder="Enter keyword" value="{{ search_query | default('') }}">
+  <button type="submit">Search</button>
+</form>
+
+<!-- Linkki uuden artikkelin lisäämiseen -->
+<div style="margin-top: 10px;">
+  <a href="/add_article">Add new article</a>
 </div>
 
-<ul>
-  {% for todo in todos %}
-    <li style="display: flex">
-      <div>
-        {{ todo }} 
-      </div>
-      {% if not todo.done %}
-        <form action="/toggle_todo/{{ todo.id }}" method="post" style="margin-left: 10px;">
-          <button type="submit">mark as done</button>
-        </form>
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+<hr>
 
-<div>
-  <a href="/new_todo">Create new todo</a>
-</div>
+<!-- Näytetään hakutulosviesti, jos käyttäjä on hakenut -->
+{% if search_query %}
+  <p><strong>Search results for:</strong> "{{ search_query }}"</p>
+{% endif %}
+
+{% if records %}
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        {% for column in columns %}
+          <th>{{ column }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in records %}
+        <tr>
+          {% for column in columns %}
+            <td>{{ row[column] }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No records found.</p>
+{% endif %}
 
 {% endblock %}
