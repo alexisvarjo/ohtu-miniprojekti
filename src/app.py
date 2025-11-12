@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.todo_repository import get_todos, create_article, set_done
+from repositories.article_repository import get_todos, create_article, set_done
 from config import app, test_env
 from util import validate_author, validate_volume, validate_journal, validate_name, validate_number, validate_year
 
