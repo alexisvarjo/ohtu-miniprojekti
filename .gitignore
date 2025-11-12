@@ -5,7 +5,7 @@ htmlcov/
 .coverage
 notes.txt
 .vscode
-
+.env
 # Images
 *.png
 
