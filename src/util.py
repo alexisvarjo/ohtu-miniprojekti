@@ -1,9 +1,35 @@
 class UserInputError(Exception):
     pass
 
-def validate_todo(content):
-    if len(content) < 5:
-        raise UserInputError("Todo content length must be greater than 4")
+def validate_author(author):
+    if len(author) == 0:
+        raise UserInputError("Author must not be empty")
 
-    if len(content) > 100:
-          raise UserInputError("Todo content length must be smaller than 100")
+    if len(author) > 100:
+          raise UserInputError("Author length must be smaller than 100")
+
+def validate_year(year):
+    if int(year) < 1700:
+          raise UserInputError("Invalid publication year")
+
+def validate_name(name):
+    if len(name) == 0:
+        raise UserInputError("Name must not be empty")
+
+    if len(name) > 100:
+          raise UserInputError("Name length must be smaller than 100")
+    
+def validate_journal(journal):
+    if len(journal) == 0:
+        raise UserInputError("Journal name must not be empty")
+
+    if len(journal) > 100:
+          raise UserInputError("Journal name length must be smaller than 100")
+
+def validate_volume(volume):
+    if int(volume) < 0:
+          raise UserInputError("Invalid volume")
+
+def validate_number(number):
+    if int(number) <0:
+          raise UserInputError("Invalid number")

@@ -2,13 +2,13 @@ CREATE TABLE todos (
   id SERIAL PRIMARY KEY, 
   content TEXT NOT NULL,
   done BOOLEAN DEFAULT FALSE
-)
+);
 
 CREATE TABLE articles (
   id SERIAL PRIMARY KEY,
   citekey TEXT NOT NULL,
   author TEXT NOT NULL,
-  title TEXT NOT NULL,
+  name TEXT NOT NULL,
   journal TEXT NOT NULL,
   year INT NOT NULL,
   volume INT,

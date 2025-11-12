@@ -1,8 +1,8 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.todo_repository import get_todos, create_todo, set_done
+from repositories.todo_repository import get_todos, create_article, set_done
 from config import app, test_env
-from util import validate_todo
+from util import validate_author, validate_volume, validate_journal, validate_name, validate_number, validate_year
 
 @app.route("/")
 def index():
@@ -16,11 +16,24 @@ def new():
 
 @app.route("/create_todo", methods=["POST"])
 def todo_creation():
-    content = request.form.get("content")
-
+    citekey = request.form.get("citekey")
+    author = request.form.get("author")
+    year = request.form.get("year")
+    name = request.form.get("name")
+    journal = request.form.get("journal")
+    volume = request.form.get("volume")
+    number = request.form.get("number")
+    urldate = request.form.get("urldate")
+    url = request.form.get("url")
+                              
     try:
-        validate_todo(content)
-        create_todo(content)
+        validate_author(author)
+        validate_year(year)
+        validate_name(name)
+        validate_journal(journal)
+        validate_volume(volume)
+        validate_number(number)
+        create_article(citekey, author, year, name, journal, volume, number, urldate, url)
         return redirect("/")
     except Exception as error:
         flash(str(error))
