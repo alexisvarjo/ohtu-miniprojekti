@@ -1,10 +1,14 @@
-*** Settings ***
+THIS FILE ONLY INCLUDES ROBOT.TEST EXAMPLES
+DON'T REMOVE THE COMMENTS!
+
+#*** Settings ***
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
 Test Setup       Reset Todos
+# reset todos is in resource.robot with the python function being in app.py
 
-*** Test Cases ***
+#*** Test Cases ***
 At start there are no todos
     Go To  ${HOME_URL}
     Title Should Be  Todo app
