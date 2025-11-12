@@ -10,12 +10,12 @@ def index():
     unfinished = len([todo for todo in todos if not todo.done])
     return render_template("index.html", todos=todos, unfinished=unfinished) 
 
-@app.route("/new_todo")
-def new():
-    return render_template("new_todo.html")
+@app.route("/add_article")
+def add_article():
+    return render_template("add_article.html")
 
-@app.route("/create_todo", methods=["POST"])
-def todo_creation():
+@app.route("/create_article", methods=["POST"])
+def create_article():
     citekey = request.form.get("citekey")
     author = request.form.get("author")
     year = request.form.get("year")
@@ -37,7 +37,7 @@ def todo_creation():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect("/new_todo")
+        return redirect("add_article.html")
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):
