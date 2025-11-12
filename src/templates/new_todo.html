@@ -6,7 +6,7 @@ Create a new todo
 
 {% block body %}
 
-<h2>Create a new todo</h2>
+<h2>Create a new article source</h2>
 
 <form action="/create_todo" method="post">
   {% with messages = get_flashed_messages() %}
@@ -18,8 +18,25 @@ Create a new todo
       </ul>
     {% endif %}
   {% endwith %}
-  <label for="content">Todo:</label>
-  <input type="text" name="content">
+
+<li><label for="content">Cite key:</label>
+  <input type="text" name="citekey"></li>
+  <li><label for="content">Author:</label>
+  <input type="text" name="author"></li>
+<li><label for="content">Publication year:</label>
+  <input type="text" name="year"></li>
+<li><label for="content">Article name:</label>
+  <input type="text" name="name"></li>
+<li><label for="content">Journal:</label>
+  <input type="text" name="journal"></li>
+<li><label for="content">Volume:</label>
+  <input type="text" name="volume"></li>
+<li><label for="content">Number:</label>
+  <input type="text" name="number"></li>
+<li><label for="content">Urldate:</label>
+  <input type="text" name="urldate"></li>
+<li><label for="content">Url:</label>
+  <input type="text" name="url"></li>
   <br>
   <button type="submit">
     Create

@@ -13,7 +13,20 @@ def set_done(todo_id):
     db.session.execute(sql, { "id": todo_id })
     db.session.commit()
 
-def create_todo(content):
-    sql = text("INSERT INTO todos (content) VALUES (:content)")
-    db.session.execute(sql, { "content": content })
+def create_article(citekey, author, year, name, journal, volume, number, urldate, url):
+    sql = text("""
+    INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url)
+    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url)
+""")
+    db.session.execute(sql, {
+    "citekey": citekey,
+    "author": author,
+    "year": year,
+    "name": name,
+    "journal": journal,
+    "volume": volume,
+    "number": number,
+    "urldate": urldate,
+    "url": url
+})  
     db.session.commit()
