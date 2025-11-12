@@ -5,7 +5,6 @@ htmlcov/
 .coverage
 notes.txt
 .vscode
-.env
 
 # Images
 *.png
@@ -15,6 +14,4 @@ output.xml
 report.html
 log.html
 
-
-#MAC users
-.DS_Store
+.env
