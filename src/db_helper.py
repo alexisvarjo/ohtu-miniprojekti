@@ -16,7 +16,7 @@ def tables():
     "WHERE table_schema = 'public' "
     "AND table_name NOT LIKE '%_id_seq'"
   )
-  
+
   result = db.session.execute(sql)
   return [row[0] for row in result.fetchall()]
 
@@ -34,15 +34,24 @@ def setup_db():
     db.session.commit()
 
   print("Creating database")
-  
+
   # Read schema from schema.sql file
   schema_path = os.path.join(os.path.dirname(__file__), 'schema.sql')
   with open(schema_path, 'r') as f:
     schema_sql = f.read().strip()
-  
+
   sql = text(schema_sql)
   db.session.execute(sql)
   db.session.commit()
+
+from sqlalchemy import text
+from config import db  # oletetaan, että db on SQLAlchemy-yhteys
+
+def search_articles(query=None):
+    sql = text("SELECT * FROM articles")
+    result = db.session.execute(sql)
+    return result.fetchall()
+
 
 if __name__ == "__main__":
     with app.app_context():
