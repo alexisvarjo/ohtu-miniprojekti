@@ -8,7 +8,15 @@ from util import validate_author, validate_volume, validate_journal, validate_na
 def index():
     todos = get_todos()
     unfinished = len([todo for todo in todos if not todo.done])
-    return render_template("index.html", todos=todos, unfinished=unfinished) 
+
+    search_query = request.args.get("search", "")
+
+    return render_template(
+        "index.html",
+        todos=todos,
+        unfinished=unfinished,
+        search_query=search_query
+    )
 
 @app.route("/add_article")
 def add_article():
@@ -25,7 +33,7 @@ def create_article():
     number = request.form.get("number")
     urldate = request.form.get("urldate")
     url = request.form.get("url")
-                              
+
     try:
         validate_author(author)
         validate_year(year)

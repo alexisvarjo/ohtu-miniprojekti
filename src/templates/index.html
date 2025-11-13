@@ -25,6 +25,23 @@ Database Viewer
 <!-- Näytetään hakutulosviesti, jos käyttäjä on hakenut -->
 {% if search_query %}
   <p><strong>Search results for:</strong> "{{ search_query }}"</p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>citekey</th>
+      <th>author</th>
+      <th>name</th>
+      <th>journal</th>
+      <th>year</th>
+      <th>volume</th>
+      <th>number</th>
+      <th>urldate</th>
+      <th>url</th>
+    </tr>
+  </thead>
+</table>
+
 {% endif %}
 
 {% if records %}
