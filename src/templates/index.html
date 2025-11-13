@@ -6,7 +6,7 @@ Database Viewer
 
 {% block body %}
 
-<h2>Tietokanta haku</h2>
+<h2>Article search</h2>
 
 <!-- Hakukenttä -->
 <form method="get" action="">
@@ -17,7 +17,7 @@ Database Viewer
 
 <!-- Linkki uuden artikkelin lisäämiseen -->
 <div style="margin-top: 10px;">
-  <a href="/add_article">Add new article</a>
+  <a href="{{ url_for('add_article') }}">Add article</a>
 </div>
 
 <hr>
