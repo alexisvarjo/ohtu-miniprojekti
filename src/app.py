@@ -1,5 +1,5 @@
 from flask import redirect, render_template, request, jsonify, flash
-from db_helper import reset_db
+from db_helper import search_articles, reset_db
 from repositories.article_repository import get_todos, create_article, set_done
 from config import app, test_env
 from util import validate_author, validate_volume, validate_journal, validate_name, validate_number, validate_year
@@ -10,12 +10,15 @@ def index():
     unfinished = len([todo for todo in todos if not todo.done])
 
     search_query = request.args.get("search", "")
+    records = search_articles(search_query)  # haku suoritetaan aina
 
     return render_template(
         "index.html",
         todos=todos,
         unfinished=unfinished,
-        search_query=search_query
+        search_query=search_query,
+        records=records,
+        columns=["citekey","author","name","journal","year","volume","number","urldate","url"]
     )
 
 @app.route("/add_article")
