@@ -29,3 +29,17 @@ Open And Configure Browser
 Reset Todos
     Go To  ${RESET_URL}
 
+Add Article With Key
+    [Arguments]  ${citekey}
+    Go To  ${HOME_URL}
+    Click Link  Add article
+    Input Text  citekey  ${citekey}
+    Input Text  author  robots
+    Input Text  year  2077
+    Input Text  name  Robot takeover
+    Input Text  journal  Robots today
+    Input Text  volume  6
+    Input Text  number  7
+    Input Text  urldate  2077-01-01
+    Input Text  url  https://www.youtube.com/watch?v=dQw4w9WgXcQ
+    Click Button  Create
