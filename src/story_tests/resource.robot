@@ -43,3 +43,4 @@ Add Article With Key
     Input Text  urldate  2077-01-01
     Input Text  url  https://www.youtube.com/watch?v=dQw4w9WgXcQ
     Click Button  Create
+    Go To  ${HOME_URL}
