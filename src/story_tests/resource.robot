@@ -6,6 +6,7 @@ ${SERVER}     localhost:5001
 ${DELAY}      0.5 seconds
 ${HOME_URL}   http://${SERVER}
 ${RESET_URL}  http://${SERVER}/reset_db
+${DELETE_ROBOT_SOURCES_URL}  http://${SERVER}/delete_robot_sources_db
 ${BROWSER}    chrome
 ${HEADLESS}   false
 
@@ -44,3 +45,6 @@ Add Article With Key
     Input Text  url  https://www.youtube.com/watch?v=dQw4w9WgXcQ
     Click Button  Create
     Go To  ${HOME_URL}
+
+Delete Robot Sources
+    Go To  ${DELETE_ROBOT_SOURCES_URL}

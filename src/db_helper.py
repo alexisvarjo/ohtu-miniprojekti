@@ -6,6 +6,14 @@ from sqlalchemy import text
 
 from config import app, db
 
+def clear_robot_sources():
+    """Removes the sources added by the robot-tests"""
+    sql_tables = ["articles", "books", "miscs"]
+
+    for table in sql_tables:
+        sql = text(f"DELETE FROM {table} WHERE author = :author")
+        db.session.execute(sql, {"author": "robot"})
+    db.session.commit()
 
 def reset_db():
     """resets the database"""

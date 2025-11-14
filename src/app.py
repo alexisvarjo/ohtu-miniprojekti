@@ -3,7 +3,7 @@
 from flask import flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
-from db_helper import filter_articles, reset_db
+from db_helper import filter_articles, clear_robot_sources, reset_db
 from repositories.article_repository import create_article, set_done  # ,get_todos,
 from util import (
     validate_author,
@@ -115,6 +115,15 @@ def toggle_todo(todo_id):
     """todo on/off"""
     set_done(todo_id)
     return redirect("/")
+
+# removes the sources added by the robot-tests
+if test_env:
+    @app.route("/delete_robot_sources_db")
+    def delete_robot_sources():
+        """URL for removing sources added by robot tests"""
+        clear_robot_sources()
+        flash("Robot sources deleted")
+        return redirect("/")
 
 
 # testausta varten oleva reitti
