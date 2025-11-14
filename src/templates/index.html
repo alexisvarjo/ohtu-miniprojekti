@@ -77,7 +77,7 @@ Database Viewer
       <thead>
         <tr>
           {% for column in columns %}
-            <th>{{ column }}</th>
+            <th>{{ column.replace('_', ' ') | title }}</th>
           {% endfor %}
         </tr>
       </thead>
