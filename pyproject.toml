@@ -1,9 +1,14 @@
 [project]
-name = "miniprojekti-boilerplate"
+name = "miniprojekti"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Matti Luukkainen",email = "mluukkai@iki.fi"}
+    {name = "Alexis Varjo",email = "biz@alexisvarjo.fi"},
+    {name = "Erik Vormala", email = "aa@aa.fi"},
+    {name = "Alexander Algrund", email="ab@aa.fi"},
+    {name = "Atos Ikonen", email="ac@aa.fi"},
+    {name = "Iida Kivilahti", email="ad@aa.fi"},
+    {name = "Kristjan Kaasik", email="ae@aa.fi"}
 ]
 license = {text = "MIT"}
 requires-python = "^3.12"
@@ -20,7 +25,8 @@ dependencies = [
 dev = [
     "robotframework (>=7.3.2,<8.0.0)",
     "robotframework-seleniumlibrary (>=6.8.0,<7.0.0)",
-    "pytest (>=8.4.2,<9.0.0)"
+    "pytest (>=8.4.2,<9.0.0)",
+    "pylint (>=4.0.3,<5.0.0)"
 ]
 
 [tool.poetry]

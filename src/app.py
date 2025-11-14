@@ -1,8 +1,10 @@
+"""Contains all routes of the app"""
+
 from flask import flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
-from db_helper import filter_articles, list_articles, reset_db
-from repositories.article_repository import create_article, get_todos, set_done
+from db_helper import filter_articles, reset_db
+from repositories.article_repository import create_article, set_done  # ,get_todos,
 from util import (
     validate_author,
     validate_journal,
@@ -16,10 +18,11 @@ from util import (
 @app.route("/")
 @app.route("/<int:page>")
 def index(page=1):
-    page_size = 5
+    """landing page"""
+    page_size = 20
 
-    todos = get_todos()
-    unfinished = len([todo for todo in todos if not todo.done])
+    #todos = get_todos()
+    #unfinished = len([todo for todo in todos if not todo.done])
 
     search_query = request.args.get("search", "")
 
@@ -72,11 +75,13 @@ def index(page=1):
 
 @app.route("/add_article")
 def add_article():
+    """route for displaying add_article.html"""
     return render_template("add_article.html")
 
 
 @app.route("/create_article", methods=["POST"])
 def try_create_article():
+    """create article route"""
     citekey = request.form.get("citekey")
     author = request.form.get("author")
     year = request.form.get("year")
@@ -105,6 +110,7 @@ def try_create_article():
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):
+    """todo on/off"""
     set_done(todo_id)
     return redirect("/")
 
@@ -114,5 +120,6 @@ if test_env:
 
     @app.route("/reset_db")
     def reset_database():
+        """reset database wrapper"""
         reset_db()
         return jsonify({"message": "db reset"})
