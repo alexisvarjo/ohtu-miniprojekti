@@ -68,34 +68,6 @@ Database Viewer
   </tbody>
 </table>
 
-<!-- Näytetään hakutulosviesti, jos käyttäjä on hakenut -->
-{% if search_query %}
-  <p><strong>Search results for:</strong> "{{ search_query }}"</p>
-
-  {% if records %}
-    <table border="1" cellpadding="5" cellspacing="0">
-      <thead>
-        <tr>
-          {% for column in columns %}
-            <th>{{ column.replace('_', ' ') | title }}</th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in records %}
-          <tr>
-            {% for column in columns %}
-              <td>{{ row[column] }}</td>
-            {% endfor %}
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>No records found.</p>
-  {% endif %}
-
-{% endif %}
 
 
 {% endblock %}
