@@ -46,8 +46,19 @@ Database Viewer
   <a href="{{ url_for('add_article') }}">Add article</a>
 </div>
 
-<hr>
+<div style="color: darkgreen;">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+</div>
 
+<hr>
 
 <table border="1" cellpadding="5" cellspacing="0">
   <thead>

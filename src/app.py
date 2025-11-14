@@ -39,7 +39,8 @@ def index(page=1):
         except:
             year = None
 
-    records = filter_articles(material, keyword, year, search_term)
+    # reversed list of the sources
+    records = list(reversed(filter_articles(material, keyword, year, search_term)))
 
     all_articles = len(records)
     page_count = max((all_articles-1) // page_size + 1, 1)
@@ -102,6 +103,7 @@ def try_create_article():
         create_article(
             citekey, author, year, name, journal, volume, number, urldate, url
         )
+        flash("Source added successfully")
         return redirect("/")
     except Exception as error:
         flash(str(error))
