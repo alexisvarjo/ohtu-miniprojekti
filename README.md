@@ -2,9 +2,25 @@
 
 Ryhmä: Kvokaalit, ohtu miniprojekti syksy 2025 TKT20006
 
-Kuvaus: Tehdään järjestelmä, jonka avulla voidaan hallinnoida viitteitä helposti.
+Kuvaus: Järjestelmä, jonka avulla voidaan hallinnoida viitteitä helposti.
 
 Product backlog ja sprint backlog: https://docs.google.com/spreadsheets/d/1tK9AVzTZSkeHgW1EZFT_ms2w0wZbGu9LWFU_PPOqzLw/edit?gid=1#gid=1
+
+### Asennusohjeet (Linux):
+- Ennen käyttöä täytyy [Python](https://www.python.org/) ja [poetry](https://python-poetry.org/) olla ladattuina. Projekti vaatii myös [PostgreSQL](https://www.postgresql.org/)-tietokannan toimiakseen
+- Lataa projekti tältä Github sivulta
+- Luo projektin kansion juureen tiedosto .env ja määrittele siihen seuraavat muuttujat
+    - `DATABASE_URL=`: täydennä PostgreSQL tietokannan polku
+    - `TEST_ENV=`: täydennä false tai true (testiympäristö)
+    - `SECRET_KEY=`: täydennä tietokantasi salainen avain
+- Lataa tarvittavat riippuvuudet: `poetry install`
+- Käynnistä virtuaaliympäristö: `eval $(poetry env activate)`
+- Luo tietokantataulutu (vain ennen ensimmäistä käynnistystä): `python src/db_helper.py`
+- Käynnistä ohjelma: `python3 src/index.py`
+- Ohjelma käynnistyy osoiteeseen `http://127.0.0.1:5001`
+
+### Käyttöohje:
+Sovelluksen etusivulla näkyvät kaikki lisätyt viitteet uusimmasta vanhimpaan. Viitteitä pääsee lisäämään Add article-linkin kautta. Etusivulla voi myös suodattaa lisättyjä viitteitä.
 
 ### Definition of done:
 - User storyilla hyväksymiskriteerit
