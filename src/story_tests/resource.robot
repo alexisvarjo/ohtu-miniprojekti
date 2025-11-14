@@ -34,7 +34,7 @@ Add Article With Key
     Go To  ${HOME_URL}
     Click Link  Add article
     Input Text  citekey  ${citekey}
-    Input Text  author  robots
+    Input Text  author  robot
     Input Text  year  2077
     Input Text  name  Robot takeover
     Input Text  journal  Robots today

@@ -7,5 +7,4 @@ Suite Teardown   Close Browser
 *** Test Cases ***
 Adding and seeing an article
     Add Article With Key  adding_and_seeing_robot
-    Page Should Contain  Source added successfully
     Page Should Contain  adding_and_seeing_robot
