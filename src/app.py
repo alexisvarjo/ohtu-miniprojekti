@@ -1,7 +1,7 @@
 from flask import flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
-from db_helper import list_articles, reset_db
+from db_helper import filter_articles, list_articles, reset_db
 from repositories.article_repository import create_article, get_todos, set_done
 from util import (
     validate_author,
@@ -19,14 +19,24 @@ def index():
     unfinished = len([todo for todo in todos if not todo.done])
 
     search_query = request.args.get("search", "")
-    records = list_articles(search_query)  # haku suoritetaan aina
+
+    material = request.args.get("material_type", "")
+    keyword = request.args.get("keyword", "")
+    year = request.args.get("year", "")
+    search_term = request.args.get("search", "")
+
+    if year:
+        try:
+            year = int(year)
+        except:
+            year = None
+
+    records = filter_articles(material, keyword, year, search_term)
 
     return render_template(
         "index.html",
-        todos=todos,
-        unfinished=unfinished,
-        search_query=search_query,
         records=records,
+        search_query=search_query,
         columns=[
             "citekey",
             "author",

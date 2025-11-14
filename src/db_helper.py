@@ -56,6 +56,69 @@ def list_articles(query=None):
     return result.fetchall()
 
 
+def _filter_from_table(table, keyword, year, search_term):
+    base = f"SELECT * FROM {table} WHERE 1=1"
+    params = {}
+
+    # Year filter
+    if year:
+        base += " AND year = :year"
+        params["year"] = year
+
+    # Keyword search
+    if keyword and search_term:
+        # Map "title" → correct column
+        if table == "articles":
+            title_col = "name"
+        else:
+            title_col = "title"
+
+        if keyword == "author":
+            base += " AND author ILIKE :term"
+        elif keyword == "title":
+            base += f" AND {title_col} ILIKE :term"
+
+        params["term"] = f"%{search_term}%"
+
+    # Free text search
+    elif search_term:
+        # Title column differs between tables
+        if table == "articles":
+            title_col = "name"
+        else:
+            title_col = "title"
+
+        base += f"""
+            AND (
+                citekey ILIKE :term OR
+                author ILIKE :term OR
+                {title_col} ILIKE :term
+            )
+        """
+        params["term"] = f"%{search_term}%"
+
+    sql = text(base)
+    rows = db.session.execute(sql, params).mappings().all()
+
+    return rows
+
+
+def filter_articles(material, keyword, year, search_term):
+    # Map material → table name
+    table_map = {"article": "articles", "book": "books", "misc": "miscs"}
+
+    # If no material chosen → fetch from all three tables
+    if not material:
+        return (
+            _filter_from_table("articles", keyword, year, search_term)
+            + _filter_from_table("books", keyword, year, search_term)
+            + _filter_from_table("miscs", keyword, year, search_term)
+        )
+
+    # Otherwise → fetch from the selected table
+    return _filter_from_table(table_map[material], keyword, year, search_term)
+
+
 if __name__ == "__main__":
     with app.app_context():
         setup_db()
