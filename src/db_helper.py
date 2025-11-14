@@ -50,7 +50,7 @@ def setup_db():
     db.session.commit()
 
 
-def list_articles(query=None):
+def list_articles(page, page_size, query=None):
     sql = text("SELECT * FROM articles")
     result = db.session.execute(sql)
     return result.fetchall()

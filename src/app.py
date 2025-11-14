@@ -14,7 +14,10 @@ from util import (
 
 
 @app.route("/")
-def index():
+@app.route("/<int:page>")
+def index(page=1):
+    page_size = 5
+
     todos = get_todos()
     unfinished = len([todo for todo in todos if not todo.done])
 
@@ -25,6 +28,8 @@ def index():
     year = request.args.get("year", "")
     search_term = request.args.get("search", "")
 
+
+
     if year:
         try:
             year = int(year)
@@ -33,9 +38,23 @@ def index():
 
     records = filter_articles(material, keyword, year, search_term)
 
+    all_articles = len(records)
+    page_count = max((all_articles-1) // page_size + 1, 1)
+    
+    if page < 1:
+        return redirect("/1")
+    if page > page_count:
+        return redirect("/" + str(page_count))
+    
+    start = (page - 1) * page_size
+    end = start + page_size
+    records_page = records[start:end]
+
     return render_template(
         "index.html",
-        records=records,
+        records=records_page,
+        page=page,
+        page_count=page_count,
         search_query=search_query,
         columns=[
             "citekey",
