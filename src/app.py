@@ -26,7 +26,7 @@ def add_article():
     return render_template("add_article.html")
 
 @app.route("/create_article", methods=["POST"])
-def create_article():
+def try_create_article():
     citekey = request.form.get("citekey")
     author = request.form.get("author")
     year = request.form.get("year")
