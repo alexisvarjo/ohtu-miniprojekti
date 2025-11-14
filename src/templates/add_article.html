@@ -1,46 +1,73 @@
-{% extends "layout.html" %}
-
-{% block title %}
-Add a new article
-{% endblock %}
-
-{% block body %}
-
-<h2>Add a new article source</h2>
+<style>
+    .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .form-row label {
+        width: 150px;
+        font-weight: bold;
+    }
+    .form-row input {
+        flex: 1;
+        width: 150px;
+        max-width: 150px;
+    }
+</style>
 
 <form action="/create_article" method="post">
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-      {% for message in messages %}
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
         <li>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
 
-  <li><label for="content">Cite key:</label>
-    <input type="text" name="citekey"></li>
-  <li><label for="content">Author:</label>
-    <input type="text" name="author"></li>
-  <li><label for="content">Publication year:</label>
-    <input type="text" name="year"></li>
-  <li><label for="content">Article name:</label>
-    <input type="text" name="name"></li>
-  <li><label for="content">Journal:</label>
-    <input type="text" name="journal"></li>
-  <li><label for="content">Volume:</label>
-    <input type="text" name="volume"></li>
-  <li><label for="content">Number:</label>
-    <input type="text" name="number"></li>
-  <li><label for="content">Urldate:</label>
-    <input type="text" name="urldate"></li>
-  <li><label for="content">Url:</label>
-  <input type="text" name="url"></li>
-  <br>
-  <button type="submit">
-    Create
-  </button>
+    <div class="form-row">
+        <label>Cite key:</label>
+        <input type="text" name="citekey" />
+    </div>
+
+    <div class="form-row">
+        <label>Author:</label>
+        <input type="text" name="author" />
+    </div>
+
+    <div class="form-row">
+        <label>Publication year:</label>
+        <input type="text" name="year" />
+    </div>
+
+    <div class="form-row">
+        <label>Article name:</label>
+        <input type="text" name="name" />
+    </div>
+
+    <div class="form-row">
+        <label>Journal:</label>
+        <input type="text" name="journal" />
+    </div>
+
+    <div class="form-row">
+        <label>Volume:</label>
+        <input type="text" name="volume" />
+    </div>
+
+    <div class="form-row">
+        <label>Number:</label>
+        <input type="text" name="number" />
+    </div>
+
+    <div class="form-row">
+        <label>Urldate:</label>
+        <input type="text" name="urldate" />
+    </div>
+
+    <div class="form-row">
+        <label>Url:</label>
+        <input type="text" name="url" />
+    </div>
+
+    <button type="submit">Create</button>
 </form>
-
-{% endblock %}

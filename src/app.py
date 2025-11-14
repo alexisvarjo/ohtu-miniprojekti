@@ -1,8 +1,17 @@
-from flask import redirect, render_template, request, jsonify, flash
-from db_helper import search_articles, reset_db
-from repositories.article_repository import get_todos, create_article, set_done
+from flask import flash, jsonify, redirect, render_template, request
+
 from config import app, test_env
-from util import validate_author, validate_volume, validate_journal, validate_name, validate_number, validate_year
+from db_helper import reset_db, search_articles
+from repositories.article_repository import create_article, get_todos, set_done
+from util import (
+    validate_author,
+    validate_journal,
+    validate_name,
+    validate_number,
+    validate_volume,
+    validate_year,
+)
+
 
 @app.route("/")
 def index():
@@ -18,12 +27,24 @@ def index():
         unfinished=unfinished,
         search_query=search_query,
         records=records,
-        columns=["citekey","author","name","journal","year","volume","number","urldate","url"]
+        columns=[
+            "citekey",
+            "author",
+            "name",
+            "journal",
+            "year",
+            "volume",
+            "number",
+            "urldate",
+            "url",
+        ],
     )
+
 
 @app.route("/add_article")
 def add_article():
     return render_template("add_article.html")
+
 
 @app.route("/create_article", methods=["POST"])
 def try_create_article():
@@ -44,20 +65,25 @@ def try_create_article():
         validate_journal(journal)
         validate_volume(volume)
         validate_number(number)
-        create_article(citekey, author, year, name, journal, volume, number, urldate, url)
+        create_article(
+            citekey, author, year, name, journal, volume, number, urldate, url
+        )
         return redirect("/")
     except Exception as error:
         flash(str(error))
         return redirect("add_article.html")
+
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):
     set_done(todo_id)
     return redirect("/")
 
+
 # testausta varten oleva reitti
 if test_env:
+
     @app.route("/reset_db")
     def reset_database():
         reset_db()
-        return jsonify({ 'message': "db reset" })
+        return jsonify({"message": "db reset"})
