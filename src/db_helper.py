@@ -1,3 +1,5 @@
+"""Helpers for interacting with the database"""
+
 import os
 
 from sqlalchemy import text
@@ -6,8 +8,9 @@ from config import app, db
 
 
 def reset_db():
-    print(f"Clearing contents from table todos")
-    sql = text(f"DELETE FROM todos")
+    """resets the database"""
+    print("Clearing contents from table todos")
+    sql = text("DELETE FROM todos")
     db.session.execute(sql)
     db.session.commit()
 
@@ -42,18 +45,12 @@ def setup_db():
 
     # Read schema from schema.sql file
     schema_path = os.path.join(os.path.dirname(__file__), "schema.sql")
-    with open(schema_path, "r") as f:
+    with open(schema_path, "r", encoding="utf-8") as f:
         schema_sql = f.read().strip()
 
     sql = text(schema_sql)
     db.session.execute(sql)
     db.session.commit()
-
-
-def list_articles(query=None):
-    sql = text("SELECT * FROM articles")
-    result = db.session.execute(sql)
-    return result.fetchall()
 
 
 def _filter_from_table(table, keyword, year, search_term):
@@ -104,6 +101,7 @@ def _filter_from_table(table, keyword, year, search_term):
 
 
 def filter_articles(material, keyword, year, search_term):
+    """Filters all articles from DB based on parameters"""
     # Map material → table name
     table_map = {"article": "articles", "book": "books", "misc": "miscs"}
 
