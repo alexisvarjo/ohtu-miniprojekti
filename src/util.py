@@ -1,6 +1,7 @@
+from db_helper import get_article
+
 class UserInputError(Exception):
     pass
-
 
 def validate_author(author):
     if len(author) == 0:
@@ -44,3 +45,8 @@ def validate_number(number):
 def validate_citekey(citekey):
     if len(citekey) == 0:
         raise UserInputError("Citekey is needed")
+    try:
+        get_article(citekey)
+        raise UserInputError("Citekey already exists")
+    except ValueError:
+        pass
