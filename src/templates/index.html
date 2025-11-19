@@ -74,6 +74,7 @@ Database Viewer
         {% for column in columns %}
           <td>{{ row[column] }}</td>
         {% endfor %}
+        <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
       </tr>
     {% endfor %}
   </tbody>
