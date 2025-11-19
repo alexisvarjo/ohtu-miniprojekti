@@ -101,7 +101,7 @@ def try_create_article():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return redirect("add_article.html")
+        return redirect("add_article")
 
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
