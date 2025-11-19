@@ -54,10 +54,9 @@ jobs:
         id: score
         working-directory: ${{ github.workspace }}
         run: |
-          mkdir -p badge
+          mkdir -p $GITHUB_WORKSPACE/badge
           SCORE=$(grep -oP 'Your code has been rated at \K[0-9.]+(?=/10)' pylint_report.txt || echo "0")
-          echo "score=$SCORE" >> $GITHUB_OUTPUT
-          echo "{ \"schemaVersion\": 1, \"label\": \"pylint\", \"message\": \"${SCORE}/10\", \"color\": \"blue\" }" > badge/pylint_badge.json
+          echo "{ \"schemaVersion\": 1, \"label\": \"pylint\", \"message\": \"${SCORE}/10\", \"color\": \"blue\" }" > $GITHUB_WORKSPACE/badge/pylint_badge.json
 
       - name: Publish pylint badge to gh-pages
         if: github.event_name == 'push'
@@ -65,7 +64,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ${{ github.workspace }}/badge
+          publish_dir: $GITHUB_WORKSPACE/badge
           keep_files: true
           allow_empty_commit: false
 
