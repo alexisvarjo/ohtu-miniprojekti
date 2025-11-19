@@ -17,14 +17,6 @@ def clear_robot_sources():
     db.session.commit()
 
 
-def reset_db():
-    """resets the database"""
-    print("Clearing contents from table todos")
-    sql = text("DELETE FROM todos")
-    db.session.execute(sql)
-    db.session.commit()
-
-
 def tables():
     """Returns all table names from the database except those ending with _id_seq"""
     sql = text(

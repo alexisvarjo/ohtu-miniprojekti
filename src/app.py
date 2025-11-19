@@ -3,8 +3,8 @@
 from flask import flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
-from db_helper import clear_robot_sources, filter_articles, modify_article, get_article, reset_db, remove_article_from_database
-from repositories.article_repository import create_article, set_done  # ,get_todos,
+from db_helper import clear_robot_sources, filter_articles, modify_article, get_article, remove_article_from_database
+from repositories.article_repository import create_article, set_done
 from util import (
     validate_author,
     validate_citekey,
@@ -21,9 +21,6 @@ from util import (
 def index(page=1):
     """landing page"""
     page_size = 20
-
-    # todos = get_todos()
-    # unfinished = len([todo for todo in todos if not todo.done])
 
     search_query = request.args.get("search", "")
 
@@ -103,13 +100,6 @@ def try_create_article():
         flash(str(error))
         return redirect("add_article")
 
-
-@app.route("/toggle_todo/<todo_id>", methods=["POST"])
-def toggle_todo(todo_id):
-    """todo on/off"""
-    set_done(todo_id)
-    return redirect("/")
-
 @app.route("/edit_article/<citekey>")
 def edit_article(citekey):
     article = get_article(citekey)
@@ -149,12 +139,3 @@ if test_env:
         flash("Robot sources deleted")
         return redirect("/")
 
-
-# testausta varten oleva reitti
-if test_env:
-
-    @app.route("/reset_db")
-    def reset_database():
-        """reset database wrapper"""
-        reset_db()
-        return jsonify({"message": "db reset"})

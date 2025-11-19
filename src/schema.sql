@@ -1,9 +1,3 @@
-CREATE TABLE todos (
-  id SERIAL PRIMARY KEY,
-  content TEXT NOT NULL,
-  done BOOLEAN DEFAULT FALSE
-);
-
 CREATE TABLE articles (
   citekey TEXT PRIMARY KEY,
   author TEXT,
