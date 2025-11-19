@@ -41,38 +41,39 @@ jobs:
       - name: Install dependencies (including dev)
         run: poetry install --with dev
 
-      - name: Run pylint
-        run: poetry run pylint src --score=y --output-format=text > pylint_report.txt
-
-      - name: Upload pylint report artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: pylint-report
-          path: pylint_report.txt
-
-      - name: Extract pylint score
-        id: score
-        working-directory: ${{ github.workspace }}
+      - name: Run pylint and enforce score >= 9.5
         run: |
-          mkdir -p $GITHUB_WORKSPACE/badge
-          SCORE=$(grep -oP 'Your code has been rated at \K[0-9.]+(?=/10)' pylint_report.txt || echo "0")
-          echo "Score detected: $SCORE"
-          echo "{ \"schemaVersion\": 1, \"label\": \"pylint\", \"message\": \"${SCORE}/10\", \"color\": \"blue\" }" > $GITHUB_WORKSPACE/badge/pylint_badge.json
-          echo "score=$SCORE" >> $GITHUB_OUTPUT
+          set -euo pipefail
 
-      - name: Fail if score < 9.5
-        run: |
-          score=${{ steps.score.outputs.score }}
-          awk -v s="$score" 'BEGIN { exit (s < 9.5) }'
+          echo "Running pylint (forcing exit code 0 regardless of messages)..."
+          # --exit-zero is CRITICAL: prevents pylint from failing the step directly
+          poetry run pylint src --exit-zero --score=y --output-format=text | tee pylint_report.txt
 
-      - name: Publish pylint badge to gh-pages
-        if: github.event_name == 'push'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: $GITHUB_WORKSPACE/badge
-          keep_files: true
-          allow_empty_commit: false
+          echo "Parsing pylint score from output..."
+          python - << 'EOF'
+          import re
+          import sys
+          from pathlib import Path
 
-        continue-on-error: true
+          text = Path("pylint_report.txt").read_text(encoding="utf-8", errors="ignore")
+
+          # Standard pylint summary line, e.g.:
+          # "Your code has been rated at 9.51/10"
+          m = re.search(r"Your code has been rated at ([0-9.]+)/10", text)
+          if not m:
+              print("ERROR: Could not find pylint score in output. Full output follows:")
+              print("=" * 80)
+              print(text)
+              print("=" * 80)
+              sys.exit(1)
+
+          score = float(m.group(1))
+          print(f"Detected pylint score: {score}/10")
+
+          threshold = 9.5
+          if score < threshold:
+              print(f"FAIL: pylint score {score} is below required threshold {threshold}.")
+              sys.exit(1)
+
+          print(f"PASS: pylint score {score} meets or exceeds threshold {threshold}.")
+          EOF
