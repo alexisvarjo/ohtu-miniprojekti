@@ -6,7 +6,7 @@ Suite Teardown   Close Browser
 Test Setup  Delete Robot Sources
 
 *** Test Cases ***
-Adding And Seeing An Article
+Adding And Modifying An Article
     Add Article With Key  test_key
     Page Should Contain  test_key
     Modify Article With Key  test_key new_author 1995 new_title new_journal new_volume new_number new_urldate new_url
