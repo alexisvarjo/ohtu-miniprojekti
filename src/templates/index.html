@@ -76,7 +76,7 @@ Database Viewer
         {% endfor %}
         <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
         <!-- korjaa url_for myöhemmin oikeaksi, nyt vaan toi että näkyy jotain -->
-        <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Remove</a></td>
+        <td><a href="{{ url_for('remove_article', citekey=row['citekey']) }}">Remove</a></td>
       </tr>
     {% endfor %}
   </tbody>

@@ -115,6 +115,11 @@ def edit_article(citekey):
     article = get_article(citekey)
     return render_template("edit_article.html", article=article)
 
+@app.route("/remove_article/<citekey>")
+def remove_article(citekey):
+    article = get_article(citekey)
+    return render_template("remove_article.html", article=article)
+
 @app.route("/modified_article/<citekey>", methods=["POST"])
 def modified_article(citekey):
     fields = ["citekey", "author", "year", "name", "journal", "volume", "number", "urldate", "url"]
@@ -127,6 +132,7 @@ def modified_article(citekey):
     except Exception as error:
         flash(str(error))
         return redirect("/")
+
 
 
 # removes the sources added by the robot-tests
