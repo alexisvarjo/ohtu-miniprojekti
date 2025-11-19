@@ -3,7 +3,7 @@
 from flask import flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
-from db_helper import clear_robot_sources, filter_articles, reset_db
+from db_helper import clear_robot_sources, filter_articles, modify_article, get_article, reset_db
 from repositories.article_repository import create_article, set_done  # ,get_todos,
 from util import (
     validate_author,
@@ -109,6 +109,24 @@ def toggle_todo(todo_id):
     """todo on/off"""
     set_done(todo_id)
     return redirect("/")
+
+@app.route("/edit_article/<citekey>")
+def edit_article(citekey):
+    article = get_article(citekey)
+    return render_template("edit_article.html", article=article)
+
+@app.route("/modified_article/<citekey>", methods=["POST"])
+def modified_article(citekey):
+    fields = ["citekey", "author", "year", "name", "journal", "volume", "number", "urldate", "url"]
+    modified_fields = {field: request.form.get(field) or None for field in fields}
+
+    try:
+        modify_article(citekey, modified_fields)
+        flash("Article edited successfully")
+        return redirect("/")
+    except Exception as error:
+        flash(str(error))
+        return redirect("/")
 
 
 # removes the sources added by the robot-tests

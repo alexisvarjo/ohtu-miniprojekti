@@ -179,6 +179,31 @@ def modify_article(citekey: str, new_information: dict):
     db.session.execute(sql, params)
     db.session.commit()
 
+def get_article(citekey: str):
+    """Returns all fields of an article identified by its citekey."""
+
+    # Query using parameterized SQL
+    sql = text("""
+        SELECT
+            citekey,
+            author,
+            year,
+            name,
+            journal,
+            volume,
+            number,
+            urldate,
+            url
+        FROM articles
+        WHERE citekey = :citekey
+    """)
+
+    result = db.session.execute(sql, {"citekey": citekey}).mappings().first()
+
+    if result is None:
+        raise ValueError(f"Article with citekey '{citekey}' not found")
+
+    return dict(result)
 
 if __name__ == "__main__":
     with app.app_context():

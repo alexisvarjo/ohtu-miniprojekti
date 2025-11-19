@@ -1,0 +1,78 @@
+<style>
+    .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .form-row label {
+        width: 150px;
+        font-weight: bold;
+    }
+    .form-row input {
+        flex: 1;
+        width: 150px;
+        max-width: 150px;
+    }
+</style>
+
+<form action="{{ url_for('modified_article', citekey=article['citekey']) }}" method="post">
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+
+    <h1>Edit article</h1>
+
+
+    <div class="form-row">
+        <label>Cite key:</label>
+        <input type="text" name="citekey" />
+    </div>
+
+    <div class="form-row">
+        <label>Author:</label>
+        <input type="text" name="author" />
+    </div>
+
+    <div class="form-row">
+        <label>Publication year:</label>
+        <input type="text" name="year" />
+    </div>
+
+    <div class="form-row">
+        <label>Article name:</label>
+        <input type="text" name="name" />
+    </div>
+
+    <div class="form-row">
+        <label>Journal:</label>
+        <input type="text" name="journal" />
+    </div>
+
+    <div class="form-row">
+        <label>Volume:</label>
+        <input type="text" name="volume" />
+    </div>
+
+    <div class="form-row">
+        <label>Number:</label>
+        <input type="text" name="number" />
+    </div>
+
+    <div class="form-row">
+        <label>Urldate:</label>
+        <input type="text" name="urldate" />
+    </div>
+
+    <div class="form-row">
+        <label>Url:</label>
+        <input type="text" name="url" />
+    </div>
+
+    <button type="submit">Edit</button>
+</form>
+
+<a href="{{ url_for('index') }}">Homepage</a>
