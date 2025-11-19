@@ -6,6 +6,7 @@ from sqlalchemy import text
 
 from config import app, db
 
+
 def clear_robot_sources():
     """Removes the sources added by the robot-tests"""
     sql_tables = ["articles", "books", "miscs"]
@@ -14,6 +15,7 @@ def clear_robot_sources():
         sql = text(f"DELETE FROM {table} WHERE author = :author")
         db.session.execute(sql, {"author": "robot"})
     db.session.commit()
+
 
 def reset_db():
     """resets the database"""
@@ -123,6 +125,59 @@ def filter_articles(material, keyword, year, search_term):
 
     # Otherwise → fetch from the selected table
     return _filter_from_table(table_map[material], keyword, year, search_term)
+
+
+def check_if_citekey_exists(citekey: str):
+    """Checks if a citekey exists in the database"""
+    sql = text("SELECT COUNT(*) FROM articles WHERE citekey = :citekey")
+    count = db.session.execute(sql, {"citekey": citekey}).scalar()
+
+    return count > 0
+
+
+def modify_article(citekey: str, new_information: dict):
+    """Modifies fields of an existing article identified by its citekey."""
+
+    # Check that article exists
+    if not check_if_citekey_exists(citekey):
+        raise ValueError(f"Article with citekey '{citekey}' not found")
+
+    # Allowed fields to update
+    allowed_fields = {
+        "author",
+        "year",
+        "name",
+        "journal",
+        "volume",
+        "number",
+        "urldate",
+        "url",
+    }
+
+    # Filter out any invalid keys
+    update_fields = {k: v for k, v in new_information.items() if k in allowed_fields}
+
+    if not update_fields:
+        return  # No changes
+
+    # Build SET clause from whitelisted columns
+    # This is safe because column names are fixed, not user-provided
+    set_clause = ", ".join(f"{col} = :{col}" for col in update_fields)
+
+    # Create parameterized SQL
+    sql = text(f"""
+        UPDATE articles
+        SET {set_clause}
+        WHERE citekey = :citekey
+    """)
+
+    # Add citekey to parameters
+    params = update_fields.copy()
+    params["citekey"] = citekey
+
+    # Execute safely with parameter binding
+    db.session.execute(sql, params)
+    db.session.commit()
 
 
 if __name__ == "__main__":
