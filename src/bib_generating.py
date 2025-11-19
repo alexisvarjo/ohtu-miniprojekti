@@ -1,6 +1,9 @@
+"""Functions for bib generating"""
+
 from repositories.all_citations_repository import fetch_all_citations
 
 def bib_generator():
+    """Generates a bib string"""
     citations = fetch_all_citations()
     bib = ""
 
@@ -10,7 +13,7 @@ def bib_generator():
             single_bib = ""
             single_bib += f"@{short_citation}{{{citation["citekey"]},\n"
             for field in citation:
-                if citation[field] != None and field != "citekey":
+                if citation[field] is not None and field != "citekey":
                     single_bib += f"  {field}={{{citation[field]}}},\n"
             single_bib = single_bib[:-2]
             single_bib += "\n}\n\n"
@@ -19,6 +22,7 @@ def bib_generator():
     return bib
 
 def generate_bib_file():
+    """Generates a citations.bib file"""
     bib = bib_generator()
-    with open("citations.bib", "w") as file:
+    with open("citations.bib", "w", encoding="utf-8") as file:
         file.write(bib)

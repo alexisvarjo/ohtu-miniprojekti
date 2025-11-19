@@ -185,10 +185,12 @@ def remove_article(citekey):
 
 @app.route("/bib_view")
 def bib_view():
+    """Route for viewing bib in the browser"""
     return Response(bib_generator(), mimetype="text/plain")
 
 @app.route("/bib_file")
 def bib_file():
+    """Route for downloading a .bib file"""
     generate_bib_file()
     path = "../citations.bib"
     return send_file(path, as_attachment=True)
