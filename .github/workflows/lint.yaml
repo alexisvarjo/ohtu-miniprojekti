@@ -44,7 +44,7 @@ jobs:
       - name: Run pylint
         run: poetry run pylint src --exit-zero --score=y --output-format=text > pylint_report.txt
 
-      - name: Upload pylint report
+      - name: Upload pylint report artifact
         uses: actions/upload-artifact@v4
         with:
           name: pylint-report
@@ -57,12 +57,14 @@ jobs:
           echo "score=$SCORE" >> $GITHUB_OUTPUT
           echo "{ \"schemaVersion\": 1, \"label\": \"pylint\", \"message\": \"${SCORE}/10\", \"color\": \"blue\" }" > pylint_badge.json
 
+      # Only publish badge on push (not on pull_request)
       - name: Publish pylint badge to gh-pages
+        if: github.event_name == 'push'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: .
           keep_files: true
-          allow_empty_commit: false
+          allow_empty_commit: true
         continue-on-error: true
