@@ -47,7 +47,10 @@ Add Article With Key
     Go To  ${HOME_URL}
 
 Modify Article With Key
-    [Arguments]  ${citekey} ${new_author} ${new_year} ${new_title} ${new_journal} ${new_volume} ${new_number} ${new_urldate} ${new_url}
+
+    [Arguments]    ${citekey}    ${new_author}    ${new_year}    ${new_title}  
+...            ${new_journal}    ${new_volume}    ${new_number}  
+...            ${new_urldate}    ${new_url}
     Go To  ${HOME_URL}
     Click Link  Modify article
     Input Text  citekey  ${citekey}
