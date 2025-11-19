@@ -5,6 +5,7 @@ from flask import flash, jsonify, redirect, render_template, request
 from config import app, test_env
 from db_helper import clear_robot_sources, filter_articles, modify_article, get_article, remove_article_from_database
 from repositories.article_repository import create_article
+from repositories.all_citations_repository import fetch_all_citations
 from util import (
     validate_author,
     validate_citekey,
@@ -128,6 +129,12 @@ def remove_article(citekey):
         if "remove" in request.form:
             remove_article_from_database(citekey)
         return redirect("/")
+
+@app.route("/citations")
+def citations():
+    citations = fetch_all_citations()
+    
+    return citations
 
 # removes the sources added by the robot-tests
 if test_env:
