@@ -59,7 +59,7 @@ Database Viewer
 </div>
 
 <hr>
-
+<!-- Taulukko -->
 <table border="1" cellpadding="5" cellspacing="0">
   <thead>
     <tr>
@@ -75,6 +75,8 @@ Database Viewer
           <td>{{ row[column] }}</td>
         {% endfor %}
         <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
+        <!-- korjaa url_for myöhemmin oikeaksi, nyt vaan toi että näkyy jotain -->
+        <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Remove</a></td>
       </tr>
     {% endfor %}
   </tbody>

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Remove Article
+{% endblock %}
+
+{% block body %}
+
+<h1>Remove article</h1>
+
+<p>Are you sure you want to remove the article?</p>
+
+<!-- korjaa myöhemmin oikeaksi, nyt vaan toi että näkyy jotain -->
+<div><a href="{{ url_for('index') }}">Remove</a><a href="{{ url_for('index') }}">Homepage</a></div>
+
+{% endblock %}
