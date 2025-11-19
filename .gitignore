@@ -6,6 +6,7 @@ htmlcov/
 notes.txt
 .vscode
 .env
+*.log
 
 # Images
 *.png
