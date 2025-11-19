@@ -11,6 +11,10 @@ Remove Article
 <p>Are you sure you want to remove the article?</p>
 
 <!-- korjaa myöhemmin oikeaksi, nyt vaan toi että näkyy jotain -->
-<div><a href="{{ url_for('index') }}">Remove</a><a href="{{ url_for('index') }}">Homepage</a></div>
 
+<form action="/remove_article/{{ citekey }}" method="POST">
+    <input type="submit" name="remove" value="Confirm">
+    <input type="submit" name="return" value="Cancel">
+</form>
+<a href="{{ url_for('index') }}">Homepage</a></div>
 {% endblock %}

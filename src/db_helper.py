@@ -204,7 +204,7 @@ def modify_article(citekey: str, new_information: dict):
     db.session.execute(sql, params)
     db.session.commit()
 
-def remove_article(citekey):
+def remove_article_from_database(citekey):
     if not check_if_citekey_exists(citekey):
         raise ValueError("Article doesn't exist")
     sql = text("DELETE FROM articles WHERE citekey = :citekey")

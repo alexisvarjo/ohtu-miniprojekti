@@ -3,7 +3,7 @@
 from flask import flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
-from db_helper import clear_robot_sources, filter_articles, modify_article, get_article, reset_db
+from db_helper import clear_robot_sources, filter_articles, modify_article, get_article, reset_db, remove_article_from_database
 from repositories.article_repository import create_article, set_done  # ,get_todos,
 from util import (
     validate_author,
@@ -115,11 +115,6 @@ def edit_article(citekey):
     article = get_article(citekey)
     return render_template("edit_article.html", article=article)
 
-@app.route("/remove_article/<citekey>")
-def remove_article(citekey):
-    article = get_article(citekey)
-    return render_template("remove_article.html", article=article)
-
 @app.route("/modified_article/<citekey>", methods=["POST"])
 def modified_article(citekey):
     fields = ["citekey", "author", "year", "name", "journal", "volume", "number", "urldate", "url"]
@@ -133,7 +128,16 @@ def modified_article(citekey):
         flash(str(error))
         return redirect("/")
 
+@app.route("/remove_article/<citekey>", methods=["GET", "POST"])
+def remove_article(citekey):
+    if request.method == "GET":
+        article = get_article(citekey)
+        return render_template("remove_article.html", article=article, citekey=citekey)
 
+    if request.method == "POST":
+        if "remove" in request.form:
+            remove_article_from_database(citekey)
+        return redirect("/")
 
 # removes the sources added by the robot-tests
 if test_env:
