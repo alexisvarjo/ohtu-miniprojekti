@@ -8,10 +8,19 @@ Remove Article
 
 <h1>Remove article</h1>
 
-<p>Are you sure you want to remove the article?</p>
+<p>Are you sure you want to remove the following article?</p>
+
+<p> Citekey: {{ article.citekey }}</p>
+<p> Author: {{ article.author }}</p>
+<p> Publication year: {{ article.year }}</p>
+<p> Article name: {{ article.name }}</p>
+<p> Journal: {{ article.journal }}</p>
+<p> Volume: {{ article.volume }}</p>
+<p> Number: {{ article.number }}</p>
+<p> Urldate: {{ article.urldate }}</p>
+<p> Url: {{ article.url }}</p>
 
 <!-- korjaa myöhemmin oikeaksi, nyt vaan toi että näkyy jotain -->
-
 <form action="/remove_article/{{ citekey }}" method="POST">
     <input type="submit" name="remove" value="Confirm">
     <input type="submit" name="return" value="Cancel">
