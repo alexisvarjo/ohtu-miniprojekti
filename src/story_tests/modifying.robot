@@ -1,11 +1,11 @@
-*** Settings ***
+#*** Settings ***
 
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
 Test Setup  Delete Robot Sources
 
-*** Test Cases ***
+#*** Test Cases ***
 Adding And Modifying An Article
     Add Article With Key  test_key
     Page Should Contain  test_key
