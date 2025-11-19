@@ -6,12 +6,12 @@ Test Setup       Delete Robot Sources
 
 *** Test Cases ***
 Adding And Modifying An Article
-    Add Article With Key  test_key
-    Page Should Contain   test_key
+    Add Article With Key  modifying_robot
+    Page Should Contain   modifying_robot
 
     Modify Article With Key
-    ...    test_key
-    ...    new_author
+    ...    modifying_robot
+    ...    robot
     ...    1995
     ...    new_title
     ...    new_journal
@@ -20,7 +20,7 @@ Adding And Modifying An Article
     ...    new_urldate
     ...    new_url
 
-    Page Should Contain   new_author
+    Page Should Contain   robot
     Page Should Contain   1995
     Page Should Contain   new_title
     Page Should Contain   new_journal
