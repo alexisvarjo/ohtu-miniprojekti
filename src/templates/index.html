@@ -66,13 +66,21 @@ Database Viewer
       {% for column in columns %}
         <th>{{ column }}</th>
       {% endfor %}
+    <!-- Lisättään 2 tyhjää otsikkoa niin, että taulukko on kokonainen -->
+    <th>{{ empty }}</th>
+    <th>{{ empty }}</th>
     </tr>
   </thead>
   <tbody>
     {% for row in records %}
       <tr>
         {% for column in columns %}
+          <!-- Jos ei löydy tietoa, taulukko näyttää tyhjää-->
+          {% if row[column] %}
           <td>{{ row[column] }}</td>
+          {% else %}
+          <td>{{ empty }}</td>
+          {% endif %}
         {% endfor %}
         <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
         <!-- korjaa url_for myöhemmin oikeaksi, nyt vaan toi että näkyy jotain -->
