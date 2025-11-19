@@ -3,10 +3,11 @@
 from flask import flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
-from db_helper import filter_articles, clear_robot_sources, reset_db
+from db_helper import clear_robot_sources, filter_articles, reset_db
 from repositories.article_repository import create_article, set_done  # ,get_todos,
 from util import (
     validate_author,
+    validate_citekey,
     validate_journal,
     validate_name,
     validate_number,
@@ -21,8 +22,8 @@ def index(page=1):
     """landing page"""
     page_size = 20
 
-    #todos = get_todos()
-    #unfinished = len([todo for todo in todos if not todo.done])
+    # todos = get_todos()
+    # unfinished = len([todo for todo in todos if not todo.done])
 
     search_query = request.args.get("search", "")
 
@@ -30,8 +31,6 @@ def index(page=1):
     keyword = request.args.get("keyword", "")
     year = request.args.get("year", "")
     search_term = request.args.get("search", "")
-
-
 
     if year:
         try:
@@ -43,13 +42,13 @@ def index(page=1):
     records = list(reversed(filter_articles(material, keyword, year, search_term)))
 
     all_articles = len(records)
-    page_count = max((all_articles-1) // page_size + 1, 1)
-    
+    page_count = max((all_articles - 1) // page_size + 1, 1)
+
     if page < 1:
         return redirect("/1")
     if page > page_count:
         return redirect("/" + str(page_count))
-    
+
     start = (page - 1) * page_size
     end = start + page_size
     records_page = records[start:end]
@@ -94,12 +93,7 @@ def try_create_article():
     url = request.form.get("url")
 
     try:
-        validate_author(author)
-        validate_year(year)
-        validate_name(name)
-        validate_journal(journal)
-        validate_volume(volume)
-        validate_number(number)
+        validate_citekey(citekey)
         create_article(
             citekey, author, year, name, journal, volume, number, urldate, url
         )
@@ -116,8 +110,10 @@ def toggle_todo(todo_id):
     set_done(todo_id)
     return redirect("/")
 
+
 # removes the sources added by the robot-tests
 if test_env:
+
     @app.route("/delete_robot_sources_db")
     def delete_robot_sources():
         """URL for removing sources added by robot tests"""
