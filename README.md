@@ -1,4 +1,4 @@
-[![CI badge](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml) ![pylint score](https://img.shields.io/endpoint?url=https://alexisvarjo.github.io/ohtu-miniprojekti/pylint_badge.json)
+[![CI badge](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml) [![Lint (pylint)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/lint.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/lint.yaml)
 
 
 
