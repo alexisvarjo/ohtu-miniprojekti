@@ -1,6 +1,4 @@
-[![CI badge](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml) [![Lint (pylint)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/lint.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/lint.yaml)
-
-
+[![CI badge](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml) [![Lint (pylint)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/lint.yaml/badge.svg?branch=master)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/lint.yaml)
 
 Ryhmä: Kvokaalit, ohtu miniprojekti syksy 2025 TKT20006
 
