@@ -5,26 +5,24 @@ CREATE TABLE todos (
 );
 
 CREATE TABLE articles (
-  id SERIAL PRIMARY KEY,
-  citekey TEXT NOT NULL,
-  author TEXT NOT NULL,
-  name TEXT NOT NULL,
-  journal TEXT NOT NULL,
-  year INT NOT NULL,
+  citekey TEXT PRIMARY KEY,
+  author TEXT,
+  name TEXT,
+  journal TEXT,
+  year INT,
   volume INT,
   number INT,
-  urldate TEXT NOT NULL,
-  url TEXT NOT NULL
+  urldate TEXT,
+  url TEXT
 );
 
 CREATE TABLE books (
-  id SERIAL PRIMARY KEY,
-  citekey TEXT NOT NULL,
-  author TEXT NOT NULL,
-  editor TEXT NOT NULL,
-  title TEXT NOT NULL,
-  publisher TEXT NOT NULL,
-  year INT NOT NULL,
+  citekey TEXT PRIMARY KEY,
+  author TEXT,
+  editor TEXT,
+  title TEXT,
+  publisher TEXT,
+  year INT,
   volume INT,
   number INT,
   urldate TEXT,
@@ -32,8 +30,7 @@ CREATE TABLE books (
 );
 
 CREATE TABLE miscs (
-  id SERIAL PRIMARY KEY,
-  citekey TEXT NOT NULL,
+  citekey TEXT PRIMARY KEY,
   author TEXT,
   title TEXT,
   year INT,
