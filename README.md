@@ -1,6 +1,7 @@
 [![CI badge](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml) ![pylint score](https://img.shields.io/endpoint?url=https://alexisvarjo.github.io/ohtu-miniprojekti/pylint_badge.json)
 
 
+
 Ryhmä: Kvokaalit, ohtu miniprojekti syksy 2025 TKT20006
 
 Kuvaus: Järjestelmä, jonka avulla voidaan hallinnoida viitteitä helposti.
