@@ -1,7 +1,8 @@
 """Contains all routes of the app"""
 
-from flask import flash, redirect, render_template, request
+from flask import flash, redirect, render_template, send_file, request, Response
 
+from bib_generating import bib_generator, generate_bib_file
 from config import app, test_env
 from db_helper import (
     clear_robot_sources,
@@ -182,20 +183,16 @@ def remove_article(citekey):
 
     return render_template("error")
 
+@app.route("/bib_view")
+def bib_view():
+    return Response(bib_generator(), mimetype="text/plain")
 
-@app.route("/citations")
-def citations():
-    """Route for fetching all citations.
+@app.route("/bib_file")
+def bib_file():
+    generate_bib_file()
+    path = "../citations.bib"
+    return send_file(path, as_attachment=True)
 
-    Returns:
-        list: A list of citations.
-    """
-    citations = fetch_all_citations()
-
-    return citations
-
-
-# removes the sources added by the robot-tests
 if test_env:
 
     @app.route("/delete_robot_sources_db")
@@ -208,3 +205,14 @@ if test_env:
         clear_robot_sources()
         flash("Robot sources deleted")
         return redirect("/")
+
+    @app.route("/citations")
+    def citations():
+        """Route for fetching all citations.
+
+        Returns:
+            list: A list of citations.
+        """
+        citations = fetch_all_citations()
+
+        return citations

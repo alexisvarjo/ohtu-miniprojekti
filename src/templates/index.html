@@ -58,6 +58,16 @@ Database Viewer
   {% endwith %}
 </div>
 
+<!-- Web bib viewing -->
+<div style="margin-top: 10px;">
+  <a href="{{ url_for('bib_view') }}">View bib in browser</a>
+</div>
+
+<!-- Bib file download -->
+<div style="margin-top: 10px;">
+  <a href="{{ url_for('bib_file') }}">Download a .bib file</a>
+</div>
+
 <hr>
 <!-- Taulukko -->
 <table border="1" cellpadding="5" cellspacing="0">
