@@ -42,7 +42,7 @@ jobs:
         run: poetry install --with dev
 
       - name: Run pylint
-        run: poetry run pylint src --exit-zero --score=y --output-format=text > pylint_report.txt
+        run: poetry run pylint src --score=y --output-format=text > pylint_report.txt
 
       - name: Upload pylint report artifact
         uses: actions/upload-artifact@v4
@@ -56,7 +56,14 @@ jobs:
         run: |
           mkdir -p $GITHUB_WORKSPACE/badge
           SCORE=$(grep -oP 'Your code has been rated at \K[0-9.]+(?=/10)' pylint_report.txt || echo "0")
+          echo "Score detected: $SCORE"
           echo "{ \"schemaVersion\": 1, \"label\": \"pylint\", \"message\": \"${SCORE}/10\", \"color\": \"blue\" }" > $GITHUB_WORKSPACE/badge/pylint_badge.json
+          echo "score=$SCORE" >> $GITHUB_OUTPUT
+
+      - name: Fail if score < 9.5
+        run: |
+          score=${{ steps.score.outputs.score }}
+          awk -v s="$score" 'BEGIN { exit (s < 9.5) }'
 
       - name: Publish pylint badge to gh-pages
         if: github.event_name == 'push'
@@ -67,6 +74,5 @@ jobs:
           publish_dir: $GITHUB_WORKSPACE/badge
           keep_files: true
           allow_empty_commit: false
-
 
         continue-on-error: true
