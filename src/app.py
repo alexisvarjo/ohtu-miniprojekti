@@ -4,7 +4,7 @@ from flask import flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
 from db_helper import clear_robot_sources, filter_articles, modify_article, get_article, remove_article_from_database
-from repositories.article_repository import create_article, set_done
+from repositories.article_repository import create_article
 from util import (
     validate_author,
     validate_citekey,
