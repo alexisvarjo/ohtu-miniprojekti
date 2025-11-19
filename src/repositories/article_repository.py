@@ -1,12 +1,17 @@
+"""apumetodeja artikkeleiden käsittelyyn tietokannassa"""
+
 from sqlalchemy import text
 
 from config import db
 
+
 def normalize(value):
+    """varmistaa, että ei tyhjiä merkkijonoja"""
     return None if value == "" else value
 
 
 def create_article(citekey, author, year, name, journal, volume, number, urldate, url):
+    """luo artikkelin tietokantaan"""
     sql = text("""
     INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url)
     VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url)

@@ -1,26 +1,31 @@
 """Contains all routes of the app"""
 
-from flask import flash, jsonify, redirect, render_template, request
+from flask import flash, redirect, render_template, request
 
 from config import app, test_env
-from db_helper import clear_robot_sources, filter_articles, modify_article, get_article, remove_article_from_database
-from repositories.article_repository import create_article
-from repositories.all_citations_repository import fetch_all_citations
-from util import (
-    validate_author,
-    validate_citekey,
-    validate_journal,
-    validate_name,
-    validate_number,
-    validate_volume,
-    validate_year,
+from db_helper import (
+    clear_robot_sources,
+    filter_articles,
+    get_article,
+    modify_article,
+    remove_article_from_database,
 )
+from repositories.all_citations_repository import fetch_all_citations
+from repositories.article_repository import create_article
+from util import validate_citekey
 
 
 @app.route("/")
 @app.route("/<int:page>")
 def index(page=1):
-    """landing page"""
+    """Landing page for the application, displays a paginated list of articles.
+
+    Args:
+        page (int): The current page number (default is 1).
+
+    Returns:
+        str: Rendered HTML template for the landing page.
+    """
     page_size = 20
 
     search_query = request.args.get("search", "")
@@ -33,7 +38,7 @@ def index(page=1):
     if year:
         try:
             year = int(year)
-        except:
+        except ValueError:
             year = None
 
     # reversed list of the sources
@@ -73,13 +78,21 @@ def index(page=1):
 
 @app.route("/add_article")
 def add_article():
-    """route for displaying add_article.html"""
+    """Route for displaying the 'add_article.html' form.
+
+    Returns:
+        str: Rendered HTML template for adding a new article.
+    """
     return render_template("add_article.html")
 
 
 @app.route("/create_article", methods=["POST"])
 def try_create_article():
-    """create article route"""
+    """Route for creating a new article.
+
+    Returns:
+        str: Redirects to the landing page or back to the form on error.
+    """
     citekey = request.form.get("citekey")
     author = request.form.get("author")
     year = request.form.get("year")
@@ -101,14 +114,42 @@ def try_create_article():
         flash(str(error))
         return redirect("add_article")
 
+
 @app.route("/edit_article/<citekey>")
 def edit_article(citekey):
+    """Route for displaying the 'edit_article.html' form for a specific article.
+
+    Args:
+        citekey (str): The unique identifier for the article.
+
+    Returns:
+        str: Rendered HTML template for editing an article.
+    """
     article = get_article(citekey)
     return render_template("edit_article.html", article=article)
 
+
 @app.route("/modified_article/<citekey>", methods=["POST"])
 def modified_article(citekey):
-    fields = ["citekey", "author", "year", "name", "journal", "volume", "number", "urldate", "url"]
+    """Route for modifying an existing article.
+
+    Args:
+        citekey (str): The unique identifier for the article.
+
+    Returns:
+        str: Redirects to the landing page or back to the form on error.
+    """
+    fields = [
+        "citekey",
+        "author",
+        "year",
+        "name",
+        "journal",
+        "volume",
+        "number",
+        "urldate",
+        "url",
+    ]
     modified_fields = {field: request.form.get(field) or None for field in fields}
 
     try:
@@ -119,8 +160,17 @@ def modified_article(citekey):
         flash(str(error))
         return redirect("/")
 
+
 @app.route("/remove_article/<citekey>", methods=["GET", "POST"])
 def remove_article(citekey):
+    """Route for displaying and handling the removal of an article.
+
+    Args:
+        citekey (str): The unique identifier for the article.
+
+    Returns:
+        str: Rendered HTML template for removing an article or redirect after removal.
+    """
     if request.method == "GET":
         article = get_article(citekey)
         return render_template("remove_article.html", article=article, citekey=citekey)
@@ -130,19 +180,31 @@ def remove_article(citekey):
             remove_article_from_database(citekey)
         return redirect("/")
 
+    return render_template("error")
+
+
 @app.route("/citations")
 def citations():
+    """Route for fetching all citations.
+
+    Returns:
+        list: A list of citations.
+    """
     citations = fetch_all_citations()
-    
+
     return citations
+
 
 # removes the sources added by the robot-tests
 if test_env:
 
     @app.route("/delete_robot_sources_db")
     def delete_robot_sources():
-        """URL for removing sources added by robot tests"""
+        """URL for removing sources added by robot tests.
+
+        Returns:
+            str: Redirects to the landing page after deletion.
+        """
         clear_robot_sources()
         flash("Robot sources deleted")
         return redirect("/")
-

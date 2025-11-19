@@ -56,6 +56,7 @@ def setup_db():
 
 
 def _filter_from_table(table, keyword, year, search_term):
+    """helper function for filter_articles()"""
     base = f"SELECT * FROM {table} WHERE 1=1"
     params = {}
 
@@ -126,6 +127,7 @@ def check_if_citekey_exists(citekey: str):
 
     return count > 0
 
+
 def get_article(citekey: str):
     """Returns all fields of an article identified by its citekey."""
 
@@ -151,6 +153,7 @@ def get_article(citekey: str):
         raise ValueError(f"Article with citekey '{citekey}' not found")
 
     return dict(result)
+
 
 def modify_article(citekey: str, new_information: dict):
     """Modifies fields of an existing article identified by its citekey."""
@@ -196,12 +199,15 @@ def modify_article(citekey: str, new_information: dict):
     db.session.execute(sql, params)
     db.session.commit()
 
+
 def remove_article_from_database(citekey):
+    """removes an article from database based on given parameter"""
     if not check_if_citekey_exists(citekey):
         raise ValueError("Article doesn't exist")
     sql = text("DELETE FROM articles WHERE citekey = :citekey")
     db.session.execute(sql, {"citekey": citekey})
     db.session.commit()
+
 
 if __name__ == "__main__":
     with app.app_context():
