@@ -59,7 +59,6 @@ jobs:
           echo "score=$SCORE" >> $GITHUB_OUTPUT
           echo "{ \"schemaVersion\": 1, \"label\": \"pylint\", \"message\": \"${SCORE}/10\", \"color\": \"blue\" }" > badge/pylint_badge.json
 
-      # Only publish badge on push (not on pull_request)
       - name: Publish pylint badge to gh-pages
         if: github.event_name == 'push'
         uses: peaceiris/actions-gh-pages@v4
@@ -69,5 +68,6 @@ jobs:
           publish_dir: ${{ github.workspace }}/badge
           keep_files: true
           allow_empty_commit: false
+
 
         continue-on-error: true
