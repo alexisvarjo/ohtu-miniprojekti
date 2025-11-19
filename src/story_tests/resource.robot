@@ -46,5 +46,21 @@ Add Article With Key
     Click Button  Create
     Go To  ${HOME_URL}
 
+Modify Article With Key
+    [Arguments]  ${citekey} ${new_author} ${new_year} ${new_title} ${new_journal} ${new_volume} ${new_number} ${new_urldate} ${new_url}
+    Go To  ${HOME_URL}
+    Click Link  Modify article
+    Input Text  citekey  ${citekey}
+    Input Text  author  ${new_author}
+    Input Text  year  ${new_year}
+    Input Text  name  ${new_title}
+    Input Text  journal  ${new_journal}
+    Input Text  volume  ${new_volume}
+    Input Text  number  ${new_number}
+    Input Text  urldate  ${new_urldate}
+    Input Text  url  ${new_url}
+    Click Button  Modify
+    Go To  ${HOME_URL}
+
 Delete Robot Sources
     Go To  ${DELETE_ROBOT_SOURCES_URL}
