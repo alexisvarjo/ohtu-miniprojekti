@@ -132,18 +132,46 @@ def try_create_article():
 
 
 
-@app.route("/edit_article/<citekey>")
-def edit_article(citekey):
-    """Route for displaying the 'edit_article.html' form for a specific article.
+@app.route("/update_article/<citekey>", methods=["POST"])
+def update_article(citekey):
+    """Update an existing article with form data."""
 
-    Args:
-        citekey (str): The unique identifier for the article.
+    citekey = request.form.get("citekey")
+    author = request.form.get("author")
+    year = request.form.get("year")
+    name = request.form.get("name")
+    journal = request.form.get("journal")
 
-    Returns:
-        str: Rendered HTML template for editing an article.
-    """
-    article = get_article(citekey)
-    return render_template("edit_article.html", article=article)
+    # --- Required field validation ---
+    required_fields = {
+        "Cite key": citekey,
+        "Author": author,
+        "Publication year": year,
+        "Article name": name,
+        "Journal": journal,
+    }
+
+    for field_name, value in required_fields.items():
+        if not value or value.strip() == "":
+            flash(f"{field_name} is required.")
+            return redirect(url_for("edit_article", citekey=citekey))
+    # ---------------------------------
+
+    volume = request.form.get("volume")
+    number = request.form.get("number")
+    urldate = request.form.get("urldate")
+    url = request.form.get("url")
+
+    try:
+        update_article_in_db(
+            citekey, author, year, name, journal, volume, number, urldate, url
+        )
+        flash("Article updated successfully.")
+        return redirect("/")
+    except Exception as error:
+        flash(str(error))
+        return redirect(url_for("edit_article", citekey=citekey))
+
 
 
 @app.route("/modified_article/<citekey>", methods=["POST"])
