@@ -46,7 +46,7 @@ Database Viewer
   <a href="{{ url_for('add_article') }}">Add article</a>
 </div>
 <div style="margin-top: 10px;">
-  <a href="{{ url_for('edit_article') }}">Edit article</a>
+  <a href="{{ url_for('edit_article', citekey=article.citekey) }}">Edit</a>
 </div>
 
 <div style="color: darkgreen;">
