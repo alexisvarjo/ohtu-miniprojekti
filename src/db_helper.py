@@ -175,7 +175,7 @@ def modify_article(citekey: str, new_information: dict):
     }
 
     # Filter out any invalid keys
-    update_fields = {k: v for k, v in new_information.items() if k in allowed_fields}
+    update_fields = {k: v for k, v in new_information.items() if k in allowed_fields if v is not None}
 
     if not update_fields:
         return  # No changes
