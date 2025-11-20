@@ -16,13 +16,7 @@
 </style>
 
 <form action="{{ url_for('modified_article', citekey=article['citekey']) }}" method="post">
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
+
 
     <h1>Edit article</h1>
 
@@ -73,6 +67,14 @@
     </div>
 
     <button type="submit">Edit</button>
+
+     {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
 </form>
 
 <a href="{{ url_for('index') }}">Homepage</a>

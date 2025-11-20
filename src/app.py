@@ -104,16 +104,32 @@ def try_create_article():
     urldate = request.form.get("urldate")
     url = request.form.get("url")
 
+    # --- NEW: Required field validation ---
+    required_fields = {
+        "Cite key": citekey,
+        "Author": author,
+        "Publication year": year,
+        "Article name": name,
+        "Journal": journal
+    }
+
+    for field_name, value in required_fields.items():
+        if not value or value.strip() == "":
+            flash(f"{field_name} is required.")
+            return redirect("add_article")
+    # --------------------------------------
+
     try:
         validate_citekey(citekey)
         create_article(
             citekey, author, year, name, journal, volume, number, urldate, url
         )
         flash("Source added successfully")
-        return redirect("/")
+        return redirect("add_article")
     except Exception as error:
         flash(str(error))
         return redirect("add_article")
+
 
 
 @app.route("/edit_article/<citekey>")

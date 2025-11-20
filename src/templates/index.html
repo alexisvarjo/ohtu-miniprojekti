@@ -45,6 +45,9 @@ Database Viewer
 <div style="margin-top: 10px;">
   <a href="{{ url_for('add_article') }}">Add article</a>
 </div>
+<div style="margin-top: 10px;">
+  <a href="{{ url_for('edit_article') }}">Edit article</a>
+</div>
 
 <div style="color: darkgreen;">
   {% with messages = get_flashed_messages() %}

@@ -16,39 +16,36 @@
 </style>
 
 <form action="/create_article" method="post">
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
 
     <h1>Add article</h1>
 
+
+
+    <p>Required fields are marked with *</p>
+
     <div class="form-row">
-        <label>Cite key:</label>
+        <label>*Cite key:</label>
         <input type="text" name="citekey" required />
     </div>
 
     <div class="form-row">
-        <label>Author:</label>
-        <input type="text" name="author" />
+        <label>*Author:</label>
+        <input type="text" name="author" required />
     </div>
 
     <div class="form-row">
-        <label>Publication year:</label>
-        <input type="text" name="year" />
+        <label>*Publication year:</label>
+        <input type="text" name="year" required />
     </div>
 
     <div class="form-row">
-        <label>Article name:</label>
-        <input type="text" name="name" />
+        <label>*Article name:</label>
+        <input type="text" name="name" required />
     </div>
 
     <div class="form-row">
-        <label>Journal:</label>
-        <input type="text" name="journal" />
+        <label>*Journal:</label>
+        <input type="text" name="journal" required />
     </div>
 
     <div class="form-row">
@@ -72,6 +69,15 @@
     </div>
 
     <button type="submit">Create</button>
+
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+
 </form>
 
 <a href="{{ url_for('index') }}">Homepage</a>
