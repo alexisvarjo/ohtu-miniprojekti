@@ -132,47 +132,15 @@ def try_create_article():
 
 
 
-@app.route("/edit_article/<citekey>", methods=["POST"])
+@app.route("/edit_article/<citekey>")
 def edit_article(citekey):
-    """Update an existing article with form data."""
-
-    citekey = request.form.get("citekey")
-    author = request.form.get("author")
-    year = request.form.get("year")
-    name = request.form.get("name")
-    journal = request.form.get("journal")
-
-    # --- Required field validation ---
-    required_fields = {
-        "Cite key": citekey,
-        "Author": author,
-        "Publication year": year,
-        "Article name": name,
-        "Journal": journal,
-    }
-
-    for field_name, value in required_fields.items():
-        if not value or value.strip() == "":
-            flash(f"{field_name} is required.")
-            return redirect(url_for("edit_article", citekey=citekey))
-    # ---------------------------------
-
-    volume = request.form.get("volume")
-    number = request.form.get("number")
-    urldate = request.form.get("urldate")
-    url = request.form.get("url")
-
-    try:
-        modify_article(
-            citekey, author, year, name, journal, volume, number, urldate, url
-        )
-        flash("Article updated successfully.")
-        return redirect("/")
-    except Exception as error:
-        flash(str(error))
-        return redirect(url_for("edit_article", citekey=citekey))
-
-
+    """Renders the edit article template."""
+    """
+    Returns:
+        str: Rendered HTML template for editing an article.
+    """
+    article = get_article(citekey)
+    return render_template("edit_article.html", article=article)
 
 @app.route("/modified_article/<citekey>", methods=["POST"])
 def modified_article(citekey):
@@ -203,7 +171,7 @@ def modified_article(citekey):
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return redirect("/")
+        return redirect(url_for("edit_article"), citekey=citekey)
 
 
 @app.route("/remove_article/<citekey>", methods=["GET", "POST"])
