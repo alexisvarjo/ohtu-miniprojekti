@@ -3,6 +3,7 @@
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
+Test Setup  Delete Robot Sources
 
 *** Test Cases ***
 Adding And Removing An Article
