@@ -2,7 +2,7 @@
 
 from flask import flash, redirect, render_template, send_file, request, Response
 
-from bib_generating import bib_generator, generate_bib_file
+from bib_generating import generate_bib_browser, generate_bib_file
 from config import app, test_env
 from db_helper import (
     clear_robot_sources,
@@ -198,7 +198,7 @@ def remove_article(citekey):
 @app.route("/bib_view")
 def bib_view():
     """Route for viewing bib in the browser"""
-    return Response(bib_generator(), mimetype="text/plain")
+    return Response(generate_bib_browser(), mimetype="text/plain")
 
 @app.route("/bib_file")
 def bib_file():

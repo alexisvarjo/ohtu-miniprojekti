@@ -2,11 +2,9 @@
 
 from repositories.all_citations_repository import fetch_all_citations
 
-def bib_generator():
+def bib_generator(citations):
     """Generates a bib string"""
-    citations = fetch_all_citations()
     bib = ""
-
     for citation_type in citations:
         for citation in citations[citation_type]:
             short_citation = citation_type[:-1]
@@ -21,8 +19,14 @@ def bib_generator():
 
     return bib
 
+def generate_bib_browser():
+    """Generates a bib for the browser viewing"""
+    citations = fetch_all_citations()
+    return bib_generator(citations)
+
 def generate_bib_file():
     """Generates a citations.bib file"""
-    bib = bib_generator()
+    citations = fetch_all_citations()
+    bib = bib_generator(citations)
     with open("citations.bib", "w", encoding="utf-8") as file:
         file.write(bib)
