@@ -132,8 +132,8 @@ def try_create_article():
 
 
 
-@app.route("/update_article/<citekey>", methods=["POST"])
-def update_article(citekey):
+@app.route("/edit_article/<citekey>", methods=["POST"])
+def edit_article(citekey):
     """Update an existing article with form data."""
 
     citekey = request.form.get("citekey")
@@ -163,7 +163,7 @@ def update_article(citekey):
     url = request.form.get("url")
 
     try:
-        update_article_in_db(
+        modify_article(
             citekey, author, year, name, journal, volume, number, urldate, url
         )
         flash("Article updated successfully.")
