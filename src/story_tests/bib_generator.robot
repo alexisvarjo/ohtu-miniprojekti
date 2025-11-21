@@ -4,6 +4,7 @@ Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
 Test Setup  Delete Robot Sources
+Test Teardown  Delete Robot Sources
 
 *** Test Cases ***
 Bib Browser View
