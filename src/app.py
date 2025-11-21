@@ -1,6 +1,6 @@
 """Contains all routes of the app"""
 
-from flask import flash, redirect, render_template, send_file, request, Response
+from flask import flash, redirect, render_template, send_file, url_for, request, Response
 
 from bib_generating import generate_bib_browser, generate_bib_file
 from config import app, test_env
