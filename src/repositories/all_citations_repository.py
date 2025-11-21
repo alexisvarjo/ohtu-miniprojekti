@@ -11,6 +11,6 @@ def fetch_all_citations():
     for citation_type in tables():
         sql = text(f"SELECT * FROM {citation_type}")
         result = db.session.execute(sql).fetchall()
-        all_citations[citation_type] = reversed([dict(row._mapping) for row in result])
+        all_citations[citation_type] = list(reversed([dict(row._mapping) for row in result]))
 
     return all_citations
