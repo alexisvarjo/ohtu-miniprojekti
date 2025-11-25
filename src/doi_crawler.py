@@ -1,3 +1,5 @@
+"""Module for adding citations with a DOI"""
+
 import requests
 
 from repositories.article_repository import create_article
