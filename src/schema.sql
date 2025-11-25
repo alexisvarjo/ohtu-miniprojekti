@@ -30,7 +30,7 @@ CREATE TABLE inproceedings (
   title TEXT,
   booktitle TEXT,
   publisher TEXT,
-  pages INT,
+  pages TEXT,
   year INT,
   volume INT,
   number INT,
