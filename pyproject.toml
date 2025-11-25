@@ -8,7 +8,7 @@ authors = [
     {name = "Alexander Algrund", email="ab@aa.fi"},
     {name = "Atos Ikonen", email="atos.ikonen@helsinki.fi"},
     {name = "Iida Kivilahti", email="ad@aa.fi"},
-    {name = "Kristjan Kaasik", email="ae@aa.fi"}
+    {name = "Kristjan Kaasik", email="kristjan.kaasik@helsinki.fi"}
 ]
 license = {text = "MIT"}
 requires-python = "^3.12"
