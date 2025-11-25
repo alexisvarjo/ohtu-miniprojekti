@@ -12,6 +12,7 @@ from db_helper import (
     remove_article_from_database,
     add_test_source
 )
+from doi_crawler import citation_with_doi
 from repositories.all_citations_repository import fetch_all_citations
 from repositories.article_repository import create_article
 from util import validate_citekey
@@ -226,6 +227,20 @@ def bib_file():
     generate_bib_file()
     path = "../citations.bib"
     return send_file(path, as_attachment=True)
+
+@app.route("/cite_doi", methods=["POST"])
+def cite_doi():
+    doi = request.form.get("doi")
+    citekey = request.form.get("citekey")
+
+    message = citation_with_doi(doi, citekey)
+    if message == "success":
+        flash("Citation added")
+    elif message != "success":
+        flash(message)
+
+    return redirect("/")
+
 
 if test_env:
 

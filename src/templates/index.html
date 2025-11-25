@@ -72,8 +72,22 @@ Citation App
   <a href="{{ url_for('test_source') }}">Generate a random source (testing)</a>
 </div>
 
+<!-- Doi citations -->
+<form action="/cite_doi" method="post">
+  <p>
+    Add a citation with a DOI:
+  </p>
+  <label for="doi">*DOI:</label>
+  <input type="text" placeholder="Enter DOI" name="doi" required>
+
+  <label for="citekey">*Citekey:</label>
+  <input type="text" placeholder="Enter citekey" name="citekey" required>
+
+  <input type="submit" value="Add citation">
+</form>
+
 <!-- Flash messages -->
-<div style="color: darkgreen;">
+<div>
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       <ul>
