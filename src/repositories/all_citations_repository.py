@@ -1,3 +1,7 @@
+"""Functions relating to all of the citations in the database"""
+
+# pylint: disable=protected-access
+
 from sqlalchemy import text
 
 from config import db

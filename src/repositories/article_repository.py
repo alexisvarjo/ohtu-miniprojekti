@@ -1,4 +1,4 @@
-"""apumetodeja artikkeleiden käsittelyyn tietokannassa"""
+"""Functions for handling articles in the database"""
 
 from sqlalchemy import text
 
@@ -6,12 +6,14 @@ from config import db
 
 
 def normalize(value):
-    """varmistaa, että ei tyhjiä merkkijonoja"""
+    """No empty strings"""
     return None if value == "" else value
 
 
 def create_article(citekey, author, year, name, journal, volume, number, urldate, url):
-    """luo artikkelin tietokantaan"""
+    """Adds an article into the database"""
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
+
     sql = text("""
     INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url)
     VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url)

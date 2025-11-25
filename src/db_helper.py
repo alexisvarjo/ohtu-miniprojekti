@@ -158,6 +158,8 @@ def get_article(citekey: str):
 def modify_article(citekey: str, new_information: dict):
     """Modifies fields of an existing article identified by its citekey."""
 
+    # pylint: disable=R0801
+
     # Check that article exists
     if not check_if_citekey_exists(citekey):
         raise ValueError(f"Article with citekey '{citekey}' not found")
@@ -175,7 +177,11 @@ def modify_article(citekey: str, new_information: dict):
     }
 
     # Filter out any invalid keys
-    update_fields = {k: v for k, v in new_information.items() if k in allowed_fields if v is not None}
+    update_fields = {
+        k: v
+        for k, v in new_information.items()
+        if k in allowed_fields and v is not None
+    }
 
     if not update_fields:
         return  # No changes

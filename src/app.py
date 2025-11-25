@@ -94,6 +94,8 @@ def try_create_article():
     Returns:
         str: Redirects to the landing page or back to the form on error.
     """
+    # pylint: disable=broad-exception-caught
+
     citekey = request.form.get("citekey")
     author = request.form.get("author")
     year = request.form.get("year")
@@ -104,7 +106,7 @@ def try_create_article():
     urldate = request.form.get("urldate")
     url = request.form.get("url")
 
-    # --- NEW: Required field validation ---
+    # Required field validation
     required_fields = {
         "Cite key": citekey,
         "Author": author,
@@ -117,7 +119,6 @@ def try_create_article():
         if not value or value.strip() == "":
             flash(f"{field_name} is required.")
             return redirect("add_article")
-    # --------------------------------------
 
     try:
         validate_citekey(citekey)
@@ -135,10 +136,7 @@ def try_create_article():
 @app.route("/edit_article/<citekey>")
 def edit_article(citekey):
     """Renders the edit article template."""
-    """
-    Returns:
-        str: Rendered HTML template for editing an article.
-    """
+
     article = get_article(citekey)
     return render_template("edit_article.html", article=article)
 
@@ -152,6 +150,8 @@ def modified_article(citekey):
     Returns:
         str: Redirects to the landing page or back to the form on error.
     """
+    # pylint: disable=broad-exception-caught, unexpected-keyword-arg, R0801
+
     fields = [
         "citekey",
         "author",
@@ -163,6 +163,7 @@ def modified_article(citekey):
         "urldate",
         "url",
     ]
+
     modified_fields = {field: request.form.get(field) or None for field in fields}
 
     try:
@@ -227,6 +228,6 @@ if test_env:
         Returns:
             list: A list of citations.
         """
-        citations = fetch_all_citations()
+        citations_for_web = fetch_all_citations()
 
-        return citations
+        return citations_for_web
