@@ -144,7 +144,8 @@ def get_article(citekey: str):
             volume,
             number,
             urldate,
-            url
+            url,
+            tag
         FROM articles
         WHERE citekey = :citekey
     """)
@@ -176,6 +177,7 @@ def modify_article(citekey: str, new_information: dict):
         "number",
         "urldate",
         "url",
+        "tag"
     }
 
     # Filter out any invalid keys
@@ -220,8 +222,8 @@ def add_test_source():
     """Adds a test source to the database"""
 
     sql = text("""
-    INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url)
-    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url)"""
+    INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url, tag)
+    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url, :tag)"""
     )
 
     db.session.execute(sql, {
@@ -234,6 +236,7 @@ def add_test_source():
             "number": number_generator(1, 10, 1),
             "urldate": string_generator(),
             "url": string_generator(),
+            "tag": string_generator()
         }
     )
     db.session.commit()

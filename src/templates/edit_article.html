@@ -66,6 +66,11 @@
         <input type="text" name="url" value="{{ article['url'] or '' }}" />
     </div>
 
+    <div class="form-row">
+        <label>tag:</label>
+        <input type="text" name="tag" value="{{ article['tag'] or '' }}" />
+    </div>
+
     <button type="submit">Edit</button>
 
      {% with messages = get_flashed_messages() %} {% if messages %}

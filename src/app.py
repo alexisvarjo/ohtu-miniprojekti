@@ -75,6 +75,7 @@ def index(page=1):
             "number",
             "urldate",
             "url",
+            "tag"
         ],
     )
 
@@ -125,6 +126,7 @@ def try_create_article():
     number = request.form.get("number")
     urldate = request.form.get("urldate")
     url = request.form.get("url")
+    tag = request.form.get("tag")
 
     # Required field validation
     required_fields = {
@@ -143,7 +145,7 @@ def try_create_article():
     try:
         validate_citekey(citekey)
         create_article(
-            citekey, author, year, name, journal, volume, number, urldate, url
+            citekey, author, year, name, journal, volume, number, urldate, url, tag
         )
         flash("Source added successfully")
         return redirect("add_article")
@@ -182,6 +184,7 @@ def modified_article(citekey):
         "number",
         "urldate",
         "url",
+        "tag"
     ]
 
     modified_fields = {field: request.form.get(field) or None for field in fields}
