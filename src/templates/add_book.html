@@ -15,6 +15,72 @@
     }
 </style>
 
-<h1>Add book</h1>
+<form action="/create_book" method="post">
+
+    <h1>Add book</h1>
+
+    <p>Required fields are marked with *</p>
+
+    <div class="form-row">
+        <label>*Cite key:</label>
+        <input type="text" name="citekey" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Author:</label>
+        <input type="text" name="author" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Editor:</label>
+        <input type="text" name="editor" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Book name:</label>
+        <input type="text" name="name" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Publisher:</label>
+        <input type="text" name="publisher" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Year:</label>
+        <input type="text" name="year" required />
+    </div>
+
+    <div class="form-row">
+        <label>Volume:</label>
+        <input type="text" name="volume" />
+    </div>
+
+    <div class="form-row">
+        <label>Number:</label>
+        <input type="text" name="number" />
+    </div>
+
+    <div class="form-row">
+        <label>Urldate:</label>
+        <input type="text" name="urldate" />
+    </div>
+
+    <div class="form-row">
+        <label>Url:</label>
+        <input type="text" name="url" />
+    </div>
+
+    <button type="submit">Create</button>
+
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+
+</form>
 
 <a href="{{ url_for('index') }}">Homepage</a>
