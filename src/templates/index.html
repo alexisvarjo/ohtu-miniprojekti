@@ -8,7 +8,7 @@ Citation App
 
 <h1>Library search</h1>
 
-<!-- Hakulomake -->
+<!-- Search form -->
 <form method="get" action="">
   <!-- Material, Keyword, Publication year -->
   <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
@@ -53,6 +53,11 @@ Citation App
 <!-- Bib file download -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('bib_file') }}">Download a .bib file</a>
+</div>
+
+<!-- Generate random source -->
+<div style="margin-top: 10px;">
+  <a href="{{ url_for('test_source') }}">Generate a random source (testing)</a>
 </div>
 
 <!-- Flash messages -->

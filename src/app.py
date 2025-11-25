@@ -10,6 +10,7 @@ from db_helper import (
     get_article,
     modify_article,
     remove_article_from_database,
+    add_test_source
 )
 from repositories.all_citations_repository import fetch_all_citations
 from repositories.article_repository import create_article
@@ -231,3 +232,11 @@ if test_env:
         citations_for_web = fetch_all_citations()
 
         return citations_for_web
+
+    @app.route("/test_source")
+    def test_source():
+        """Adds a random source to the database for testing"""
+
+        add_test_source()
+
+        return redirect("/")

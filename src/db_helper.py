@@ -4,6 +4,8 @@ import os
 
 from sqlalchemy import text
 
+from testing_generator import string_generator, number_generator
+
 from config import app, db
 
 
@@ -212,6 +214,28 @@ def remove_article_from_database(citekey):
         raise ValueError("Article doesn't exist")
     sql = text("DELETE FROM articles WHERE citekey = :citekey")
     db.session.execute(sql, {"citekey": citekey})
+    db.session.commit()
+
+def add_test_source():
+    """Adds a test source to the database"""
+
+    sql = text("""
+    INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url)
+    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url)"""
+    )
+
+    db.session.execute(sql, {
+            "citekey": string_generator(),
+            "author": string_generator(),
+            "year": number_generator(1700, 2000, 1),
+            "name": string_generator(),
+            "journal": string_generator(),
+            "volume": number_generator(1, 10, 1),
+            "number": number_generator(1, 10, 1),
+            "urldate": string_generator(),
+            "url": string_generator(),
+        }
+    )
     db.session.commit()
 
 
