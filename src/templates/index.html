@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Database Viewer
+Citation App
 {% endblock %}
 
 {% block body %}
@@ -10,51 +10,39 @@ Database Viewer
 
 <!-- Hakulomake -->
 <form method="get" action="">
-  <!-- Ensimmäinen rivi: Material, Keyword, Publication year -->
-<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-    <label for="material_type" style="width: 60px;">Material:</label>
-    <select id="material_type" name="material_type">
-      <option value="">All</option>
-      <option value="article">Article</option>
-      <option value="book">Book</option>
-      <option value="misc">Misc</option>
-    </select>
+  <!-- Material, Keyword, Publication year -->
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+      <label for="material_type" style="width: 60px;">Material:</label>
+      <select id="material_type" name="material_type">
+        <option value="">All</option>
+        <option value="article">Article</option>
+        <option value="book">Book</option>
+        <option value="misc">Misc</option>
+      </select>
 
-    <label for="keyword" style="width: 60px;">Keyword:</label>
-    <select id="keyword" name="keyword">
-      <option value="">All</option>
-      <option value="author">Author</option>
-      <option value="title">Title</option>
-    </select>
-     <label for="year" style="width: 30px;">Year:</label>
-    <input type="number" id="year" name="year" style="width: 60px;">
+      <label for="keyword" style="width: 60px;">Keyword:</label>
+      <select id="keyword" name="keyword">
+        <option value="">All</option>
+        <option value="author">Author</option>
+        <option value="title">Title</option>
+      </select>
+      <label for="year" style="width: 30px;">Year:</label>
+      <input type="number" id="year" name="year" style="width: 60px;">
+    </div>
+
+  <!-- Search -->
+  <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin-bottom: 15px;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+      <label for="search" style="width: 60px;">Search:</label>
+      <input type="text" id="search" name="search" placeholder="Enter keyword" style="width: 200px;">
+    </div style="margin-bottom= 20px;">
+    <button type="submit">Search</button>
   </div>
-
- <!-- Kolmas rivi: Search -->
-<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin-bottom: 15px;">
-  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-    <label for="search" style="width: 60px;">Search:</label>
-    <input type="text" id="search" name="search" placeholder="Enter keyword" style="width: 200px;">
-  </div style="margin-bottom= 20px;">
-  <button type="submit">Search</button>
-</div>
-
 </form>
 
-<!-- Linkki uuden artikkelin lisäämiseen -->
+<!-- Link for adding a new article -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('add_article') }}">Add article</a>
-</div>
-<div style="color: darkgreen;">
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-          {% for message in messages %}
-          <li>{{ message }}</li>
-          {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
 </div>
 
 <!-- Web bib viewing -->
@@ -65,6 +53,19 @@ Database Viewer
 <!-- Bib file download -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('bib_file') }}">Download a .bib file</a>
+</div>
+
+<!-- Flash messages -->
+<div style="color: darkgreen;">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
 </div>
 
 <hr>
@@ -103,9 +104,7 @@ Database Viewer
   <a href="/{{ page - 1 }}">&lt;&lt;</a>
     Page {{ page }}/{{ page_count }}
   <a href="/{{ page + 1 }}">&gt;&gt;</a>
-  </p>
-
-
+</p>
 
 
 {% endblock %}
