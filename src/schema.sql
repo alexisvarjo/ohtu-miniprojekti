@@ -23,6 +23,21 @@ CREATE TABLE books (
   url TEXT
 );
 
+CREATE TABLE inproceedings (
+  citekey TEXT PRIMARY KEY,
+  author TEXT,
+  editor TEXT,
+  title TEXT,
+  booktitle TEXT,
+  publisher TEXT,
+  pages INT,
+  year INT,
+  volume INT,
+  number INT,
+  urldate TEXT,
+  url TEXT
+);
+
 CREATE TABLE miscs (
   citekey TEXT PRIMARY KEY,
   author TEXT,
