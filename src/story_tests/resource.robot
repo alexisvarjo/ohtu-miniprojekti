@@ -3,12 +3,12 @@ Library  SeleniumLibrary
 
 *** Variables ***
 ${SERVER}     localhost:5001
-${DELAY}      0.5 seconds
+${DELAY}      0.2 seconds
 ${HOME_URL}   http://${SERVER}
 ${RESET_URL}  http://${SERVER}/reset_db
 ${DELETE_ROBOT_SOURCES_URL}  http://${SERVER}/delete_robot_sources_db
 ${BROWSER}    chrome
-${HEADLESS}   false
+${HEADLESS}   true
 
 *** Keywords ***
 Open And Configure Browser
@@ -47,6 +47,7 @@ Add Article With Key
     Input Text  name=number     7
     Input Text  name=urldate    2077-01-01
     Input Text  name=url        https://www.youtube.com/watch?v=dQw4w9WgXcQ
+    Input Text  name=tag        tag
     Click Button  Create
     Go To  ${HOME_URL}
 
