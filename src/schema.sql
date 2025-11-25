@@ -1,3 +1,14 @@
+CREATE TABLE citations (
+  citekey TEXT PRIMARY KEY,
+  citation_type TEXT,
+  author TEXT,
+  name TEXT,
+  year INT,
+  urldate TEXT,
+  url TEXT,
+  tag TEXT
+);
+
 CREATE TABLE articles (
   citekey TEXT PRIMARY KEY,
   author TEXT,
