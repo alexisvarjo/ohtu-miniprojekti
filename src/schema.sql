@@ -7,7 +7,8 @@ CREATE TABLE articles (
   volume INT,
   number INT,
   urldate TEXT,
-  url TEXT
+  url TEXT,
+  tag TEXT
 );
 
 CREATE TABLE books (
@@ -20,7 +21,8 @@ CREATE TABLE books (
   volume INT,
   number INT,
   urldate TEXT,
-  url TEXT
+  url TEXT,
+  tag TEXT
 );
 
 CREATE TABLE inproceedings (
@@ -35,7 +37,8 @@ CREATE TABLE inproceedings (
   volume INT,
   number INT,
   urldate TEXT,
-  url TEXT
+  url TEXT,
+  tag TEXT
 );
 
 CREATE TABLE miscs (
