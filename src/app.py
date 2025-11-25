@@ -78,6 +78,24 @@ def index(page=1):
     )
 
 
+@app.route("/add_inproceeding")
+def add_inproceeding():
+    """Route for displaying the 'add_inproceeding.html' form.
+
+    Returns:
+        str: Rendered HTML template for adding a new inproceeding.
+    """
+    return render_template("add_inproceeding.html")
+
+@app.route("/add_book")
+def add_book():
+    """Route for displaying the 'add_book.html' form.
+
+    Returns:
+        str: Rendered HTML template for adding a new book.
+    """
+    return render_template("add_book.html")
+
 @app.route("/add_article")
 def add_article():
     """Route for displaying the 'add_article.html' form.
