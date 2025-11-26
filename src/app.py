@@ -15,6 +15,7 @@ from db_helper import (
 from doi_crawler import citation_with_doi
 from repositories.all_citations_repository import fetch_all_citations
 from repositories.article_repository import create_article
+from repositories.book_repository import create_book
 from util import validate_citekey
 
 
@@ -97,6 +98,54 @@ def add_book():
         str: Rendered HTML template for adding a new book.
     """
     return render_template("add_book.html")
+
+@app.route("/create_book", methods=["POST"])
+def try_create_book():
+    """Route for creating a new book"""
+
+    """Retruns:
+        str: Redirects to the landing page or back to the form on error.
+    """
+    # pylint: disable=broad-exception-caught
+
+    citekey = request.form.get("citekey")
+    author = request.form.get("author")
+    editor = request.form.get("editor")
+    title = request.form.get("title")
+    publisher = request.form.get("publisher")
+    year = request.form.get("year")
+    volume = request.form.get("volume")
+    number = request.form.get("number")
+    urldate = request.form.get("urldate")
+    url = request.form.get("url")
+    tag = request.form.get("tag")
+
+    # Required field validation
+    required_fields = {
+        "Cite key": citekey,
+        "Author": author,
+        "Editor": editor,
+        "Title": title,
+        "Publisher": publisher,
+        "Year": year
+    }
+
+    for field_name, value in required_fields.items():
+        if not value or value.strip() == "":
+            flash(f"{field_name} is required.")
+            return redirect("add_book")
+        
+    try:
+        validate_citekey(citekey)
+        create_book(
+            citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag
+        )
+        flash("Source added successfully")
+        return redirect("add_book")
+    except Exception as error:
+        flash(str(error))
+        return redirect("add_book")
+
 
 @app.route("/add_article")
 def add_article():
