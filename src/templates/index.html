@@ -9,9 +9,8 @@ Citation App
 <h1>Library search</h1>
 
 <!-- Search form -->
-<form method="get" action="">
-  <!-- Material, Keyword, Publication year -->
   <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+      <!-- Material -->
       <label for="material_type" style="width: 60px;">Material:</label>
       <select id="material_type" name="material_type">
         <option value="">All</option>
@@ -20,85 +19,52 @@ Citation App
         <option value="misc">Misc</option>
       </select>
 
-
-    <label for="keyword" style="width: 60px;">Keyword:</label>
-    <select id="keyword" name="keyword">
-      <option value="">All</option>
-      <option value="author">Author</option>
-      <option value="title">Title</option>
-    </select>
-     <label for="year" style="width: 30px;">Year:</label>
-    <input type="number" id="minYear" name="year" style="width: 60px;" placeholder="From">
-    <span>-</span>
-     <input type="number" id="maxYear" name="year" style="width: 60px;" placeholder="To">
-  </div>
-
- <!-- Kolmas rivi: Search -->
-<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin-bottom: 15px;">
-  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-    <label for="search" style="width: 60px;">Search:</label>
-    <input type="text" id="search" name="search" placeholder="Enter keyword" style="width: 200px;">
-  </div style="margin-bottom= 20px;">
-  <button type="button", id="filterBtn">Search</button>
-</div>
-
-
+      <!-- Keyword -->
       <label for="keyword" style="width: 60px;">Keyword:</label>
       <select id="keyword" name="keyword">
         <option value="">All</option>
         <option value="author">Author</option>
         <option value="title">Title</option>
       </select>
-      <label for="year" style="width: 30px;">Year:</label>
-      <input type="number" id="year" name="year" style="width: 60px;">
-    </div>
 
-  <!-- Search -->
-  <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin-bottom: 15px;">
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-      <label for="search" style="width: 60px;">Search:</label>
-      <input type="text" id="search" name="search" placeholder="Enter keyword" style="width: 200px;">
-    </div style="margin-bottom= 20px;">
-    <button type="submit">Search</button>
+      <!-- Year range -->
+      <label for="year" style="width: 30px;">Year:</label>
+      <input type="number" id="minYear" name="minYear" style="width: 60px;" placeholder="From">
+      <span>-</span>
+      <input type="number" id="maxYear" name="maxYear" style="width: 60px;" placeholder="To">
   </div>
 
-</form>
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+      <!-- Search text -->
+      <label for="search" style="width: 60px;">Search:</label>
+      <input type="text" id="search" name="search" placeholder="Enter keyword" style="width: 200px;">
 
-<!-- Link for adding a new article -->
+      <button type="button" id="filterBtn" style="margin-left: 10px;">Search</button>
+  </div>
+
+<!-- Links -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('add_article') }}">Add article</a>
 </div>
-
-<!-- Link for adding a new book -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('add_book') }}">Add book</a>
 </div>
-
-<!-- Link for adding a new inproceeding -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('add_inproceeding') }}">Add inproceeding</a>
 </div>
-
-<!-- Web bib viewing -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('bib_view') }}">View bib in browser</a>
 </div>
-
-<!-- Bib file download -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('bib_file') }}">Download a .bib file</a>
 </div>
-
-<!-- Generate random source -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('test_source') }}">Generate a random source (testing)</a>
 </div>
 
-<!-- Doi citations -->
+<!-- DOI citations -->
 <form action="/cite_doi" method="post">
-  <p>
-    Add a citation with a DOI:
-  </p>
+  <p>Add a citation with a DOI:</p>
   <label for="doi">*DOI:</label>
   <input type="text" placeholder="Enter DOI" name="doi" required>
 
@@ -113,40 +79,38 @@ Citation App
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       <ul>
-          {% for message in messages %}
+        {% for message in messages %}
           <li>{{ message }}</li>
-          {% endfor %}
+        {% endfor %}
       </ul>
     {% endif %}
   {% endwith %}
 </div>
 
 <hr>
-<!-- Taulukko -->
+
+<!-- Articles table -->
 <table id="articlesTable" border="1" cellpadding="5" cellspacing="0">
   <thead>
     <tr>
       {% for column in columns %}
         <th>{{ column }}</th>
       {% endfor %}
-    <!-- Lisättään 2 tyhjää otsikkoa niin, että taulukko on kokonainen -->
-    <th>{{ empty }}</th>
-    <th>{{ empty }}</th>
+      <th>{{ empty }}</th>
+      <th>{{ empty }}</th>
     </tr>
   </thead>
   <tbody>
     {% for row in records %}
       <tr>
         {% for column in columns %}
-          <!-- Jos ei löydy tietoa, taulukko näyttää tyhjää-->
           {% if row[column] %}
-          <td>{{ row[column] }}</td>
+            <td>{{ row[column] }}</td>
           {% else %}
-          <td>{{ empty }}</td>
+            <td>{{ empty }}</td>
           {% endif %}
         {% endfor %}
         <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
-        <!-- korjaa url_for myöhemmin oikeaksi, nyt vaan toi että näkyy jotain -->
         <td><a href="{{ url_for('remove_article', citekey=row['citekey']) }}">Remove</a></td>
       </tr>
     {% endfor %}
@@ -155,10 +119,9 @@ Citation App
 
 <p>
   <a href="/{{ page - 1 }}">&lt;&lt;</a>
-    Page {{ page }}/{{ page_count }}
+  Page {{ page }}/{{ page_count }}
   <a href="/{{ page + 1 }}">&gt;&gt;</a>
-
-  </p>
+</p>
 
 <script>
 const filterBtn = document.getElementById('filterBtn');
@@ -187,9 +150,6 @@ filterBtn.addEventListener('click', () => {
 </script>
 
 
-
 </p>
-
-
 
 {% endblock %}
