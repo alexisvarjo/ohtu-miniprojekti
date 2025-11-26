@@ -170,7 +170,6 @@ def modify_article(citekey: str, new_information: dict):
         "journal",
         "volume",
         "number",
-        "urldate",
         "url",
     }
 
