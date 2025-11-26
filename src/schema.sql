@@ -1,3 +1,14 @@
+CREATE TABLE citations (
+  citekey TEXT PRIMARY KEY,
+  citation_type TEXT,
+  author TEXT,
+  name TEXT,
+  year INT,
+  urldate TEXT,
+  url TEXT,
+  tag TEXT
+);
+
 CREATE TABLE articles (
   citekey TEXT PRIMARY KEY,
   author TEXT,
@@ -7,7 +18,8 @@ CREATE TABLE articles (
   volume INT,
   number INT,
   urldate TEXT,
-  url TEXT
+  url TEXT,
+  tag TEXT
 );
 
 CREATE TABLE books (
@@ -20,7 +32,24 @@ CREATE TABLE books (
   volume INT,
   number INT,
   urldate TEXT,
-  url TEXT
+  url TEXT,
+  tag TEXT
+);
+
+CREATE TABLE inproceedings (
+  citekey TEXT PRIMARY KEY,
+  author TEXT,
+  editor TEXT,
+  title TEXT,
+  booktitle TEXT,
+  publisher TEXT,
+  pages TEXT,
+  year INT,
+  volume INT,
+  number INT,
+  urldate TEXT,
+  url TEXT,
+  tag TEXT
 );
 
 CREATE TABLE miscs (

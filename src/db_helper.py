@@ -4,6 +4,8 @@ import os
 
 from sqlalchemy import text
 
+from testing_generator import string_generator, number_generator
+
 from config import app, db
 
 
@@ -142,7 +144,8 @@ def get_article(citekey: str):
             volume,
             number,
             urldate,
-            url
+            url,
+            tag
         FROM articles
         WHERE citekey = :citekey
     """)
@@ -158,6 +161,8 @@ def get_article(citekey: str):
 def modify_article(citekey: str, new_information: dict):
     """Modifies fields of an existing article identified by its citekey."""
 
+    # pylint: disable=R0801
+
     # Check that article exists
     if not check_if_citekey_exists(citekey):
         raise ValueError(f"Article with citekey '{citekey}' not found")
@@ -171,10 +176,15 @@ def modify_article(citekey: str, new_information: dict):
         "volume",
         "number",
         "url",
+        "tag"
     }
 
     # Filter out any invalid keys
-    update_fields = {k: v for k, v in new_information.items() if k in allowed_fields if v is not None}
+    update_fields = {
+        k: v
+        for k, v in new_information.items()
+        if k in allowed_fields and v is not None
+    }
 
     if not update_fields:
         return  # No changes
@@ -205,6 +215,29 @@ def remove_article_from_database(citekey):
         raise ValueError("Article doesn't exist")
     sql = text("DELETE FROM articles WHERE citekey = :citekey")
     db.session.execute(sql, {"citekey": citekey})
+    db.session.commit()
+
+def add_test_source():
+    """Adds a test source to the database"""
+
+    sql = text("""
+    INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url, tag)
+    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url, :tag)"""
+    )
+
+    db.session.execute(sql, {
+            "citekey": string_generator(),
+            "author": string_generator(),
+            "year": number_generator(1700, 2000, 1),
+            "name": string_generator(),
+            "journal": string_generator(),
+            "volume": number_generator(1, 10, 1),
+            "number": number_generator(1, 10, 1),
+            "urldate": string_generator(),
+            "url": string_generator(),
+            "tag": string_generator()
+        }
+    )
     db.session.commit()
 
 

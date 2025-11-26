@@ -25,3 +25,28 @@ Pidimme ensimmäisen retrospektiivin heti ensimmäisen asiakastapaamisen jälkee
 - Parempi ajan ja töiden kirjaaminen
 
 Pidämme jatkossa viikottaisen daily scrumin lisäksi asiakastapaamisen jälkeen toisen tapaamisen paikanpäällä. Tällöin saamme sprintin alussa jaettua työt paremmin (tässä oli ensimmäisen sprintin kanssa kaaosta). Sitouduimme myös tekemään työtä ennen daily scrumia. Ensimmäisessä daily scrumissa oli vaikeuksia sillä osa ryhmästä ei vielä aloittanut töitä (ei pystynyt) jolloin daily scrumin hyöty jäi vähälle. Kirjaamme ajankäytön ja tekemämme toiminallisuudet paremmin backlogiin, mikä selkeyttää kommunikaatiota (kaikki paremmin ajantasalla projektin tilanteesta). Tiheytämme myös muuta kommunikaatiota.
+
+## 2. retrospektiivi
+
+#### Glad:
+- Erik: Saatiin paloteltua työ hyvin.
+- Iida: Parempi kommunikaatio
+- Atos: Työ eteni hyvin
+- Kristjan: Selkeempi työnjako
+- Alexander: Hyvin meni
+
+#### Sad:
+- Erik: Liian vähän tekemistä
+- Iida: Meni hyvin. Daily scrumissa liian vähän porukkaa.
+- Atos: Meni hyvin
+- Kristjan: Meni hyvin
+- Alexander: Liian vähän tekemistä
+
+#### Mad:
+- Kaikki: Perjantain daily scrumiin enemmän porukkaa
+
+#### Potentiaaliset muutokset:
+- Daily scrumin 11:00
+- Kaikille tekemistä
+
+Koimme perjantain 10:00 olevan liian aikaisin jolloin osa porukasta ei päässyt paikalle. Siirsimme tapaamisen 11:00. Tekemistä ei kaikille ollut sillä tekemistä oli ylipäätään melko vähän. Tulevassa sprintissä tulee sovellukselle iso overhaul, joten työtä riittää. Viime viikosta on työn kirjaaminen onnistunut paremmin, toinen tapaaminen on ollut hyödyllinen ja työn kaikkien työn tekeminen ennen ja jälkeen daily scrumin oli toimiva idea.

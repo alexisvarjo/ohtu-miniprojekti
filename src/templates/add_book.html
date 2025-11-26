@@ -15,11 +15,9 @@
     }
 </style>
 
-<form action="/create_article" method="post">
+<form action="/create_book" method="post">
 
-    <h1>Add article</h1>
-
-
+    <h1>Add book</h1>
 
     <p>Required fields are marked with *</p>
 
@@ -34,18 +32,23 @@
     </div>
 
     <div class="form-row">
-        <label>*Publication year:</label>
-        <input type="text" name="year" required />
+        <label>*Editor:</label>
+        <input type="text" name="editor" required />
     </div>
 
     <div class="form-row">
-        <label>*Article name:</label>
+        <label>*Book name:</label>
         <input type="text" name="name" required />
     </div>
 
     <div class="form-row">
-        <label>*Journal:</label>
-        <input type="text" name="journal" required />
+        <label>*Publisher:</label>
+        <input type="text" name="publisher" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Year:</label>
+        <input type="text" name="year" required />
     </div>
 
     <div class="form-row">

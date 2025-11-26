@@ -1,3 +1,7 @@
+"""Functions relating to all of the citations in the database"""
+
+# pylint: disable=protected-access
+
 from sqlalchemy import text
 
 from config import db
@@ -9,6 +13,8 @@ def fetch_all_citations():
     that include dictionaries with column names as keys and values as values"""
     all_citations = {}
     for citation_type in tables():
+        if citation_type == "citations":
+            continue
         sql = text(f"SELECT * FROM {citation_type}")
         result = db.session.execute(sql).fetchall()
         all_citations[citation_type] = list(reversed([dict(row._mapping) for row in result]))

@@ -23,47 +23,52 @@
 
     <div class="form-row">
         <label>*Cite key:</label>
-        <input type="text" name="citekey" />
+        <input type="text" name="citekey" value="{{ article['citekey'] }}" required />
     </div>
 
     <div class="form-row">
         <label>*Author:</label>
-        <input type="text" name="author" />
+        <input type="text" name="author" value="{{ article['author'] }}" required />
     </div>
 
     <div class="form-row">
         <label>*Publication year:</label>
-        <input type="text" name="year" />
+        <input type="text" name="year" value="{{ article['year'] }}" required />
     </div>
 
     <div class="form-row">
         <label>*Article name:</label>
-        <input type="text" name="name" />
+        <input type="text" name="name" value="{{ article['name'] }}" required />
     </div>
 
     <div class="form-row">
         <label>*Journal:</label>
-        <input type="text" name="journal" />
+        <input type="text" name="journal" value="{{ article['journal'] }}" required />
     </div>
 
     <div class="form-row">
         <label>Volume:</label>
-        <input type="text" name="volume" />
+        <input type="text" name="volume" value="{{ article['volume'] or '' }}" />
     </div>
 
     <div class="form-row">
         <label>Number:</label>
-        <input type="text" name="number" />
+        <input type="text" name="number" value="{{ article['number'] or '' }}" />
     </div>
 
     <div class="form-row">
         <label>Urldate:</label>
-        <input type="text" name="urldate" />
+        <input type="text" name="urldate" value="{{ article['urldate'] or '' }}" />
     </div>
 
     <div class="form-row">
         <label>Url:</label>
-        <input type="text" name="url" />
+        <input type="text" name="url" value="{{ article['url'] or '' }}" />
+    </div>
+
+    <div class="form-row">
+        <label>tag:</label>
+        <input type="text" name="tag" value="{{ article['tag'] or '' }}" />
     </div>
 
     <button type="submit">Edit</button>

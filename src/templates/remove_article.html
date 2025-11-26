@@ -10,17 +10,16 @@ Remove Article
 
 <p>Are you sure you want to remove the following article?</p>
 
-<p> Citekey: {{ article.citekey }}</p>
-<p> Author: {{ article.author }}</p>
-<p> Publication year: {{ article.year }}</p>
-<p> Article name: {{ article.name }}</p>
-<p> Journal: {{ article.journal }}</p>
-<p> Volume: {{ article.volume }}</p>
-<p> Number: {{ article.number }}</p>
-<p> Urldate: {{ article.urldate }}</p>
-<p> Url: {{ article.url }}</p>
+<p> <b>Citekey:</b> {{ article.citekey }} </p>
+<p> <b>Author:</b> {{ article.author }} </p>
+<p> <b>Publication year:</b> {{ article.year }} </p>
+<p> <b>Article name:</b> {{ article.name }} </p>
+<p> <b>Journal:</b> {{ article.journal }} </p>
+{% if article.volume %}<p> <b>Volume:</b> {{ article.volume }} </p>{% endif %}
+{% if article.number %}<p> <b>Number:</b> {{ article.number }} </p>{% endif %}
+{% if article.urldate %}<p> <b>Urldate:</b> {{ article.urldate }} </p>{% endif %}
+{% if article.url %}<p> <b>Url:</b> {{ article.url }} </p>{% endif %}
 
-<!-- korjaa myöhemmin oikeaksi, nyt vaan toi että näkyy jotain -->
 <form action="/remove_article/{{ citekey }}" method="POST">
     <input type="submit" name="remove" value="Confirm">
     <input type="submit" name="return" value="Cancel">

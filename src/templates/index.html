@@ -1,24 +1,25 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Database Viewer
+Citation App
 {% endblock %}
 
 {% block body %}
 
 <h1>Library search</h1>
 
-<!-- Hakulomake -->
+<!-- Search form -->
 <form method="get" action="">
-  <!-- Ensimmäinen rivi: Material, Keyword, Publication year -->
-<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-    <label for="material_type" style="width: 60px;">Material:</label>
-    <select id="material_type" name="material_type">
-      <option value="">All</option>
-      <option value="article">Article</option>
-      <option value="book">Book</option>
-      <option value="misc">Misc</option>
-    </select>
+  <!-- Material, Keyword, Publication year -->
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+      <label for="material_type" style="width: 60px;">Material:</label>
+      <select id="material_type" name="material_type">
+        <option value="">All</option>
+        <option value="article">Article</option>
+        <option value="book">Book</option>
+        <option value="misc">Misc</option>
+      </select>
+
 
     <label for="keyword" style="width: 60px;">Keyword:</label>
     <select id="keyword" name="keyword">
@@ -41,22 +42,41 @@ Database Viewer
   <button type="button", id="filterBtn">Search</button>
 </div>
 
+
+      <label for="keyword" style="width: 60px;">Keyword:</label>
+      <select id="keyword" name="keyword">
+        <option value="">All</option>
+        <option value="author">Author</option>
+        <option value="title">Title</option>
+      </select>
+      <label for="year" style="width: 30px;">Year:</label>
+      <input type="number" id="year" name="year" style="width: 60px;">
+    </div>
+
+  <!-- Search -->
+  <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; margin-bottom: 15px;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+      <label for="search" style="width: 60px;">Search:</label>
+      <input type="text" id="search" name="search" placeholder="Enter keyword" style="width: 200px;">
+    </div style="margin-bottom= 20px;">
+    <button type="submit">Search</button>
+  </div>
+
 </form>
 
-<!-- Linkki uuden artikkelin lisäämiseen -->
+<!-- Link for adding a new article -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('add_article') }}">Add article</a>
 </div>
-<div style="color: darkgreen;">
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-          {% for message in messages %}
-          <li>{{ message }}</li>
-          {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+
+<!-- Link for adding a new book -->
+<div style="margin-top: 10px;">
+  <a href="{{ url_for('add_book') }}">Add book</a>
+</div>
+
+<!-- Link for adding a new inproceeding -->
+<div style="margin-top: 10px;">
+  <a href="{{ url_for('add_inproceeding') }}">Add inproceeding</a>
 </div>
 
 <!-- Web bib viewing -->
@@ -67,6 +87,38 @@ Database Viewer
 <!-- Bib file download -->
 <div style="margin-top: 10px;">
   <a href="{{ url_for('bib_file') }}">Download a .bib file</a>
+</div>
+
+<!-- Generate random source -->
+<div style="margin-top: 10px;">
+  <a href="{{ url_for('test_source') }}">Generate a random source (testing)</a>
+</div>
+
+<!-- Doi citations -->
+<form action="/cite_doi" method="post">
+  <p>
+    Add a citation with a DOI:
+  </p>
+  <label for="doi">*DOI:</label>
+  <input type="text" placeholder="Enter DOI" name="doi" required>
+
+  <label for="citekey">*Citekey:</label>
+  <input type="text" placeholder="Enter citekey" name="citekey" required>
+
+  <input type="submit" value="Add citation">
+</form>
+
+<!-- Flash messages -->
+<div>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
 </div>
 
 <hr>
@@ -105,6 +157,7 @@ Database Viewer
   <a href="/{{ page - 1 }}">&lt;&lt;</a>
     Page {{ page }}/{{ page_count }}
   <a href="/{{ page + 1 }}">&gt;&gt;</a>
+
   </p>
 
 <script>
@@ -133,6 +186,9 @@ filterBtn.addEventListener('click', () => {
 });
 </script>
 
+
+
+</p>
 
 
 

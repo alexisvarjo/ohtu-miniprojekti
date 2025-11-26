@@ -10,7 +10,9 @@ from db_helper import (
     get_article,
     modify_article,
     remove_article_from_database,
+    add_test_source
 )
+from doi_crawler import citation_with_doi
 from repositories.all_citations_repository import fetch_all_citations
 from repositories.article_repository import create_article
 from util import validate_citekey
@@ -73,9 +75,28 @@ def index(page=1):
             "number",
             "urldate",
             "url",
+            "tag"
         ],
     )
 
+
+@app.route("/add_inproceeding")
+def add_inproceeding():
+    """Route for displaying the 'add_inproceeding.html' form.
+
+    Returns:
+        str: Rendered HTML template for adding a new inproceeding.
+    """
+    return render_template("add_inproceeding.html")
+
+@app.route("/add_book")
+def add_book():
+    """Route for displaying the 'add_book.html' form.
+
+    Returns:
+        str: Rendered HTML template for adding a new book.
+    """
+    return render_template("add_book.html")
 
 @app.route("/add_article")
 def add_article():
@@ -94,6 +115,8 @@ def try_create_article():
     Returns:
         str: Redirects to the landing page or back to the form on error.
     """
+    # pylint: disable=broad-exception-caught
+
     citekey = request.form.get("citekey")
     author = request.form.get("author")
     year = request.form.get("year")
@@ -103,8 +126,9 @@ def try_create_article():
     number = request.form.get("number")
     urldate = request.form.get("urldate")
     url = request.form.get("url")
+    tag = request.form.get("tag")
 
-    # --- NEW: Required field validation ---
+    # Required field validation
     required_fields = {
         "Cite key": citekey,
         "Author": author,
@@ -117,12 +141,11 @@ def try_create_article():
         if not value or value.strip() == "":
             flash(f"{field_name} is required.")
             return redirect("add_article")
-    # --------------------------------------
 
     try:
         validate_citekey(citekey)
         create_article(
-            citekey, author, year, name, journal, volume, number, urldate, url
+            citekey, author, year, name, journal, volume, number, urldate, url, tag
         )
         flash("Source added successfully")
         return redirect("add_article")
@@ -135,10 +158,7 @@ def try_create_article():
 @app.route("/edit_article/<citekey>")
 def edit_article(citekey):
     """Renders the edit article template."""
-    """
-    Returns:
-        str: Rendered HTML template for editing an article.
-    """
+
     article = get_article(citekey)
     return render_template("edit_article.html", article=article)
 
@@ -152,6 +172,8 @@ def modified_article(citekey):
     Returns:
         str: Redirects to the landing page or back to the form on error.
     """
+    # pylint: disable=broad-exception-caught, unexpected-keyword-arg, R0801
+
     fields = [
         "citekey",
         "author",
@@ -162,7 +184,9 @@ def modified_article(citekey):
         "number",
         "urldate",
         "url",
+        "tag"
     ]
+
     modified_fields = {field: request.form.get(field) or None for field in fields}
 
     try:
@@ -207,6 +231,20 @@ def bib_file():
     path = "../citations.bib"
     return send_file(path, as_attachment=True)
 
+@app.route("/cite_doi", methods=["POST"])
+def cite_doi():
+    doi = request.form.get("doi")
+    citekey = request.form.get("citekey")
+
+    message = citation_with_doi(doi, citekey)
+    if message == "success":
+        flash("Citation added")
+    elif message != "success":
+        flash(message)
+
+    return redirect("/")
+
+
 if test_env:
 
     @app.route("/delete_robot_sources_db")
@@ -227,6 +265,14 @@ if test_env:
         Returns:
             list: A list of citations.
         """
-        citations = fetch_all_citations()
+        citations_for_web = fetch_all_citations()
 
-        return citations
+        return citations_for_web
+
+    @app.route("/test_source")
+    def test_source():
+        """Adds a random source to the database for testing"""
+
+        add_test_source()
+
+        return redirect("/")
