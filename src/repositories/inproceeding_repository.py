@@ -10,7 +10,7 @@ def normalize(value):
     return None if value == "" else value
 
 
-def create_inproceeding(citekey, author, title, booktitle, year, editor, publisher, pages, volume, number, urldate, url, tag):
+def create_inproceeding(citekey, author, editor, title, booktitle, publisher, pages, year, volume, number, urldate, url, tag):
     """Adds an inproceeding into the database"""
     # pylint: disable=too-many-arguments, too-many-positional-arguments
 
