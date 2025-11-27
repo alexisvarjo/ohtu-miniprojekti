@@ -5,6 +5,7 @@ import requests
 from db_helper import check_if_citekey_exists
 from repositories.article_repository import create_article
 from repositories.book_repository import create_book
+from repositories.inproceeding_repository import create_inproceeding
 
 ARTICLE_TYPES = [
     "article-journal",
@@ -18,6 +19,11 @@ BOOK_TYPES = [
     "book",
     "book-chapter",
     "edited-book"
+]
+
+INPROCEEDING_TYPES = [
+    "proceedings-article",
+    "conference-paper"
 ]
 
 
@@ -43,6 +49,8 @@ def citation_with_doi(doi, citekey, tag):
         data = response.json()
     except:
         return "Error"
+    
+    print(data)
 
     # articles
     if data["type"] in ARTICLE_TYPES:
@@ -66,7 +74,7 @@ def citation_with_doi(doi, citekey, tag):
         )
 
     # books
-    if data["type"] in BOOK_TYPES:
+    elif data["type"] in BOOK_TYPES:
         authors = []
         for author in data["author"]:
             given = author.get("given", "")
@@ -92,11 +100,46 @@ def citation_with_doi(doi, citekey, tag):
         urldate = ""
         url = data.get("URL", "")
 
-        create_book (
+        create_book(
             citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag
         )
 
     # inproceedings
+    elif data["type"] in INPROCEEDING_TYPES:
+        authors = []
+        for author in data["author"]:
+            given = author.get("given", "")
+            family = author.get("family", "")
+            authors.append(f"{given} {family}")
+        author = ", ".join(authors)
+
+        try:
+            editors = []
+            for editor in data["editor"]:
+                given = editor.get("given", "")
+                family = editor.get("family", "")
+                editors.append(f"{given} {family}")
+            editor = ", ".join(editors)
+        except:
+            editor = None
+
+        title = data.get("title", "")
+        booktitle = data.get("container-title", "")
+        publisher = data.get("publisher", "")
+        pages = data.get("page", "")
+        year = data["issued"]["date-parts"][0][0]
+        volume = data.get("volume", "")
+        number = data.get("issue", "")
+        urldate = ""
+        url = data.get("URL", "")
+
+        create_inproceeding(
+            citekey, author, editor, title, booktitle, publisher, pages, year, volume, number, urldate, url, tag
+
+        )
+    else:
+        return "The citation type is not supported"
+
 
     return "success"
 
