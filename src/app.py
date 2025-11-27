@@ -10,7 +10,7 @@ from flask import (
     url_for,
 )
 
-from bib_generating import generate_bib_browser, generate_bib_file
+from services.bib_generating import generate_bib_browser, generate_bib_file
 from config import app, test_env
 from db_helper import (
     add_test_source,
@@ -21,7 +21,7 @@ from db_helper import (
     modify_article,
     remove_article_from_database,
 )
-from doi_crawler import citation_with_doi
+from services.doi_crawler import citation_with_doi
 from repositories.all_citations_repository import fetch_all_citations
 from repositories.article_repository import create_article
 from repositories.book_repository import create_book

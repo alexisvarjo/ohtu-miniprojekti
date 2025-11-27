@@ -5,7 +5,7 @@ import os
 from sqlalchemy import text
 
 from config import app, db
-from testing_generator import number_generator, string_generator
+from services.testing_generator import number_generator, string_generator
 
 
 def clear_robot_sources():

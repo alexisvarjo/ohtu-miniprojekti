@@ -1,5 +1,5 @@
 import unittest
-from bib_generating import bib_generator
+from services.bib_generating import bib_generator
 
 class BibGenerator(unittest.TestCase):
     """Unit-testing for the bib generator"""
