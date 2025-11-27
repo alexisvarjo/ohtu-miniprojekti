@@ -4,6 +4,7 @@ import requests
 
 from db_helper import check_if_citekey_exists
 from repositories.article_repository import create_article
+from repositories.book_repository import create_book
 
 ARTICLE_TYPES = [
     "article-journal",
@@ -13,8 +14,14 @@ ARTICLE_TYPES = [
     "journal-article",
 ]
 
+BOOK_TYPES = [
+    "book",
+    "book-chapter",
+    "edited-book"
+]
 
-def citation_with_doi(doi, citekey):
+
+def citation_with_doi(doi, citekey, tag):
     """Fetches citation information with a DOI"""
 
     if check_if_citekey_exists(citekey):
@@ -55,10 +62,40 @@ def citation_with_doi(doi, citekey):
         url = data.get("URL", "")
 
         create_article(
-            citekey, author, year, name, journal, volume, number, urldate, url
+            citekey, author, year, name, journal, volume, number, urldate, url, tag
         )
 
     # books
+    if data["type"] in BOOK_TYPES:
+        authors = []
+        for author in data["author"]:
+            given = author.get("given", "")
+            family = author.get("family", "")
+            authors.append(f"{given} {family}")
+        author = ", ".join(authors)
+
+        try:
+            editors = []
+            for editor in data["editor"]:
+                given = editor.get("given", "")
+                family = editor.get("family", "")
+                editors.append(f"{given} {family}")
+            editor = ", ".join(editors)
+        except:
+            editor = None
+
+        title = data.get("title", "")
+        publisher = data.get("publisher", "")
+        year = data["issued"]["date-parts"][0][0]
+        volume = data.get("volume", "")
+        number = data.get("issue", "")
+        urldate = ""
+        url = data.get("URL", "")
+
+        create_book (
+            citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag
+        )
+
     # inproceedings
 
     return "success"

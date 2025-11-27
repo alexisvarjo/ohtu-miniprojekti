@@ -375,12 +375,13 @@ def bib_file():
 
 @app.route("/cite_doi", methods=["POST"])
 def cite_doi():
-    """confirms to user if citation
+    """Adds a citation with a doi and confirms to user if citation
     was found with doi or not"""
     doi = request.form.get("doi")
     citekey = request.form.get("citekey")
+    tag = request.form.get("tag")
 
-    message = citation_with_doi(doi, citekey)
+    message = citation_with_doi(doi, citekey, tag)
     if message == "success":
         flash("Citation added")
     elif message != "success":
