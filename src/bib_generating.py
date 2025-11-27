@@ -19,12 +19,12 @@ def bib_generator(citations):
 
     return bib
 
-def generate_bib_browser():
+def generate_bib_browser(): # pragma: no cover, covered by robot tests
     """Generates a bib for the browser viewing"""
     citations = fetch_all_citations()
     return bib_generator(citations)
 
-def generate_bib_file():
+def generate_bib_file(): # pragma: no cover, covered by robot tests
     """Generates a citations.bib file"""
     citations = fetch_all_citations()
     bib = bib_generator(citations)
