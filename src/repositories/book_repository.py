@@ -4,12 +4,15 @@ from sqlalchemy import text
 
 from config import db
 
+
 def normalize(value):
     """No empty strings"""
     return None if value == "" else value
 
 
-def create_book(citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag):
+def create_book(
+    citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag
+):
     """Adds a book into the database"""
     # pylint: disable=too-many-arguments, too-many-positional-arguments
 
@@ -30,7 +33,7 @@ def create_book(citekey, author, editor, title, publisher, year, volume, number,
             "number": normalize(number),
             "urldate": normalize(urldate),
             "url": normalize(url),
-            "tag": normalize(tag)
+            "tag": normalize(tag),
         },
     )
     db.session.commit()

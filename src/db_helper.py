@@ -4,9 +4,8 @@ import os
 
 from sqlalchemy import text
 
-from testing_generator import string_generator, number_generator
-
 from config import app, db
+from testing_generator import number_generator, string_generator
 
 
 def clear_robot_sources():
@@ -130,6 +129,18 @@ def check_if_citekey_exists(citekey: str):
     return count > 0
 
 
+def get_item_any_table(citekey: str):
+    """Checks all tables for item based on cite key, returns first matching result"""
+    table_names = ["articles", "inproceedings", "books", "citations", "miscs"]
+    for table in table_names:
+        sql = text(f"SELECT * FROM {table} WHERE citekey = :citekey")
+        result = db.session.execute(sql, {"citekey": citekey}).mappings().first()
+        if result:
+            return table, dict(result)
+
+    raise ValueError(f"No item with citekey '{citekey}' found in any table.")
+
+
 def get_article(citekey: str):
     """Returns all fields of an article identified by its citekey."""
 
@@ -176,7 +187,7 @@ def modify_article(citekey: str, new_information: dict):
         "volume",
         "number",
         "url",
-        "tag"
+        "tag",
     }
 
     # Filter out any invalid keys
@@ -217,15 +228,17 @@ def remove_article_from_database(citekey):
     db.session.execute(sql, {"citekey": citekey})
     db.session.commit()
 
+
 def add_test_source():
     """Adds a test source to the database"""
 
     sql = text("""
     INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url, tag)
-    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url, :tag)"""
-    )
+    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url, :tag)""")
 
-    db.session.execute(sql, {
+    db.session.execute(
+        sql,
+        {
             "citekey": string_generator(),
             "author": string_generator(),
             "year": number_generator(1700, 2000, 1),
@@ -235,8 +248,8 @@ def add_test_source():
             "number": number_generator(1, 10, 1),
             "urldate": string_generator(),
             "url": string_generator(),
-            "tag": string_generator()
-        }
+            "tag": string_generator(),
+        },
     )
     db.session.commit()
 

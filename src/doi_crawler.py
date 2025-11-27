@@ -2,14 +2,17 @@
 
 import requests
 
-from repositories.article_repository import create_article
 from db_helper import check_if_citekey_exists
+from repositories.article_repository import create_article
 
-ARTICLE_TYPES = ["article-journal",
-                 "article-magazine",
-                 "article-newspaper",
-                 "article",
-                 "journal-article"]
+ARTICLE_TYPES = [
+    "article-journal",
+    "article-magazine",
+    "article-newspaper",
+    "article",
+    "journal-article",
+]
+
 
 def citation_with_doi(doi, citekey):
     """Fetches citation information with a DOI"""
@@ -18,13 +21,17 @@ def citation_with_doi(doi, citekey):
         return "The citekey already exists"
 
     try:
-        response = requests.get(f"https://doi.org/{doi}", headers={"Accept": "application/vnd.citationstyles.csl+json"})
+        response = requests.get(
+            f"https://doi.org/{doi}",
+            headers={"Accept": "application/vnd.citationstyles.csl+json"},
+            timeout=10,
+        )
     except:
         return "The URL doesn't exist"
 
     if response.status_code == 404:
         return "The requested DOI doesn't exist"
-    
+
     try:
         data = response.json()
     except:
@@ -47,8 +54,10 @@ def citation_with_doi(doi, citekey):
         urldate = ""
         url = data.get("URL", "")
 
-        create_article(citekey, author, year, name, journal, volume, number, urldate, url)
-    
+        create_article(
+            citekey, author, year, name, journal, volume, number, urldate, url
+        )
+
     # books
     # inproceedings
 

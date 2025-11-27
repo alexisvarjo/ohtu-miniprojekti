@@ -1,16 +1,25 @@
 """Contains all routes of the app"""
 
-from flask import flash, redirect, render_template, send_file, url_for, request, Response
+from flask import (
+    Response,
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_file,
+    url_for,
+)
 
 from bib_generating import generate_bib_browser, generate_bib_file
 from config import app, test_env
 from db_helper import (
+    add_test_source,
     clear_robot_sources,
     filter_articles,
     get_article,
+    get_item_any_table,
     modify_article,
     remove_article_from_database,
-    add_test_source
 )
 from doi_crawler import citation_with_doi
 from repositories.all_citations_repository import fetch_all_citations
@@ -76,7 +85,7 @@ def index(page=1):
             "number",
             "urldate",
             "url",
-            "tag"
+            "tag",
         ],
     )
 
@@ -90,6 +99,7 @@ def add_inproceeding():
     """
     return render_template("add_inproceeding.html")
 
+
 @app.route("/add_book")
 def add_book():
     """Route for displaying the 'add_book.html' form.
@@ -99,13 +109,13 @@ def add_book():
     """
     return render_template("add_book.html")
 
+
 @app.route("/create_book", methods=["POST"])
 def try_create_book():
-    """Route for creating a new book"""
-
-    """Retruns:
-        str: Redirects to the landing page or back to the form on error.
-    """
+    """Route for creating a new book
+    returns:
+        str: Redirects to the landing page or
+        back to the form on error."""
     # pylint: disable=broad-exception-caught
 
     citekey = request.form.get("citekey")
@@ -127,18 +137,28 @@ def try_create_book():
         "Editor": editor,
         "Title": title,
         "Publisher": publisher,
-        "Year": year
+        "Year": year,
     }
 
     for field_name, value in required_fields.items():
         if not value or value.strip() == "":
             flash(f"{field_name} is required.")
             return redirect("add_book")
-        
+
     try:
         validate_citekey(citekey)
         create_book(
-            citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag
+            citekey,
+            author,
+            editor,
+            title,
+            publisher,
+            year,
+            volume,
+            number,
+            urldate,
+            url,
+            tag,
         )
         flash("Source added successfully")
         return redirect("add_book")
@@ -183,7 +203,7 @@ def try_create_article():
         "Author": author,
         "Publication year": year,
         "Article name": name,
-        "Journal": journal
+        "Journal": journal,
     }
 
     for field_name, value in required_fields.items():
@@ -203,6 +223,13 @@ def try_create_article():
         return redirect("add_article")
 
 
+@app.route("/view_item/<citekey>")
+def view_item(citekey):
+    """Renders the view article template."""
+    table, item = get_item_any_table(citekey)
+
+    return render_template("view_item.html", article=item, table=table)
+
 
 @app.route("/edit_article/<citekey>")
 def edit_article(citekey):
@@ -210,6 +237,7 @@ def edit_article(citekey):
 
     article = get_article(citekey)
     return render_template("edit_article.html", article=article)
+
 
 @app.route("/modified_article/<citekey>", methods=["POST"])
 def modified_article(citekey):
@@ -233,7 +261,7 @@ def modified_article(citekey):
         "number",
         "urldate",
         "url",
-        "tag"
+        "tag",
     ]
 
     modified_fields = {field: request.form.get(field) or None for field in fields}
@@ -268,10 +296,12 @@ def remove_article(citekey):
 
     return render_template("error")
 
+
 @app.route("/bib_view")
 def bib_view():
     """Route for viewing bib in the browser"""
     return Response(generate_bib_browser(), mimetype="text/plain")
+
 
 @app.route("/bib_file")
 def bib_file():
@@ -280,8 +310,11 @@ def bib_file():
     path = "../citations.bib"
     return send_file(path, as_attachment=True)
 
+
 @app.route("/cite_doi", methods=["POST"])
 def cite_doi():
+    """confirms to user if citation
+    was found with doi or not"""
     doi = request.form.get("doi")
     citekey = request.form.get("citekey")
 

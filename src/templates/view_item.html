@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>View article</title>
+
+        <style>
+            .row {
+                display: flex;
+                margin-bottom: 8px;
+                align-items: center;
+            }
+            .row label {
+                width: 150px;
+                font-weight: bold;
+            }
+            .row .value {
+                flex: 1;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>View article</h1>
+
+        <div class="row">
+            <label>Cite key:</label>
+            <div class="value">{{ article['citekey'] }}</div>
+        </div>
+
+        <div class="row">
+            <label>Author:</label>
+            <div class="value">{{ article['author'] }}</div>
+        </div>
+
+        <div class="row">
+            <label>Publication year:</label>
+            <div class="value">{{ article['year'] }}</div>
+        </div>
+
+        <div class="row">
+            <label>Article name:</label>
+            <div class="value">{{ article['name'] }}</div>
+        </div>
+
+        <div class="row">
+            <label>Journal:</label>
+            <div class="value">{{ article['journal'] }}</div>
+        </div>
+
+        <div class="row">
+            <label>Volume:</label>
+            <div class="value">{{ article['volume'] or '' }}</div>
+        </div>
+
+        <div class="row">
+            <label>Number:</label>
+            <div class="value">{{ article['number'] or '' }}</div>
+        </div>
+
+        <div class="row">
+            <label>Urldate:</label>
+            <div class="value">{{ article['urldate'] or '' }}</div>
+        </div>
+
+        <div class="row">
+            <label>Url:</label>
+            <div class="value">{{ article['url'] or '' }}</div>
+        </div>
+
+        <div class="row">
+            <label>Tag:</label>
+            <div class="value">{{ article['tag'] or '' }}</div>
+        </div>
+
+        <br />
+
+        <!-- Buttons -->
+        <form
+            action="{{ url_for('edit_article', citekey=article['citekey']) }}"
+            method="get"
+            style="display: inline"
+        >
+            <button type="submit">Edit</button>
+        </form>
+
+        <form
+            action="{{ url_for('remove_article', citekey=article['citekey']) }}"
+            method="get"
+            style="display: inline"
+        >
+            <button type="submit">Delete</button>
+        </form>
+
+        <br /><br />
+
+        <a href="{{ url_for('index') }}">Homepage</a>
+    </body>
+</html>

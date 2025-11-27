@@ -89,33 +89,61 @@ Citation App
 
 <hr>
 
-<!-- Articles table -->
-<table id="articlesTable" border="1" cellpadding="5" cellspacing="0">
-  <thead>
-    <tr>
-      {% for column in columns %}
-        <th>{{ column }}</th>
-      {% endfor %}
-      <th>{{ empty }}</th>
-      <th>{{ empty }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for row in records %}
-      <tr>
-        {% for column in columns %}
-          {% if row[column] %}
-            <td>{{ row[column] }}</td>
-          {% else %}
-            <td>{{ empty }}</td>
-          {% endif %}
+    <!-- Articles table -->
+    <table id="articlesTable" border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          {% for column in columns %}
+            <th>{{ column }}</th>
+          {% endfor %}
+          <th>{{ empty }}</th>
+          <th>{{ empty }}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for row in records %}
+          <tr>
+
+            {% for column in columns %}
+              {% set value = row[column] %}
+
+              {% if value %}
+
+                {% if column == 'citekey' %}
+                  <!-- Make citekey a hyperlink -->
+                  <td>
+                    <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
+                      {{ value }}
+                    </a>
+                  </td>
+
+                {% elif column == 'name' %}
+                  <!-- Make article name a hyperlink -->
+                  <td>
+                    <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
+                      {{ value }}
+                    </a>
+                  </td>
+
+                {% else %}
+                  <td>{{ value }}</td>
+
+                {% endif %}
+
+              {% else %}
+                <td>{{ empty }}</td>
+              {% endif %}
+
+            {% endfor %}
+
+            <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
+            <td><a href="{{ url_for('remove_article', citekey=row['citekey']) }}">Remove</a></td>
+
+          </tr>
         {% endfor %}
-        <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
-        <td><a href="{{ url_for('remove_article', citekey=row['citekey']) }}">Remove</a></td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+      </tbody>
+    </table>
 
 <p>
   <a href="/{{ page - 1 }}">&lt;&lt;</a>
