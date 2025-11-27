@@ -9,38 +9,38 @@ Citation App
 <h1>Library search</h1>
 
 <!-- Search form -->
-  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-      <!-- Material -->
-      <label for="material_type" style="width: 60px;">Material:</label>
-      <select id="material_type" name="material_type">
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+    <!-- Material -->
+    <label for="material_type" style="width: 60px;">Material:</label>
+    <select id="material_type" name="material_type">
         <option value="">All</option>
         <option value="article">Article</option>
         <option value="book">Book</option>
-        <option value="misc">Misc</option>
-      </select>
+        <option value="misc">Inproceeding</option>
+    </select>
 
-      <!-- Keyword -->
-      <label for="keyword" style="width: 60px;">Keyword:</label>
-      <select id="keyword" name="keyword">
+    <!-- Keyword (search type) -->
+    <label for="keyword" style="width: 60px;">Keyword:</label>
+    <select id="keyword" name="keyword">
         <option value="">All</option>
         <option value="author">Author</option>
         <option value="title">Title</option>
-      </select>
+    </select>
 
-      <!-- Year range -->
-      <label for="year" style="width: 30px;">Year:</label>
-      <input type="number" id="minYear" name="minYear" style="width: 60px;" placeholder="From">
-      <span>-</span>
-      <input type="number" id="maxYear" name="maxYear" style="width: 60px;" placeholder="To">
-  </div>
+    <!-- Year range -->
+    <label for="year" style="width: 30px;">Year:</label>
+    <input type="number" id="minYear" name="minYear" style="width: 60px;" placeholder="From">
+    <span>-</span>
+    <input type="number" id="maxYear" name="maxYear" style="width: 60px;" placeholder="To">
+</div>
 
-  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-      <!-- Search text -->
-      <label for="search" style="width: 60px;">Search:</label>
-      <input type="text" id="search" name="search" placeholder="Enter keyword" style="width: 200px;">
+<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+    <!-- Search text -->
+    <label for="search" style="width: 60px;">Search:</label>
+    <input type="text" id="search" name="search" placeholder="Enter keyword" style="width: 200px;">
 
-      <button type="button" id="filterBtn" style="margin-left: 10px;">Search</button>
-  </div>
+    <button type="button" id="filterBtn" style="margin-left: 10px;">Search</button>
+</div>
 
 <!-- Links -->
 <div style="margin-top: 10px;">
@@ -152,32 +152,39 @@ Citation App
 </p>
 
 <script>
-const filterBtn = document.getElementById('filterBtn');
-const table = document.getElementById('articlesTable');
+document.addEventListener('DOMContentLoaded', () => {
+  const filterBtn = document.getElementById('filterBtn');
+  const table = document.getElementById('articlesTable');
 
-filterBtn.addEventListener('click', () => {
-  const minYear = parseInt(document.getElementById('minYear').value) || 0;
-  const maxYear = parseInt(document.getElementById('maxYear').value) || 9999;
-  const search = document.getElementById('search').value.toLowerCase();
+  filterBtn.addEventListener('click', () => {
+    const minYear = parseInt(document.getElementById('minYear').value) || 0;
+    const maxYear = parseInt(document.getElementById('maxYear').value) || 9999;
+    const search = (document.getElementById('search').value || "").toLowerCase();
+    const searchType = document.getElementById('keyword').value;
 
-  for (let row of table.tBodies[0].rows) {
-    const cells = row.cells;
-    const year = parseInt(cells[4].textContent);
-    const author = cells[1].textContent.toLowerCase();
-    const title = cells[2].textContent.toLowerCase();
+    for (let row of table.tBodies[0].rows) {
+      const cells = row.cells;
+      const year = parseInt(cells[4].textContent) || 0;
+      const author = (cells[1].textContent || "").toLowerCase();
+      const name = (cells[2].textContent || "").toLowerCase(); // teoksen nimi
 
-    let show = (year >= minYear && year <= maxYear);
+      let show = (year >= minYear && year <= maxYear);
 
-    if (search) {
-      show = show && (author.includes(search) || title.includes(search));
+      if (search) {
+        if (searchType === "author") {
+          show = show && author.includes(search);
+        } else if (searchType === "title") {
+          show = show && name.includes(search);
+        } else {
+          // keyword = "All" → haku molemmista
+          show = show && (author.includes(search) || name.includes(search));
+        }
+      }
+
+      row.style.display = show ? "" : "none";
     }
-
-    row.style.display = show ? "" : "none";
-  }
+  });
 });
 </script>
-
-
-</p>
 
 {% endblock %}
