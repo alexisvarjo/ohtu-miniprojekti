@@ -25,6 +25,7 @@ from doi_crawler import citation_with_doi
 from repositories.all_citations_repository import fetch_all_citations
 from repositories.article_repository import create_article
 from repositories.book_repository import create_book
+from repositories.inproceeding_repository import create_inproceeding
 from util import validate_citekey
 
 
@@ -98,6 +99,67 @@ def add_inproceeding():
         str: Rendered HTML template for adding a new inproceeding.
     """
     return render_template("add_inproceeding.html")
+
+app.route("/create_inproceeding", methods=["POST"])
+def try_create_inproceeding():
+    """Route for creating a new proceeding.
+
+    Returns:
+        str: Redirects to the landing page or back to the form on error.
+    """
+    # pylint: disable=broad-exception-caught
+
+    citekey = request.form.get("citekey")
+    author = request.form.get("author")
+    editor = request.form.get("editor")
+    title = request.form.get("title")
+    booktitle = request.form.get("booktitle")
+    publisher = request.form.get("publisher")
+    pages = request.form.get("pages")
+    year = request.form.get("year")
+    volume = request.form.get("volume")
+    number = request.form.get("number")
+    urldate = request.form.get("urldate")
+    url = request.form.get("url")
+    tag = request.form.get("tag")
+
+    # Required field validation
+    required_fields = {
+        "Cite key": citekey,
+        "Author": author,
+        "Inproceeding name": title,
+        "Booktitle": booktitle,
+        "Year": year,
+        "Editor": editor
+    }
+
+    for field_name, value in required_fields.items():
+        if not value or value.strip() == "":
+            flash(f"{field_name} is required.")
+            return redirect("add_inproceeding")
+
+    try:
+        validate_citekey(citekey)
+        create_inproceeding(
+            citekey,
+            author,
+            title,
+            booktitle,
+            year,
+            editor,
+            publisher,
+            pages,
+            volume,
+            number,
+            urldate,
+            url,
+            tag
+        )
+        flash("Source added successfully")
+        return redirect("add_inproceeding")
+    except Exception as error:
+        flash(str(error))
+        return redirect("add_inproceeding")
 
 
 @app.route("/add_book")
