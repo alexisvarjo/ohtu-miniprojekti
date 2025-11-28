@@ -22,45 +22,35 @@ Adding And Modifying An Article
     ...    new_url
     ...    new_tag
 
-
     Page Should Contain   robot
     Page Should Contain   1995
     Page Should Contain   new_title
-    Page Should Contain   new_journal
-    Page Should Contain   10
-    Page Should Contain   2
     Page Should Contain   new_urldate
     Page Should Contain   new_url
     Page Should Contain   new_tag
 
-#Adding And Modifying An Inproceeding
-#    Add Inproceeding With Key  inproceeding_modifying_robot
-#    Page Should Contain   inproceeding_modifying_robot
-#
-#    Modify Inproceeding With Key
-#    ...    inproceeding_modifying_robot
-#    ...    robot
-#    ...    new_editor
-#    ...    new_title
-#    ...    new_booktitle
-#    ...    1995
-#    ...    new_publisher
-#    ...    new_pages
-#    ...    10
-#    ...    2
-#    ...    new_urldate
-#    ...    new_url
-#    ...    new_tag
-#
-#    Page Should Contain   robot
-#    Page Should Contain   new_editor
-#    Page Should Contain   new_title
-#    Page Should Contain   new_booktitle
-#    Page Should Contain   1995
-#    Page Should Contain   new_publisher
-#    Page Should Contain   new_pages
-#    Page Should Contain   10
-#    Page Should Contain   2
-#    Page Should Contain   new_urldate
-#    Page Should Contain   new_url
-#    Page Should Contain   new_tag
+Adding And Modifying An Inproceeding
+    Add Inproceeding With Key  inproceeding_modifying_robot
+    Page Should Contain   inproceeding_modifying_robot
+
+    Modify Inproceeding With Key
+    ...    inproceeding_modifying_robot
+    ...    robot
+    ...    new_editor
+    ...    new_title
+    ...    new_booktitle
+    ...    1995
+    ...    new_publisher
+    ...    new_pages
+    ...    10
+    ...    2
+    ...    new_urldate
+    ...    new_url
+    ...    new_tag
+
+    Page Should Contain   robot
+    Page Should Contain   new_title
+    Page Should Contain   1995
+    Page Should Contain   new_urldate
+    Page Should Contain   new_url
+    Page Should Contain   new_tag

@@ -11,6 +11,6 @@ Adding And Seeing An Article
     Add Article With Key  article_adding_and_seeing_robot
     Page Should Contain  article_adding_and_seeing_robot
 
-#Adding And Seeing An Inproceeding
-#    Add Inproceeding With Key  inproceeding_adding_and_seeing_robot
-#    Page Should Contain  inproceeding_adding_and_seeing_robot
+Adding And Seeing An Inproceeding
+    Add Inproceeding With Key  inproceeding_adding_and_seeing_robot
+    Page Should Contain  inproceeding_adding_and_seeing_robot
