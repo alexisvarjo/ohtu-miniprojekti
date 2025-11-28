@@ -2,7 +2,13 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>View article</title>
+        {% if table == "articles "%}
+            <title>View article</title>
+        {% elif table == "books" %}
+            <title>View book</title>
+        {% elif table == "inproceedings" %}
+            <title>View inproceedings</title>
+        {% endif %}
 
         <style>
             .row {
@@ -20,80 +26,97 @@
         </style>
     </head>
 
-    <body>
-        <h1>View article</h1>
+<body>
+    <!-- Article -->
+    {% if table == "articles" %}
+    <h1>View article</h1>
 
-        <div class="row">
-            <label>Cite key:</label>
-            <div class="value">{{ article['citekey'] }}</div>
-        </div>
+    <div class="row">
+        <label>Cite key:</label>
+        <div class="value">{{ item['citekey'] }}</div>
+    </div>
 
-        <div class="row">
-            <label>Author:</label>
-            <div class="value">{{ article['author'] }}</div>
-        </div>
+    <div class="row">
+        <label>Author:</label>
+        <div class="value">{{ item['author'] }}</div>
+    </div>
 
-        <div class="row">
-            <label>Publication year:</label>
-            <div class="value">{{ article['year'] }}</div>
-        </div>
+    <div class="row">
+        <label>Publication year:</label>
+        <div class="value">{{ item['year'] }}</div>
+    </div>
 
-        <div class="row">
-            <label>Article name:</label>
-            <div class="value">{{ article['name'] }}</div>
-        </div>
+    <div class="row">
+        <label>Article name:</label>
+        <div class="value">{{ item['name'] }}</div>
+    </div>
 
-        <div class="row">
-            <label>Journal:</label>
-            <div class="value">{{ article['journal'] }}</div>
-        </div>
+    <div class="row">
+        <label>Journal:</label>
+        <div class="value">{{ item['journal'] }}</div>
+    </div>
 
-        <div class="row">
-            <label>Volume:</label>
-            <div class="value">{{ article['volume'] or '' }}</div>
-        </div>
+    <div class="row">
+        <label>Volume:</label>
+        <div class="value">{{ item['volume'] or '' }}</div>
+    </div>
 
-        <div class="row">
-            <label>Number:</label>
-            <div class="value">{{ article['number'] or '' }}</div>
-        </div>
+    <div class="row">
+        <label>Number:</label>
+        <div class="value">{{ item['number'] or '' }}</div>
+    </div>
 
-        <div class="row">
-            <label>Urldate:</label>
-            <div class="value">{{ article['urldate'] or '' }}</div>
-        </div>
+    <div class="row">
+        <label>Urldate:</label>
+        <div class="value">{{ item['urldate'] or '' }}</div>
+    </div>
 
-        <div class="row">
-            <label>Url:</label>
-            <div class="value">{{ article['url'] or '' }}</div>
-        </div>
+    <div class="row">
+        <label>Url:</label>
+        <div class="value">{{ item['url'] or '' }}</div>
+    </div>
 
-        <div class="row">
-            <label>Tag:</label>
-            <div class="value">{{ article['tag'] or '' }}</div>
-        </div>
+    <div class="row">
+        <label>Tag:</label>
+        <div class="value">{{ item['tag'] or '' }}</div>
+    </div>
 
-        <br />
+    <br />
 
-        <!-- Buttons -->
-        <form
-            action="{{ url_for('edit_article', citekey=article['citekey']) }}"
-            method="get"
-            style="display: inline"
-        >
-            <button type="submit">Edit</button>
-        </form>
+    <!-- Buttons -->
+    <form
+        action="{{ url_for('edit_article', citekey=item['citekey']) }}"
+        method="get"
+        style="display: inline"
+    >
+        <button type="submit">Edit</button>
+    </form>
 
-        <form
-            action="{{ url_for('remove_article', citekey=article['citekey']) }}"
-            method="get"
-            style="display: inline"
-        >
-            <button type="submit">Delete</button>
-        </form>
+    <form
+        action="{{ url_for('remove_article', citekey=item['citekey']) }}"
+        method="get"
+        style="display: inline"
+    >
+        <button type="submit">Delete</button>
+    </form>
 
-        <br /><br />
+    <!-- Book -->
+    {% elif table == "books" %}
+    <h1>View book</h1>
+    <p>
+        NEEDS BACKEND!
+    </p>
 
-        <a href="{{ url_for('index') }}">Homepage</a>
-    </body>
+    <!-- Inproceedings -->
+    {% elif table == "inproceedings" %}
+    <h1>View inproceedings</h1>
+    <p>
+        NEEDS BACKEND!
+    </p>
+
+    {% endif %}
+
+    <br /><br />
+    <a href="{{ url_for('index') }}">Homepage</a>
+</body>
 </html>

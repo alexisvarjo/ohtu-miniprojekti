@@ -300,7 +300,7 @@ def view_item(citekey):
     """Renders the view article template."""
     table, item = get_item_any_table(citekey)
 
-    return render_template("view_item.html", article=item, table=table)
+    return render_template("view_item.html", item=item, table=table)
 
 
 @app.route("/edit_article/<citekey>")
