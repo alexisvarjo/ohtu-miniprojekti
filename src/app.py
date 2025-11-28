@@ -17,9 +17,11 @@ from db_helper import (
     clear_robot_sources,
     filter_articles,
     get_article,
+    get_inproceeding,
     get_item_any_table,
     modify_article,
     remove_article_from_database,
+    remove_inproceeding_from_database
 )
 from services.doi_crawler import citation_with_doi
 from repositories.all_citations_repository import fetch_all_citations, create_citation
@@ -364,6 +366,34 @@ def remove_article(citekey):
     if request.method == "POST":
         if "remove" in request.form:
             remove_article_from_database(citekey)
+        return redirect("/")
+
+    return render_template("error")
+
+@app.route("/edit_inproceeding/<citekey>")
+def edit_inproceeding(citekey):
+    """Renders the edit inproceeding template."""
+
+    article = get_inproceeding(citekey)
+    return render_template("edit_inproceeding.html", article=article)
+
+@app.route("/remove_inproceeding/<citekey>", methods=["GET", "POST"])
+def remove_inproceeding(citekey):
+    """Route for displaying and handling the removal of an inproceeding.
+
+    Args:
+        citekey (str): The unique identifier for the inproceeding.
+
+    Returns:
+        str: Rendered HTML template for removing an inproceeding or redirect after removal.
+    """
+    if request.method == "GET":
+        inproceeding = get_inproceeding(citekey)
+        return render_template("remove_inproceeding.html", inproceeding=inproceeding, citekey=citekey)
+
+    if request.method == "POST":
+        if "remove" in request.form:
+            remove_inproceeding_from_database(citekey)
         return redirect("/")
 
     return render_template("error")

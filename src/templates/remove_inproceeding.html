@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Remove inproceeding
+{% endblock %}
+
+{% block body %}
+
+<h1>Remove inproceedings</h1>
+
+<p>Are you sure you want to remove the following inproceeding?</p>
+
+<p> <b>Citekey:</b> {{ inproceeding.citekey }} </p>
+<p> <b>Author:</b> {{ inproceeding.author }} </p>
+<p> <b>Editor:</b> {{ inproceeding.editor }} </p>
+<p> <b>Title:</b> {{ inproceeding.title }} </p>
+<p> <b>Booktitle (title of the conference proceedings):</b> {{ inproceeding.booktitle }} </p>
+<p> <b>Year:</b> {{ inproceeding.year }} </p>
+
+{% if inproceeding.publisher %}<p> <b>Publisher:</b> {{ inproceeding.publisher }} </p>{% endif %}
+{% if inproceeding.pages %}<p> <b>Pages:</b> {{ inproceeding.pages }} </p>{% endif %}
+{% if inproceeding.volume %}<p> <b>Volume:</b> {{ inproceeding.volume }} </p>{% endif %}
+{% if inproceeding.number %}<p> <b>Number:</b> {{ inproceeding.number }} </p>{% endif %}
+{% if inproceeding.urldate %}<p> <b>Urldate:</b> {{ inproceeding.urldate }} </p>{% endif %}
+{% if inproceeding.url %}<p> <b>Url:</b> {{ inproceeding.url }} </p>{% endif %}
+{% if inproceeding.tag %}<p> <b>Tag:</b> {{ inproceeding.tag }} </p>{% endif %}
+
+<form action="/remove_inproceeding/{{ citekey }}" method="POST">
+    <input type="submit" name="remove" value="Confirm">
+    <input type="submit" name="return" value="Cancel">
+</form>
+
+<a href="{{ url_for('index') }}">Homepage</a></div>
+{% endblock %}

@@ -123,15 +123,19 @@ def filter_articles(material, keyword, year, search_term):
 
 def check_if_citekey_exists(citekey: str):
     """Checks if a citekey exists in the database"""
-    sql = text("SELECT COUNT(*) FROM articles WHERE citekey = :citekey")
-    count = db.session.execute(sql, {"citekey": citekey}).scalar()
+    table_names = ["articles", "inproceedings", "books", "citations", "miscs"]
+    for table in table_names:
+        sql = text(f"SELECT COUNT(*) FROM {table} WHERE citekey = :citekey")
+        count = db.session.execute(sql, {"citekey": citekey}).scalar()
+        if count > 0:
+            return count > 0
 
     return count > 0
 
 
 def get_item_any_table(citekey: str):
     """Checks all tables for item based on cite key, returns first matching result"""
-    table_names = ["articles", "inproceedings", "books", "citations", "miscs"]
+    table_names = ["articles", "inproceedings", "books", "miscs"]
     for table in table_names:
         sql = text(f"SELECT * FROM {table} WHERE citekey = :citekey")
         result = db.session.execute(sql, {"citekey": citekey}).mappings().first()
@@ -225,6 +229,44 @@ def remove_article_from_database(citekey):
     if not check_if_citekey_exists(citekey):
         raise ValueError("Article doesn't exist")
     sql = text("DELETE FROM articles WHERE citekey = :citekey")
+    db.session.execute(sql, {"citekey": citekey})
+    db.session.commit()
+
+def get_inproceeding(citekey: str):
+    """Returns all fields of an inproceeding identified by its citekey."""
+
+    # Query using parameterized SQL
+    sql = text("""
+        SELECT
+            citekey,
+            author,
+            editor,
+            title,
+            booktitle,
+            publisher,
+            pages,
+            year,
+            volume,
+            number,
+            urldate,
+            url,
+            tag
+        FROM inproceedings
+        WHERE citekey = :citekey
+    """)
+
+    result = db.session.execute(sql, {"citekey": citekey}).mappings().first()
+
+    if result is None:
+        raise ValueError(f"Inproceeding with citekey '{citekey}' not found")
+
+    return dict(result)
+
+def remove_inproceeding_from_database(citekey):
+    """removes an inproceeding from database based on given parameter"""
+    if not check_if_citekey_exists(citekey):
+        raise ValueError("Inproceeding doesn't exist")
+    sql = text("DELETE FROM inproceedings WHERE citekey = :citekey")
     db.session.execute(sql, {"citekey": citekey})
     db.session.commit()
 
