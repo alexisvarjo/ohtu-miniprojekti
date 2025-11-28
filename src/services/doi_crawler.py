@@ -143,7 +143,7 @@ def _parse_add_inproceeding(data, citekey, tag):
         citekey, author, editor, title, booktitle, publisher, pages, year, volume, number, urldate, url, tag
     )
     create_citation(
-        citekey, "article", author, title, year, urldate, url, tag
+        citekey, "inproceedings", author, title, year, urldate, url, tag
     )
 
     return

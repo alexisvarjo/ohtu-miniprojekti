@@ -7,10 +7,14 @@ def bib_generator(citations):
     bib = ""
     for citation_type in citations:
         for citation in citations[citation_type]:
+
+            if citation_type == "citations":
+                continue
             if citation_type == "inproceedings":
                 short_citation = citation_type
             else:
                 short_citation = citation_type[:-1]
+
             single_bib = ""
             single_bib += f"@{short_citation}{{{citation["citekey"]},\n"
             for field in citation:
