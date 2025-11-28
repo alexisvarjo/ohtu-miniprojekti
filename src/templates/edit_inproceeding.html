@@ -1,0 +1,100 @@
+<style>
+    .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .form-row label {
+        width: 150px;
+        font-weight: bold;
+    }
+    .form-row input {
+        flex: 1;
+        width: 150px;
+        max-width: 150px;
+    }
+</style>
+
+<form action="{{ url_for('modified_inproceeding', citekey=inproceeding['citekey']) }}" method="post">
+
+
+    <h1>Edit inproceeding</h1>
+
+
+    <div class="form-row">
+        <label>*Cite key:</label>
+        <input type="text" name="citekey" value="{{ inproceeding['citekey'] }}" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Author:</label>
+        <input type="text" name="author" value="{{ inproceeding['author'] }}" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Editor:</label>
+        <input type="text" name="editor" value="{{ inproceeding['editor'] }}" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Inproceeding name:</label>
+        <input type="text" name="title" value="{{ inproceeding['title'] }}" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Booktitle (title of the conference proceedings):</label>
+        <input type="text" name="booktitle" value="{{ inproceeding['booktitle'] }}" required />
+    </div>
+
+    <div class="form-row">
+        <label>*Year:</label>
+        <input type="text" name="year" value="{{ inproceeding['year'] or '' }}" required />
+    </div>
+
+    <div class="form-row">
+        <label>Publisher:</label>
+        <input type="text" name="publisher" value="{{ inproceeding['publisher'] or '' }}" />
+    </div>
+
+    <div class="form-row">
+        <label>Pages:</label>
+        <input type="text" name="pages" value="{{ inproceeding['pages'] or '' }}" />
+    </div>
+
+    <div class="form-row">
+        <label>Volume:</label>
+        <input type="text" name="volume" value="{{ inproceeding['volume'] or '' }}" />
+    </div>
+
+    <div class="form-row">
+        <label>Number:</label>
+        <input type="text" name="number" value="{{ inproceeding['number'] or '' }}" />
+    </div>
+
+    <div class="form-row">
+        <label>Urldate:</label>
+        <input type="text" name="urldate" value="{{ inproceeding['urldate'] or '' }}" />
+    </div>
+
+    <div class="form-row">
+        <label>Url:</label>
+        <input type="text" name="url" value="{{ inproceeding['url'] or '' }}" />
+    </div>
+
+    <div class="form-row">
+        <label>Tag:</label>
+        <input type="text" name="tag" value="{{ inproceeding['tag'] or '' }}" />
+    </div>
+
+    <button type="submit">Edit</button>
+
+     {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+</form>
+
+<a href="{{ url_for('index') }}">Homepage</a>

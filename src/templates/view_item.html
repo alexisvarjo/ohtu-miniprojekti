@@ -127,9 +127,73 @@
     <!-- Inproceedings -->
     {% elif table == "inproceedings" %}
     <h1>View inproceeding</h1>
-    <p>
-        NEEDS BACKEND!
-    </p>
+
+    <div class="row">
+        <label>Cite key:</label>
+        <div class="value">{{ item['citekey'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Author:</label>
+        <div class="value">{{ item['author'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Editor:</label>
+        <div class="value">{{ item['editor'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Inproceeding name:</label>
+        <div class="value">{{ item['title'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Booktitle (title of the conference proceedings)::</label>
+        <div class="value">{{ item['booktitle'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Publisher:</label>
+        <div class="value">{{ item['publisher'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Pages:</label>
+        <div class="value">{{ item['pages'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Year:</label>
+        <div class="value">{{ item['year'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Volume:</label>
+        <div class="value">{{ item['volume'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Number:</label>
+        <div class="value">{{ item['number'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Urldate:</label>
+        <div class="value">{{ item['urldate'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Url:</label>
+        <div class="value">{{ item['url'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Tag:</label>
+        <div class="value">{{ item['tag'] or '' }}</div>
+    </div>
+
+    <br />
 
     <!-- Buttons -->
     <form

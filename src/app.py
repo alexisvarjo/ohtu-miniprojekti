@@ -20,6 +20,7 @@ from db_helper import (
     get_inproceeding,
     get_item_any_table,
     modify_article,
+    modify_inproceeding,
     remove_article_from_database,
     remove_inproceeding_from_database
 )
@@ -373,8 +374,46 @@ def remove_article(citekey):
 def edit_inproceeding(citekey):
     """Renders the edit inproceeding template."""
 
-    article = get_inproceeding(citekey)
-    return render_template("edit_inproceeding.html", article=article)
+    inproceeding = get_inproceeding(citekey)
+    return render_template("edit_inproceeding.html", inproceeding=inproceeding)
+
+@app.route("/modified_inproceeding/<citekey>", methods=["POST"])
+def modified_inproceeding(citekey):
+    """Route for modifying an existing inproceeding.
+
+    Args:
+        citekey (str): The unique identifier for the inproceeding.
+
+    Returns:
+        str: Redirects to the landing page or back to the form on error.
+    """
+    # pylint: disable=broad-exception-caught, unexpected-keyword-arg, R0801
+
+    fields = [
+        "citekey",
+        "author",
+        "editor",
+        "title",
+        "booktitle",
+        "publisher",
+        "pages",
+        "year",
+        "volume",
+        "number",
+        "urldate",
+        "url",
+        "tag"
+    ]
+
+    modified_fields = {field: request.form.get(field) or None for field in fields}
+
+    try:
+        modify_inproceeding(citekey, modified_fields)
+        flash("Inproceeding edited successfully")
+        return redirect("/")
+    except Exception as error:
+        flash(str(error))
+        return redirect(url_for("edit_inproceeding"), citekey=citekey)
 
 @app.route("/remove_inproceeding/<citekey>", methods=["GET", "POST"])
 def remove_inproceeding(citekey):

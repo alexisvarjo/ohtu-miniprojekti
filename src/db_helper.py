@@ -268,6 +268,61 @@ def get_inproceeding(citekey: str):
 
     return dict(result)
 
+def modify_inproceeding(citekey: str, new_information: dict):
+    """Modifies fields of an existing inproceeding identified by its citekey."""
+
+    # pylint: disable=R0801
+
+    # Check that inproceeding exists
+    if not check_if_citekey_exists(citekey):
+        raise ValueError(f"Inproceeding with citekey '{citekey}' not found")
+
+    # Allowed fields to update
+    allowed_fields = {
+        "citekey",
+        "author",
+        "editor",
+        "title",
+        "booktitle",
+        "publisher",
+        "pages",
+        "year",
+        "volume",
+        "number",
+        "urldate",
+        "url",
+        "tag"
+    }
+
+    # Filter out any invalid keys
+    update_fields = {
+        k: v
+        for k, v in new_information.items()
+        if k in allowed_fields and v is not None
+    }
+
+    if not update_fields:
+        return  # No changes
+
+    # Build SET clause from whitelisted columns
+    # This is safe because column names are fixed, not user-provided
+    set_clause = ", ".join(f"{col} = :{col}" for col in update_fields)
+
+    # Create parameterized SQL
+    sql = text(f"""
+        UPDATE inproceedings
+        SET {set_clause}
+        WHERE citekey = :old_citekey
+    """)
+
+    # Add citekey to parameters
+    params = update_fields.copy()
+    params["old_citekey"] = citekey
+
+    # Execute safely with parameter binding
+    db.session.execute(sql, params)
+    db.session.commit()
+
 def remove_inproceeding_from_database(citekey):
     """removes an inproceeding from database based on given parameter"""
     if not check_if_citekey_exists(citekey):
