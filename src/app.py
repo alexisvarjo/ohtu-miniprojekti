@@ -404,6 +404,8 @@ def modified_inproceeding(citekey):
     ]
 
     modified_fields = {field: request.form.get(field) or None for field in fields}
+    # the modifier needs the name field with the title
+    modified_fields["name"] = request.form.get("title") or None
 
     try:
         modify_inproceeding(citekey, modified_fields)
