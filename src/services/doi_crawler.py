@@ -144,7 +144,6 @@ def citation_with_doi(doi, citekey, tag):
         return "The citekey already exists"
 
     data = _fetch_doi_citation(doi)
-    print(data)
     if data[0] != "success":
         return data[0] # error message
     else:

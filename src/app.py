@@ -22,7 +22,7 @@ from db_helper import (
     remove_article_from_database,
 )
 from services.doi_crawler import citation_with_doi
-from repositories.all_citations_repository import fetch_all_citations
+from repositories.all_citations_repository import fetch_all_citations, create_citation
 from repositories.article_repository import create_article
 from repositories.book_repository import create_book
 from repositories.inproceeding_repository import create_inproceeding
@@ -155,6 +155,9 @@ def try_create_inproceeding():
             url,
             tag
         )
+        create_citation(
+            citekey, "article", author, title, year, urldate, url, tag
+        )
         flash("Source added successfully")
         return redirect("add_inproceeding")
     except Exception as error:
@@ -222,6 +225,9 @@ def try_create_book():
             url,
             tag,
         )
+        create_citation(
+            citekey, "article", author, title, year, urldate, url, tag
+        )
         flash("Source added successfully")
         return redirect("add_book")
     except Exception as error:
@@ -274,9 +280,13 @@ def try_create_article():
             return redirect("add_article")
 
     try:
+        print("hello")
         validate_citekey(citekey)
         create_article(
             citekey, author, year, name, journal, volume, number, urldate, url, tag
+        )
+        create_citation(
+            citekey, "article", author, name, year, urldate, url, tag
         )
         flash("Source added successfully")
         return redirect("add_article")
