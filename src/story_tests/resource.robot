@@ -28,9 +28,6 @@ Open And Configure Browser
     # Open directly on home page
     Open Browser  ${HOME_URL}  browser=${BROWSER}  options=${options}
 
-Reset Todos
-    Go To  ${RESET_URL}
-
 Delete Robot Sources
     Go To  ${DELETE_ROBOT_SOURCES_URL}
 
