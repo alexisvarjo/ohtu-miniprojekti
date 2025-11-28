@@ -81,12 +81,10 @@ def index(page=1):
         search_query=search_query,
         columns=[
             "citekey",
+            "citation_type",
             "author",
             "name",
-            "journal",
             "year",
-            "volume",
-            "number",
             "urldate",
             "url",
             "tag",

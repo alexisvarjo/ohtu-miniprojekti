@@ -16,7 +16,7 @@ Citation App
         <option value="">All</option>
         <option value="article">Article</option>
         <option value="book">Book</option>
-        <option value="misc">Inproceeding</option>
+        <option value="inproceeding">Inproceeding</option>
     </select>
 
     <!-- Keyword (search type) -->
@@ -164,14 +164,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxYear = parseInt(document.getElementById('maxYear').value) || 9999;
     const search = (document.getElementById('search').value || "").toLowerCase();
     const searchType = document.getElementById('keyword').value;
+    const materialType = document.getElementById('material_type').value;
 
     for (let row of table.tBodies[0].rows) {
       const cells = row.cells;
-      const year = parseInt(cells[4].textContent) || 0;
-      const author = (cells[1].textContent || "").toLowerCase();
-      const name = (cells[2].textContent || "").toLowerCase(); // teoksen nimi
+      const year = parseInt(cells[5].textContent) || 0;
+      const author = (cells[2].textContent || "").toLowerCase();
+      const name = (cells[3].textContent || "").toLowerCase();
+      const material = (cells[1].textContent || "").toLowerCase();
 
       let show = (year >= minYear && year <= maxYear);
+
+      if (materialType === "article") {
+        show = show && material === "article";
+      } else if (materialType === "book") {
+        show = show && material === "book";
+      } else if (materialType === "inproceeding") {
+        show = show && material === "inproceeding";
+      }
 
       if (search) {
         if (searchType === "author") {

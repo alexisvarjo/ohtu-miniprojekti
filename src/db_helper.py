@@ -58,7 +58,7 @@ def setup_db():
 
 def _filter_from_table(table, keyword, year, search_term):
     """helper function for filter_articles()"""
-    base = f"SELECT * FROM {table} WHERE 1=1"
+    base = f"SELECT * FROM citations WHERE 1=1"
     params = {}
 
     # Year filter
@@ -111,11 +111,8 @@ def filter_articles(material, keyword, year, search_term):
 
     # If no material chosen → fetch from all three tables
     if not material:
-        return (
-            _filter_from_table("articles", keyword, year, search_term)
-            + _filter_from_table("books", keyword, year, search_term)
-            + _filter_from_table("miscs", keyword, year, search_term)
-        )
+        return _filter_from_table("citations", keyword, year, search_term)
+
 
     # Otherwise → fetch from the selected table
     return _filter_from_table(table_map[material], keyword, year, search_term)
