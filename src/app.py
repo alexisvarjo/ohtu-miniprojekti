@@ -156,7 +156,7 @@ def try_create_inproceeding():
             tag
         )
         create_citation(
-            citekey, "article", author, title, year, urldate, url, tag
+            citekey, "inproceedings", author, title, year, urldate, url, tag
         )
         flash("Source added successfully")
         return redirect("add_inproceeding")
@@ -226,7 +226,7 @@ def try_create_book():
             tag,
         )
         create_citation(
-            citekey, "article", author, title, year, urldate, url, tag
+            citekey, "book", author, title, year, urldate, url, tag
         )
         flash("Source added successfully")
         return redirect("add_book")

@@ -3,6 +3,7 @@
 import requests
 
 from db_helper import check_if_citekey_exists
+from repositories.all_citations_repository import create_citation
 from repositories.article_repository import create_article
 from repositories.book_repository import create_book
 from repositories.inproceeding_repository import create_inproceeding
@@ -67,6 +68,9 @@ def _parse_add_article(data, citekey, tag):
     create_article(
         citekey, author, year, name, journal, volume, number, urldate, url, tag
     )
+    create_citation(
+        citekey, "article", author, name, year, urldate, url, tag
+    )
 
     return
 
@@ -99,6 +103,9 @@ def _parse_add_book(data, citekey, tag):
 
     create_book(
         citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag
+    )
+    create_citation(
+        citekey, "book", author, title, year, urldate, url, tag
     )
 
     return
@@ -134,6 +141,9 @@ def _parse_add_inproceeding(data, citekey, tag):
 
     create_inproceeding(
         citekey, author, editor, title, booktitle, publisher, pages, year, volume, number, urldate, url, tag
+    )
+    create_citation(
+        citekey, "article", author, title, year, urldate, url, tag
     )
 
     return
