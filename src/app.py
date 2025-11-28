@@ -102,7 +102,7 @@ def add_inproceeding():
     """
     return render_template("add_inproceeding.html")
 
-app.route("/create_inproceeding", methods=["POST"])
+@app.route("/create_inproceeding", methods=["POST"])
 def try_create_inproceeding():
     """Route for creating a new proceeding.
 
@@ -145,12 +145,12 @@ def try_create_inproceeding():
         create_inproceeding(
             citekey,
             author,
+            editor,
             title,
             booktitle,
-            year,
-            editor,
             publisher,
             pages,
+            year,
             volume,
             number,
             urldate,
