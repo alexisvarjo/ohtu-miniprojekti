@@ -16,16 +16,19 @@ Adding And Modifying An Article
     ...    1995
     ...    new_title
     ...    new_journal
-    ...    new_volume
-    ...    new_number
+    ...    10
+    ...    2
     ...    new_urldate
     ...    new_url
+    ...    new_tag
+
 
     Page Should Contain   robot
     Page Should Contain   1995
     Page Should Contain   new_title
     Page Should Contain   new_journal
-    Page Should Contain   new_volume
-    Page Should Contain   new_number
+    Page Should Contain   10
+    Page Should Contain   2
     Page Should Contain   new_urldate
     Page Should Contain   new_url
+    Page Should Contain   new_tag

@@ -54,7 +54,7 @@ Add Article With Key
 Modify Article With Key
     [Arguments]    ${citekey}    ${new_author}    ${new_year}    ${new_title}
     ...            ${new_journal}    ${new_volume}    ${new_number}
-    ...            ${new_urldate}    ${new_url}
+    ...            ${new_urldate}    ${new_url}    ${new_tag}
 
     Go To  ${HOME_URL}
 
@@ -69,5 +69,6 @@ Modify Article With Key
     Input Text  name=number     ${new_number}
     Input Text  name=urldate    ${new_urldate}
     Input Text  name=url        ${new_url}
+    Input Text  name=tag        ${new_tag}
 
     Click Button  Edit

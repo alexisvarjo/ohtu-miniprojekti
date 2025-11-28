@@ -282,7 +282,6 @@ def try_create_article():
             return redirect("add_article")
 
     try:
-        print("hello")
         validate_citekey(citekey)
         create_article(
             citekey, author, year, name, journal, volume, number, urldate, url, tag
