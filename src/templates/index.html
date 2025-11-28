@@ -139,9 +139,17 @@ Citation App
               {% endif %}
 
             {% endfor %}
-
-            <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
-            <td><a href="{{ url_for('remove_article', citekey=row['citekey']) }}">Remove</a></td>
+            
+            {% if row['citation_type'] == "article" %}
+              <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
+              <td><a href="{{ url_for('remove_article', citekey=row['citekey']) }}">Remove</a></td>
+            {% elif row['citation_type'] == "book" %}
+              <td><a href="{{ url_for('edit_book', citekey=row['citekey']) }}">Modify</a></td>
+              <td><a href="{{ url_for('remove_book', citekey=row['citekey']) }}">Remove</a></td>
+            {% elif row['citation_type'] == "inproceedings" %}
+              <td><a href="{{ url_for('edit_inproceeding', citekey=row['citekey']) }}">Modify</a></td>
+              <td><a href="{{ url_for('remove_inproceeding', citekey=row['citekey']) }}">Remove</a></td>
+            {% endif %}
 
           </tr>
         {% endfor %}
