@@ -96,9 +96,9 @@ Citation App
     <table id="articlesTable" border="1" cellpadding="5" cellspacing="0">
       <thead>
         <tr>
-          {% for column in columns %}
-            <th>{{ column }}</th>
-          {% endfor %}
+          {% for col, display_name in columns.items() %}
+  <th>{{ display_name }}</th>
+{% endfor %}
           <th>{{ empty }}</th>
           <th>{{ empty }}</th>
         </tr>

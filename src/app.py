@@ -79,16 +79,16 @@ def index(page=1):
         page=page,
         page_count=page_count,
         search_query=search_query,
-        columns=[
-            "citekey",
-            "citation_type",
-            "author",
-            "name",
-            "year",
-            "urldate",
-            "url",
-            "tag",
-        ],
+        columns={
+            "citekey": "Cite Key",
+            "citation_type": "Type",
+            "author": "Author(s)",
+            "name": "Title",
+            "year": "Year",
+            "urldate": "URL Date",
+            "url": "URL",
+            "tag": "Tag"
+        },
     )
 
 
