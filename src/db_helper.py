@@ -232,6 +232,10 @@ def remove_article_from_database(citekey):
     db.session.execute(sql, {"citekey": citekey})
     db.session.commit()
 
+    sql = text("DELETE FROM citations WHERE citekey = :citekey")
+    db.session.execute(sql, {"citekey": citekey})
+    db.session.commit()
+
 def get_inproceeding(citekey: str):
     """Returns all fields of an inproceeding identified by its citekey."""
 
@@ -267,6 +271,10 @@ def remove_inproceeding_from_database(citekey):
     if not check_if_citekey_exists(citekey):
         raise ValueError("Inproceeding doesn't exist")
     sql = text("DELETE FROM inproceedings WHERE citekey = :citekey")
+    db.session.execute(sql, {"citekey": citekey})
+    db.session.commit()
+
+    sql = text("DELETE FROM citations WHERE citekey = :citekey")
     db.session.execute(sql, {"citekey": citekey})
     db.session.commit()
 
