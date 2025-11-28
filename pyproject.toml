@@ -1,6 +1,6 @@
 [project]
 name = "miniprojekti"
-version = "0.1.0"
+version = "0.8.0"
 description = ""
 authors = [
     {name = "Alexis Varjo",email = "biz@alexisvarjo.fi"},
