@@ -184,6 +184,7 @@ def modify_article(citekey: str, new_information: dict):
 
     # Allowed fields to update
     allowed_fields = {
+        "citekey",
         "author",
         "year",
         "name",
@@ -212,12 +213,12 @@ def modify_article(citekey: str, new_information: dict):
     sql = text(f"""
         UPDATE articles
         SET {set_clause}
-        WHERE citekey = :citekey
+        WHERE citekey = :old_citekey
     """)
 
     # Add citekey to parameters
     params = update_fields.copy()
-    params["citekey"] = citekey
+    params["old_citekey"] = citekey
 
     # Execute safely with parameter binding
     db.session.execute(sql, params)
