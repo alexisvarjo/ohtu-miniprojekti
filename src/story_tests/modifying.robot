@@ -54,3 +54,27 @@ Adding And Modifying An Inproceeding
     Page Should Contain   new_urldate
     Page Should Contain   new_url
     Page Should Contain   new_tag
+
+Adding And Modifying A Book
+    Add Book With Key  book_modifying_robot
+    Page Should Contain   book_modifying_robot
+
+    Modify Book With Key
+    ...    book_modifying_robot
+    ...    robot
+    ...    new_editor
+    ...    new_title
+    ...    new_publisher
+    ...    1995
+    ...    10
+    ...    2
+    ...    new_urldate
+    ...    new_url
+    ...    new_tag
+
+    Page Should Contain   robot
+#    Page Should Contain   new_title
+    Page Should Contain   1995
+    Page Should Contain   new_urldate
+    Page Should Contain   new_url
+    Page Should Contain   new_tag

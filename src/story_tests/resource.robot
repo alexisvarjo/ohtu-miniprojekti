@@ -68,6 +68,24 @@ Add Inproceeding With Key
     Click Button  Create
     Go To  ${HOME_URL}
 
+Add Book With Key
+    [Arguments]  ${citekey}
+    Go To  ${HOME_URL}
+    Click Link  Add book
+    Input Text  name=citekey    ${citekey}
+    Input Text  name=author     robot
+    Input Text  name=editor     robots
+    Input Text  name=title      Robot takeover
+    Input Text  name=publisher  Robots inc
+    Input Text  name=year       2077
+    Input Text  name=volume     6
+    Input Text  name=number     7
+    Input Text  name=urldate    2077-01-01
+    Input Text  name=url        https://www.youtube.com/watch?v=dQw4w9WgXcQ
+    Input Text  name=tag        tag
+    Click Button  Create
+    Go To  ${HOME_URL}
+
 Modify Article With Key
     [Arguments]    ${citekey}    ${new_author}    ${new_year}    ${new_title}
     ...            ${new_journal}    ${new_volume}    ${new_number}
@@ -108,6 +126,29 @@ Modify Inproceeding With Key
     Input Text  name=year       ${new_year}
     Input Text  name=publisher  ${new_publisher}
     Input Text  name=pages      ${new_pages}
+    Input Text  name=volume     ${new_volume}
+    Input Text  name=number     ${new_number}
+    Input Text  name=urldate    ${new_urldate}
+    Input Text  name=url        ${new_url}
+    Input Text  name=tag        ${new_tag}
+
+    Click Button  Edit
+
+Modify Book With Key
+    [Arguments]    ${citekey}    ${new_author}    ${new_editor}    ${new_title}
+    ...            ${new_publisher}    ${new_year}    ${new_volume}    ${new_number}
+    ...            ${new_urldate}   ${new_url}   ${new_tag}
+
+    Go To  ${HOME_URL}
+
+    Click Link  xpath=//tr[td[normalize-space()='${citekey}']]//a[normalize-space()='Modify']
+
+    Input Text  name=citekey    ${citekey}
+    Input Text  name=author     ${new_author}
+    Input Text  name=editor     ${new_editor}
+    Input Text  name=title      ${new_title}
+    Input Text  name=publisher  ${new_publisher}
+    Input Text  name=year       ${new_year}
     Input Text  name=volume     ${new_volume}
     Input Text  name=number     ${new_number}
     Input Text  name=urldate    ${new_urldate}

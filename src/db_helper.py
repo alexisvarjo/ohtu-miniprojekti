@@ -306,7 +306,7 @@ def get_book(citekey: str):
 
 def modify_book(citekey: str, new_information: dict):
     """Modifies fields of an existing book identified by its citekey."""
-
+    print(new_information)
     # pylint: disable=R0801
 
     # Check that book exists
@@ -345,6 +345,47 @@ def modify_book(citekey: str, new_information: dict):
     # Create parameterized SQL
     sql = text(f"""
         UPDATE books
+        SET {set_clause}
+        WHERE citekey = :old_citekey
+    """)
+
+    # Add citekey to parameters
+    params = update_fields.copy()
+    params["old_citekey"] = citekey
+
+    # Execute safely with parameter binding
+    db.session.execute(sql, params)
+    db.session.commit()
+
+    # Allowed fields to update
+    allowed_fields = {
+        "citekey",
+        "author",
+        "name",
+        "year",
+        "urldate",
+        "url",
+        "tag"
+    }
+
+    # Filter out any invalid keys
+    update_fields = {
+        k: v
+        for k, v in new_information.items()
+        if k in allowed_fields and v is not None
+    }
+
+    if not update_fields:
+        return  # No changes
+
+    # Build SET clause from whitelisted columns
+    # This is safe because column names are fixed, not user-provided
+    set_clause = ", ".join(f"{col} = :{col}" for col in update_fields)
+    print(set_clause)
+
+    # Create parameterized SQL
+    sql = text(f"""
+        UPDATE citations
         SET {set_clause}
         WHERE citekey = :old_citekey
     """)

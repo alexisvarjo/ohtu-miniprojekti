@@ -19,4 +19,11 @@ Adding And Removing An Inproceeding
     Page Should Contain  inproceeding_removing_robot
     Click Link  Remove
     Click Button  Confirm
-    Page Should Not Contain  inprocedding_removing_robot
+    Page Should Not Contain  inproceeding_removing_robot
+
+Adding And Removing A Book
+    Add Book With Key  book_removing_robot
+    Page Should Contain  book_removing_robot
+    Click Link  Remove
+    Click Button  Confirm
+    Page Should Not Contain  book_removing_robot
