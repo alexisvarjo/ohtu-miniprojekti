@@ -17,11 +17,14 @@ from db_helper import (
     clear_robot_sources,
     filter_articles,
     get_article,
+    get_book,
     get_inproceeding,
     get_item_any_table,
     modify_article,
+    modify_book,
     modify_inproceeding,
     remove_article_from_database,
+    remove_book_from_database,
     remove_inproceeding_from_database
 )
 from services.doi_crawler import citation_with_doi
@@ -364,6 +367,71 @@ def remove_article(citekey):
     if request.method == "POST":
         if "remove" in request.form:
             remove_article_from_database(citekey)
+        return redirect("/")
+
+    return render_template("error")
+
+@app.route("/edit_book/<citekey>")
+def edit_book(citekey):
+    """Renders the edit book template."""
+
+    book = get_book(citekey)
+    return render_template("edit_book.html", book=book)
+
+@app.route("/modified_book/<citekey>", methods=["POST"])
+def modified_book(citekey):
+    """Route for modifying an existing book.
+
+    Args:
+        citekey (str): The unique identifier for the book.
+
+    Returns:
+        str: Redirects to the landing page or back to the form on error.
+    """
+    # pylint: disable=broad-exception-caught, unexpected-keyword-arg, R0801
+
+    fields = [
+        "citekey",
+        "author",
+        "editor",
+        "title",
+        "publisher",
+        "year",
+        "volume",
+        "number",
+        "urldate",
+        "url",
+        "tag"
+    ]
+
+    modified_fields = {field: request.form.get(field) or None for field in fields}
+
+    try:
+        modify_book(citekey, modified_fields)
+        flash("Book edited successfully")
+        return redirect("/")
+    except Exception as error:
+        flash(str(error))
+        return redirect(url_for("edit_book"), citekey=citekey)
+
+
+@app.route("/remove_book/<citekey>", methods=["GET", "POST"])
+def remove_book(citekey):
+    """Route for displaying and handling the removal of a book.
+
+    Args:
+        citekey (str): The unique identifier for the book.
+
+    Returns:
+        str: Rendered HTML template for removing a book or redirect after removal.
+    """
+    if request.method == "GET":
+        book = get_book(citekey)
+        return render_template("remove_book.html", book=book, citekey=citekey)
+
+    if request.method == "POST":
+        if "remove" in request.form:
+            remove_book_from_database(citekey)
         return redirect("/")
 
     return render_template("error")

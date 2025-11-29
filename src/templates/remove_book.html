@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Remove Book
+{% endblock %}
+
+{% block body %}
+
+<h1>Remove Book</h1>
+
+<p>Are you sure you want to remove the following book?</p>
+
+<p> <b>Citekey:</b> {{ book.citekey }} </p>
+<p> <b>Author:</b> {{ book.author }} </p>
+<p> <b>Editor:</b> {{ book.editor }} </p>
+<p> <b>Book title:</b> {{ book.title }} </p>
+<p> <b>Publisher:</b> {{ book.publisher }} </p>
+<p> <b>Year:</b> {{ book.year }} </p>
+
+{% if book.volume %}<p> <b>Volume:</b> {{ book.volume }} </p>{% endif %}
+{% if book.number %}<p> <b>Number:</b> {{ book.number }} </p>{% endif %}
+{% if book.urldate %}<p> <b>Urldate:</b> {{ book.urldate }} </p>{% endif %}
+{% if book.url %}<p> <b>Url:</b> {{ book.url }} </p>{% endif %}
+{% if book.tag %}<p> <b>Tag:</b> {{ book.tag }} </p>{% endif %}
+
+<form action="/remove_book/{{ citekey }}" method="POST">
+    <input type="submit" name="remove" value="Confirm">
+    <input type="submit" name="return" value="Cancel">
+</form>
+
+<a href="{{ url_for('index') }}">Homepage</a></div>
+{% endblock %}

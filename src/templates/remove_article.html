@@ -19,6 +19,7 @@ Remove Article
 {% if article.number %}<p> <b>Number:</b> {{ article.number }} </p>{% endif %}
 {% if article.urldate %}<p> <b>Urldate:</b> {{ article.urldate }} </p>{% endif %}
 {% if article.url %}<p> <b>Url:</b> {{ article.url }} </p>{% endif %}
+{% if article.tag %}<p> <b>Tag:</b> {{ article.tag }} </p>{% endif %}
 
 <form action="/remove_article/{{ citekey }}" method="POST">
     <input type="submit" name="remove" value="Confirm">

@@ -15,77 +15,76 @@
     }
 </style>
 
-<form action="/create_book" method="post">
+<form action="{{ url_for('modified_book', citekey=book['citekey']) }}" method="post">
 
-    <h1>Add book</h1>
 
-    <p>Required fields are marked with *</p>
+    <h1>Edit Book</h1>
 
-    <div class="form-row">
+
+<div class="form-row">
         <label>*Cite key:</label>
-        <input type="text" name="citekey" required />
+        <input type="text" name="citekey" value="{{ book['citekey'] }}" required />
     </div>
 
     <div class="form-row">
         <label>*Author:</label>
-        <input type="text" name="author" required />
+        <input type="text" name="author" value="{{ book['author'] }}" required />
     </div>
 
     <div class="form-row">
         <label>*Editor:</label>
-        <input type="text" name="editor" required />
+        <input type="text" name="editor" value="{{ book['editor'] }}" required/>
     </div>
 
     <div class="form-row">
         <label>*Book title:</label>
-        <input type="text" name="title" required />
+        <input type="text" name="title" value="{{ book['title'] }}" required />
     </div>
 
     <div class="form-row">
         <label>*Publisher:</label>
-        <input type="text" name="publisher" required />
+        <input type="text" name="publisher" value="{{ book['publisher'] }}" required />
     </div>
 
     <div class="form-row">
         <label>*Year:</label>
-        <input type="text" name="year" required />
+        <input type="text" name="year" value="{{ book['year']}}" required />
     </div>
 
     <div class="form-row">
         <label>Volume:</label>
-        <input type="text" name="volume" />
+        <input type="text" name="volume" value="{{ book['volume'] or '' }}" />
     </div>
 
     <div class="form-row">
         <label>Number:</label>
-        <input type="text" name="number" />
+        <input type="text" name="number" value="{{ book['number'] or '' }}" />
     </div>
 
     <div class="form-row">
         <label>Urldate:</label>
-        <input type="text" name="urldate" />
+        <input type="text" name="urldate" value="{{ book['urldate'] or '' }}" />
     </div>
 
     <div class="form-row">
         <label>Url:</label>
-        <input type="text" name="url" />
+        <input type="text" name="url" value="{{ book['url'] or '' }}" />
     </div>
 
     <div class="form-row">
         <label>Tag:</label>
-        <input type="text" name="tag" />
+        <input type="text" name="tag" value="{{ book['tag'] or '' }}" />
     </div>
 
-    <button type="submit">Create</button>
+    <button type="submit">Edit</button>
 
-    {% with messages = get_flashed_messages() %} {% if messages %}
+     {% with messages = get_flashed_messages() %} {% if messages %}
     <ul>
         {% for message in messages %}
         <li>{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %} {% endwith %}
-
 </form>
 
 <a href="{{ url_for('index') }}">Homepage</a>

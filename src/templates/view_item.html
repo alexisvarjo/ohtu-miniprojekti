@@ -103,13 +103,67 @@
     <!-- Book -->
     {% elif table == "books" %}
     <h1>View book</h1>
-    <p>
-        NEEDS BACKEND!
-    </p>
+
+    <div class="row">
+        <label>Cite key:</label>
+        <div class="value">{{ item['citekey'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Author:</label>
+        <div class="value">{{ item['author'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Editor:</label>
+        <div class="value">{{ item['editor'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Book title:</label>
+        <div class="value">{{ item['title'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Publisher:</label>
+        <div class="value">{{ item['publisher'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Year:</label>
+        <div class="value">{{ item['year'] }}</div>
+    </div>
+
+    <div class="row">
+        <label>Volume:</label>
+        <div class="value">{{ item['volume'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Number:</label>
+        <div class="value">{{ item['number'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Urldate:</label>
+        <div class="value">{{ item['urldate'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Url:</label>
+        <div class="value">{{ item['url'] or '' }}</div>
+    </div>
+
+    <div class="row">
+        <label>Tag:</label>
+        <div class="value">{{ item['tag'] or '' }}</div>
+    </div>
+
+    <br />
 
     <!-- Buttons -->
     <form
-        action="{{ url_for('edit_article', citekey=item['citekey']) }}"
+        action="{{ url_for('edit_book', citekey=item['citekey']) }}"
         method="get"
         style="display: inline"
     >
@@ -117,7 +171,7 @@
     </form>
 
     <form
-        action="{{ url_for('remove_article', citekey=item['citekey']) }}"
+        action="{{ url_for('remove_book', citekey=item['citekey']) }}"
         method="get"
         style="display: inline"
     >
