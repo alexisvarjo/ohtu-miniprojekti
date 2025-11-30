@@ -14,16 +14,16 @@ Adding And Removing An Article
     Click Button  Confirm
     Page Should Not Contain  article_removing_robot
 
-Adding And Removing An Inproceeding
-    Add Article With Key  inproceeding_removing_robot
-    Page Should Contain  inproceeding_removing_robot
-    Click Link  Remove
-    Click Button  Confirm
-    Page Should Not Contain  inproceeding_removing_robot
-
 Adding And Removing A Book
     Add Book With Key  book_removing_robot
     Page Should Contain  book_removing_robot
     Click Link  Remove
     Click Button  Confirm
     Page Should Not Contain  book_removing_robot
+
+Adding And Removing An Inproceeding
+    Add Article With Key  inproceeding_removing_robot
+    Page Should Contain  inproceeding_removing_robot
+    Click Link  Remove
+    Click Button  Confirm
+    Page Should Not Contain  inproceeding_removing_robot
