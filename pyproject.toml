@@ -32,6 +32,17 @@ dev = [
 
 [tool.poetry]
 package-mode = false
+name = "ohtu-miniprojekti"
+version = "0.1.0"
+description = ""
+authors = ["your name"]
+
+packages = [
+    { include = "services", from = "src" },
+    { include = "repositories", from = "src" },
+    { include = "entities", from = "src" },
+    { include = "templates", from = "src" },
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
