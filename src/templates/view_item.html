@@ -1,4 +1,11 @@
 <!doctype html>
+{% extends "layout.html" %}
+
+{% block title %}
+Remove inproceeding
+{% endblock %}
+
+{% block content %}
 <html>
     <head>
         <meta charset="UTF-8" />
@@ -258,17 +265,9 @@
         <button type="submit">Edit</button>
     </form>
 
-    <form
-        action="{{ url_for('remove_inproceeding', citekey=item['citekey']) }}"
-        method="get"
-        style="display: inline"
-    >
-        <button type="submit">Delete</button>
-    </form>
-
-
     {% endif %}
     <br /><br />
     <a href="{{ url_for('index') }}">Homepage</a>
 </body>
 </html>
+{% endblock %}

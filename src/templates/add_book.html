@@ -1,19 +1,10 @@
-<style>
-    .form-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-    .form-row label {
-        width: 150px;
-        font-weight: bold;
-    }
-    .form-row input {
-        flex: 1;
-        width: 150px;
-        max-width: 150px;
-    }
-</style>
+{% extends "layout.html" %}
+
+{% block title %}
+Remove inproceeding
+{% endblock %}
+
+{% block content %}
 
 <form action="/create_book" method="post">
 
@@ -89,3 +80,4 @@
 </form>
 
 <a href="{{ url_for('index') }}">Homepage</a>
+{% endblock %}

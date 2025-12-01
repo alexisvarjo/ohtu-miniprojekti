@@ -4,7 +4,7 @@
 Citation App
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
 <h1>Library search</h1>
 
@@ -43,15 +43,18 @@ Citation App
 </div>
 
 <!-- Links -->
-<div style="margin-top: 10px;">
-  <a href="{{ url_for('add_article') }}">Add article</a>
-</div>
-<div style="margin-top: 10px;">
-  <a href="{{ url_for('add_book') }}">Add book</a>
-</div>
-<div style="margin-top: 10px;">
-  <a href="{{ url_for('add_inproceeding') }}">Add inproceeding</a>
-</div>
+ <p></p>
+<form action="/add_type" method="GET">
+<label for="add_type">Add new:</label>
+<select id="add_type" name="add_type">
+  <option value="article">Article</option>
+  <option value="book">Book</option>
+  <option value="inproceeding">Inproceeding</option>
+</select>
+<input type="submit" value="Add"/>
+</p>
+
+</form>
 <div style="margin-top: 10px;">
   <a href="{{ url_for('bib_view') }}">View bib in browser</a>
 </div>
@@ -100,7 +103,6 @@ Citation App
   <th>{{ display_name }}</th>
 {% endfor %}
           <th>{{ empty }}</th>
-          <th>{{ empty }}</th>
         </tr>
       </thead>
 
@@ -142,13 +144,10 @@ Citation App
             
             {% if row['citation_type'] == "article" %}
               <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
-              <td><a href="{{ url_for('remove_article', citekey=row['citekey']) }}">Remove</a></td>
             {% elif row['citation_type'] == "book" %}
               <td><a href="{{ url_for('edit_book', citekey=row['citekey']) }}">Modify</a></td>
-              <td><a href="{{ url_for('remove_book', citekey=row['citekey']) }}">Remove</a></td>
             {% elif row['citation_type'] == "inproceedings" %}
               <td><a href="{{ url_for('edit_inproceeding', citekey=row['citekey']) }}">Modify</a></td>
-              <td><a href="{{ url_for('remove_inproceeding', citekey=row['citekey']) }}">Remove</a></td>
             {% endif %}
 
           </tr>
@@ -166,7 +165,6 @@ Citation App
 document.addEventListener('DOMContentLoaded', () => {
   const filterBtn = document.getElementById('filterBtn');
   const table = document.getElementById('articlesTable');
-
   filterBtn.addEventListener('click', () => {
     const minYear = parseInt(document.getElementById('minYear').value) || 0;
     const maxYear = parseInt(document.getElementById('maxYear').value) || 9999;

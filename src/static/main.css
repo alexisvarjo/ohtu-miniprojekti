@@ -1,0 +1,49 @@
+body {
+    margin: auto;
+    max-width: 50em;
+    font-family: "Gill Sans";
+    background-color: lightyellow;
+  }
+
+.item {
+    border: 2px solid black;
+    margin: 1em;
+    padding: 0.2em 0.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-main {
+    max-width: 75%;
+}
+
+.item-time {
+    font-size: 0.9em;
+    color: gray;
+    white-space: nowrap;
+}
+
+.info {
+    border: 2px solid black;
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: papayawhip;
+    color: black;
+  }
+
+
+.form-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+  }
+.form-row label {
+      width: 150px;
+      font-weight: bold;
+  }
+.form-row input {
+      flex: 1;
+      width: 150px;
+      max-width: 150px;
+  }

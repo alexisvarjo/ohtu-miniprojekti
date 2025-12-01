@@ -1,19 +1,10 @@
-<style>
-    .form-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-    .form-row label {
-        width: 150px;
-        font-weight: bold;
-    }
-    .form-row input {
-        flex: 1;
-        width: 150px;
-        max-width: 150px;
-    }
-</style>
+{% extends "layout.html" %}
+
+{% block title %}
+Remove inproceeding
+{% endblock %}
+
+{% block content %}
 
 <form action="{{ url_for('modified_article', citekey=article['citekey']) }}" method="post">
 
@@ -82,4 +73,14 @@
     {% endif %} {% endwith %}
 </form>
 
+<form
+action="{{ url_for('remove_inproceeding', citekey=item['citekey']) }}"
+method="get"
+style="display: inline"
+>
+<button type="submit">Delete</button>
+</form>
+
+
 <a href="{{ url_for('index') }}">Homepage</a>
+{% endblock %}

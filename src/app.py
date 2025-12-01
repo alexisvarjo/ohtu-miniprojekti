@@ -94,15 +94,17 @@ def index(page=1):
         },
     )
 
-
-@app.route("/add_inproceeding")
-def add_inproceeding():
-    """Route for displaying the 'add_inproceeding.html' form.
+@app.route("/add_type")
+def add_type():
+    """Route for displaying addition form for any type.
 
     Returns:
-        str: Rendered HTML template for adding a new inproceeding.
+        str: Rendered HTML template for adding a new source.
     """
-    return render_template("add_inproceeding.html")
+    type = request.args.get("add_type", "")
+
+    return render_template(f"add_{type}.html")
+
 
 @app.route("/create_inproceeding", methods=["POST"])
 def try_create_inproceeding():
@@ -167,16 +169,6 @@ def try_create_inproceeding():
     except Exception as error:
         flash(str(error))
         return redirect("add_inproceeding")
-
-
-@app.route("/add_book")
-def add_book():
-    """Route for displaying the 'add_book.html' form.
-
-    Returns:
-        str: Rendered HTML template for adding a new book.
-    """
-    return render_template("add_book.html")
 
 
 @app.route("/create_book", methods=["POST"])
@@ -443,7 +435,7 @@ def edit_inproceeding(citekey):
     """Renders the edit inproceeding template."""
 
     inproceeding = get_inproceeding(citekey)
-    return render_template("edit_inproceeding.html", inproceeding=inproceeding)
+    return render_template("edit_inproceeding.html", inproceeding=inproceeding, citekey=citekey)
 
 @app.route("/modified_inproceeding/<citekey>", methods=["POST"])
 def modified_inproceeding(citekey):
