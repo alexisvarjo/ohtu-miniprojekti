@@ -99,12 +99,11 @@ Remove inproceeding
         <button type="submit">Edit</button>
     </form>
 
-    <form
-        action="{{ url_for('remove_article', citekey=item['citekey']) }}"
-        method="get"
-        style="display: inline"
-    >
-        <button type="submit">Delete</button>
+    <!-- DELETE FORM -->
+    <form action="{{ url_for('remove_article', citekey=item['citekey']) }}" method="get">
+        <button type="submit" style="background-color: #c62828; color: white;">
+            Delete
+        </button>
     </form>
 
     <!-- Book -->
@@ -177,12 +176,11 @@ Remove inproceeding
         <button type="submit">Edit</button>
     </form>
 
-    <form
-        action="{{ url_for('remove_book', citekey=item['citekey']) }}"
-        method="get"
-        style="display: inline"
-    >
-        <button type="submit">Delete</button>
+    <!-- DELETE FORM -->
+    <form action="{{ url_for('remove_book', citekey=item['citekey']) }}" method="get">
+        <button type="submit" style="background-color: #c62828; color: white;">
+            Delete
+        </button>
     </form>
 
     <!-- Inproceedings -->
@@ -265,6 +263,11 @@ Remove inproceeding
         <button type="submit">Edit</button>
     </form>
 
+    <form action="{{ url_for('remove_inproceeding', citekey=item['citekey']) }}" method="get">
+        <button type="submit" style="background-color: #c62828; color: white;">
+            Delete
+        </button>
+    </form>
     {% endif %}
     <br /><br />
     <a href="{{ url_for('index') }}">Homepage</a>

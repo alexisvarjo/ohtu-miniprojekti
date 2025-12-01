@@ -78,5 +78,12 @@ Remove inproceeding
     {% endif %} {% endwith %}
 </form>
 
+    <!-- DELETE FORM -->
+    <form action="{{ url_for('remove_book', citekey=book['citekey']) }}" method="get">
+        <button type="submit" style="background-color: #c62828; color: white;">
+            Delete
+        </button>
+    </form>
+
 <a href="{{ url_for('index') }}">Homepage</a>
 {% endblock %}

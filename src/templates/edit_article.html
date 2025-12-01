@@ -6,6 +6,7 @@ Remove inproceeding
 
 {% block content %}
 
+    <!-- EDIT FORM -->
 <form action="{{ url_for('modified_article', citekey=article['citekey']) }}" method="post">
 
 
@@ -73,13 +74,12 @@ Remove inproceeding
     {% endif %} {% endwith %}
 </form>
 
-<form
-action="{{ url_for('remove_inproceeding', citekey=item['citekey']) }}"
-method="get"
-style="display: inline"
->
-<button type="submit">Delete</button>
-</form>
+    <!-- DELETE FORM -->
+    <form action="{{ url_for('remove_article', citekey=article['citekey']) }}" method="get">
+        <button type="submit" style="background-color: #c62828; color: white;">
+            Delete
+        </button>
+    </form>
 
 
 <a href="{{ url_for('index') }}">Homepage</a>

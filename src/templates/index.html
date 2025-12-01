@@ -94,66 +94,69 @@ Citation App
 </div>
 
 <hr>
+<!-- Three-column source display -->
+<div class="columns-container">
 
-    <!-- Articles table -->
-    <table id="articlesTable" border="1" cellpadding="5" cellspacing="0">
-      <thead>
-        <tr>
-          {% for col, display_name in columns.items() %}
-  <th>{{ display_name }}</th>
-{% endfor %}
-          <th>{{ empty }}</th>
-        </tr>
-      </thead>
+  <!-- ARTICLES COLUMN -->
+  <div class="column">
+      <h2>Articles</h2>
 
-      <tbody>
-        {% for row in records %}
-          <tr>
+      {% for row in records if row['citation_type'] == 'article' %}
+      <div class="source-item">
+          <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
+              {{ row['title'] or row['name'] }}
+          </a>
+          <div>Author: {{ row['author'] }}</div>
+          <div>Year: {{ row['year'] }}</div>
 
-            {% for column in columns %}
-              {% set value = row[column] %}
+          <a class="modify-link" href="{{ url_for('edit_article', citekey=row['citekey']) }}">
+              Modify
+          </a>
+      </div>
+      {% endfor %}
+  </div>
 
-              {% if value %}
 
-                {% if column == 'citekey' %}
-                  <!-- Make citekey a hyperlink -->
-                  <td>
-                    <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
-                      {{ value }}
-                    </a>
-                  </td>
+  <!-- BOOKS COLUMN -->
+  <div class="column">
+      <h2>Books</h2>
 
-                {% elif column == 'name' %}
-                  <!-- Make article name a hyperlink -->
-                  <td>
-                    <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
-                      {{ value }}
-                    </a>
-                  </td>
+      {% for row in records if row['citation_type'] == 'book' %}
+      <div class="source-item">
+          <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
+              {{ row['title'] or row['name'] }}
+          </a>
+          <div>Author: {{ row['author'] }}</div>
+          <div>Year: {{ row['year'] }}</div>
 
-                {% else %}
-                  <td>{{ value }}</td>
+          <a class="modify-link" href="{{ url_for('edit_book', citekey=row['citekey']) }}">
+              Modify
+          </a>
+      </div>
+      {% endfor %}
+  </div>
 
-                {% endif %}
 
-              {% else %}
-                <td>{{ empty }}</td>
-              {% endif %}
+  <!-- INPROCEEDINGS COLUMN -->
+  <div class="column">
+      <h2>Inproceedings</h2>
 
-            {% endfor %}
-            
-            {% if row['citation_type'] == "article" %}
-              <td><a href="{{ url_for('edit_article', citekey=row['citekey']) }}">Modify</a></td>
-            {% elif row['citation_type'] == "book" %}
-              <td><a href="{{ url_for('edit_book', citekey=row['citekey']) }}">Modify</a></td>
-            {% elif row['citation_type'] == "inproceedings" %}
-              <td><a href="{{ url_for('edit_inproceeding', citekey=row['citekey']) }}">Modify</a></td>
-            {% endif %}
+      {% for row in records if row['citation_type'] == 'inproceedings' %}
+      <div class="source-item">
+          <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
+              {{ row['title'] or row['name'] }}
+          </a>
+          <div>Author: {{ row['author'] }}</div>
+          <div>Year: {{ row['year'] }}</div>
 
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+          <a class="modify-link" href="{{ url_for('edit_inproceeding', citekey=row['citekey']) }}">
+              Modify
+          </a>
+      </div>
+      {% endfor %}
+  </div>
+
+</div>
 
 <p>
   <a href="/{{ page - 1 }}">&lt;&lt;</a>

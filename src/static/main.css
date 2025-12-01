@@ -32,6 +32,12 @@ body {
     color: black;
   }
 
+.button-column {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    gap: 10px;
+}
 
 .form-row {
       display: flex;
@@ -47,3 +53,39 @@ body {
       width: 150px;
       max-width: 150px;
   }
+
+.columns-container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.column {
+    flex: 1;
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.column h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.source-item {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.source-item a {
+    font-weight: bold;
+}
+
+.modify-link {
+    font-size: 12px;
+    display: inline-block;
+    margin-top: 4px;
+}
