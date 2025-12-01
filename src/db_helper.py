@@ -556,21 +556,53 @@ def add_test_source():
     INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url, tag)
     VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url, :tag)""")
 
+    values = {
+        "citekey": string_generator(),
+        "author": string_generator(),
+        "year": number_generator(1700, 2000, 1),
+        "name": string_generator(),
+        "journal": string_generator(),
+        "volume": number_generator(1, 10, 1),
+        "number": number_generator(1, 10, 1),
+        "urldate": string_generator(),
+        "url": string_generator(),
+        "tag": string_generator()
+    }
+
     db.session.execute(
         sql,
         {
-            "citekey": string_generator(),
-            "author": string_generator(),
-            "year": number_generator(1700, 2000, 1),
-            "name": string_generator(),
-            "journal": string_generator(),
-            "volume": number_generator(1, 10, 1),
-            "number": number_generator(1, 10, 1),
-            "urldate": string_generator(),
-            "url": string_generator(),
-            "tag": string_generator(),
+            "citekey": values["citekey"],
+            "author": values["author"],
+            "year": values["year"],
+            "name": values["name"],
+            "journal": values["journal"],
+            "volume": values["volume"],
+            "number": values["number"],
+            "urldate": values["urldate"],
+            "url": values["url"],
+            "tag": values["tag"]
         },
     )
+
+    sql = text("""
+        INSERT INTO citations (citekey, citation_type, author, name, year, urldate, url, tag)
+        VALUES (:citekey, :citation_type, :author, :name, :year, :urldate, :url, :tag)""")
+
+    db.session.execute(
+        sql,
+        {
+            "citekey": values["citekey"],
+            "citation_type": "article",
+            "author": values["author"],
+            "name": values["name"],
+            "year": values["year"],
+            "urldate": values["urldate"],
+            "url": values["url"],
+            "tag": values["tag"]
+        },
+    )
+
     db.session.commit()
 
 
