@@ -2,4 +2,4 @@
 source = src
 
 [report]
-include = src/services/*
+include = src/services/bib_generating.py
