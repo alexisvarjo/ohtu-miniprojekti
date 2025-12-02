@@ -106,8 +106,10 @@ Citation App
           <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
               {{ row['title'] or row['name'] }}
           </a>
+          <div>Citekey: {{ row['citekey'] }}</div>
           <div>Author: {{ row['author'] }}</div>
           <div>Year: {{ row['year'] }}</div>
+          <div>Tag: {{ row['tag'] }}</div>
 
           <a class="modify-link" href="{{ url_for('edit_article', citekey=row['citekey']) }}">
               Modify
@@ -126,8 +128,10 @@ Citation App
           <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
               {{ row['title'] or row['name'] }}
           </a>
+          <div>Citekey: {{ row['citekey'] }}</div>
           <div>Author: {{ row['author'] }}</div>
           <div>Year: {{ row['year'] }}</div>
+          <div>Tag: {{ row['tag'] }}</div>
 
           <a class="modify-link" href="{{ url_for('edit_book', citekey=row['citekey']) }}">
               Modify
@@ -146,8 +150,10 @@ Citation App
           <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
               {{ row['title'] or row['name'] }}
           </a>
+          <div>Citekey: {{ row['citekey'] }}</div>
           <div>Author: {{ row['author'] }}</div>
           <div>Year: {{ row['year'] }}</div>
+          <div>Tag: {{ row['tag'] }}</div>
 
           <a class="modify-link" href="{{ url_for('edit_inproceeding', citekey=row['citekey']) }}">
               Modify
