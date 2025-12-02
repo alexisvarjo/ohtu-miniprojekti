@@ -5,6 +5,7 @@ Library  SeleniumLibrary
 ${SERVER}     localhost:5001
 ${DELAY}      0.2 seconds
 ${HOME_URL}   http://${SERVER}
+${VIEW_URL}   ${HOME_URL}/view_item
 ${RESET_URL}  http://${SERVER}/reset_db
 ${DELETE_ROBOT_SOURCES_URL}  http://${SERVER}/delete_robot_sources_db
 ${BROWSER}    chrome
@@ -95,8 +96,8 @@ Modify Article With Key
     ...            ${new_urldate}    ${new_url}    ${new_tag}
 
     Go To  ${HOME_URL}
-
-    Click Link  xpath=//tr[td[normalize-space()='${citekey}']]//a[normalize-space()='Modify']
+    Go To  ${VIEW_URL}/${citekey}
+    Click Button  Edit
 
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     ${new_author}
@@ -117,8 +118,8 @@ Modify Book With Key
     ...            ${new_urldate}   ${new_url}   ${new_tag}
 
     Go To  ${HOME_URL}
-
-    Click Link  xpath=//tr[td[normalize-space()='${citekey}']]//a[normalize-space()='Modify']
+    Go To  ${VIEW_URL}/${citekey}
+    Click Button  Edit
 
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     ${new_author}
@@ -141,8 +142,8 @@ Modify Inproceeding With Key
     ...            ${new_urldate}   ${new_url}   ${new_tag}
 
     Go To  ${HOME_URL}
-
-    Click Link  xpath=//tr[td[normalize-space()='${citekey}']]//a[normalize-space()='Modify']
+    Go To  ${VIEW_URL}/${citekey}
+    Click Button  Edit
 
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     ${new_author}
