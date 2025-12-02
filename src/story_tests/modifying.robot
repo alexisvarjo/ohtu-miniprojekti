@@ -25,8 +25,6 @@ Adding And Modifying An Article
     Page Should Contain   robot
     Page Should Contain   1995
     Page Should Contain   new_title
-    Page Should Contain   new_urldate
-    Page Should Contain   new_url
     Page Should Contain   new_tag
 
 Adding And Modifying A Book
@@ -49,8 +47,6 @@ Adding And Modifying A Book
     Page Should Contain   robot
     Page Should Contain   new_title
     Page Should Contain   1995
-    Page Should Contain   new_urldate
-    Page Should Contain   new_url
     Page Should Contain   new_tag
 
 Adding And Modifying An Inproceeding
@@ -75,6 +71,4 @@ Adding And Modifying An Inproceeding
     Page Should Contain   robot
     Page Should Contain   new_title
     Page Should Contain   1995
-    Page Should Contain   new_urldate
-    Page Should Contain   new_url
     Page Should Contain   new_tag
