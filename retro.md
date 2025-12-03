@@ -50,3 +50,29 @@ Pidämme jatkossa viikottaisen daily scrumin lisäksi asiakastapaamisen jälkeen
 - Kaikille tekemistä
 
 Koimme perjantain 10:00 olevan liian aikaisin jolloin osa porukasta ei päässyt paikalle. Siirsimme tapaamisen 11:00. Tekemistä ei kaikille ollut sillä tekemistä oli ylipäätään melko vähän. Tulevassa sprintissä tulee sovellukselle iso overhaul, joten työtä riittää. Viime viikosta on työn kirjaaminen onnistunut paremmin, toinen tapaaminen on ollut hyödyllinen ja työn kaikkien työn tekeminen ennen ja jälkeen daily scrumin oli toimiva idea.
+
+## 3. retrospektiivi
+
+#### Glad:
+- Erik: Työnjako onnistui
+- Alexis: Projekti eteni hyvin
+- Kristjan: Projekti eteni hyvin
+- Alexander: Työnjako onnistui
+
+#### Sad:
+- Erik: Ehkä vähän liikaa tekemistä
+- Alexis: Vähän tekemistä
+- Kristjan: Alexiksella ja Atos vähän tekemistä
+- Alexander: Ei huolia
+
+#### Mad:
+- Erik: Ei mitään
+- Alexis: Ei mitään suurta (backlog olisi voinut toimia)
+- Kristjan: Ei mitään
+- Alexander: Työtunnit pelotti (saatiin hoidettua)
+
+#### Potentiaaliset muutokset:
+- Työmäärän maksimi 6 tuntia
+- Ihmisiä joilla vähemmän hommaa reservissä
+
+Perjantain tapaamisen siirto 11:00 onnistui ja aika oli sopivampi, kuin 10:00. Työnjaossa oli edelleen hieman ongelmia, sillä projekti on melko pieni, eikä järkevää työtä riitä kaikille 6 tunnin verran. Päätimme jakaa työt neljälle jäsenelle (niille, jotka olivat retrossa) ja pitää toiset kaksi reservissä jos user storeja jää kesken. Osa jäsenistä teki myös yli 6 tuntia työtä, joten tällä mallilla saadaan tunnit pidettyä 6:ssa ja tarvittavat työt yhä tehtyä.
