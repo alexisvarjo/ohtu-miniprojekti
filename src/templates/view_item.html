@@ -83,6 +83,17 @@ block content %}
             <div class="value">{{ item['tag'] or '' }}</div>
         </div>
 
+        {% if item['pdf'] %}
+        <div>
+            <a
+                href="{{ url_for('serve_pdf', citekey=item['citekey']) }}"
+                target="_blank"
+            >
+                View file
+            </a>
+        </div>
+        {% endif %}
+
         <br />
 
         <!-- Buttons -->

@@ -80,9 +80,22 @@ def index(page=1):
     end = start + page_size
     records_page = records[start:end]
 
+    enriched_records = []
+
+    for row in records_page:
+        d = dict(row)  # make mutable copy
+
+        try:
+            table, item = get_item_any_table(d["citekey"])
+            d["pdf"] = item.get("pdf")
+        except Exception:
+            d["pdf"] = None
+
+        enriched_records.append(d)
+
     return render_template(
         "index.html",
-        records=records_page,
+        records=enriched_records,
         page=page,
         page_count=page_count,
         search_query=search_query,
