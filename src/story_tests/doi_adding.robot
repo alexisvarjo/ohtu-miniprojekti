@@ -12,6 +12,7 @@ Adding An Article With A DOI And Seeing It
     Input Text  id=doi_citekey  doi_article_robot
     Click Button  id=doi_add
     Page Should Contain  Citation added
+
     Go To  http://${SERVER}/remove_article/doi_article_robot
     Click Button  Confirm
 
@@ -20,6 +21,7 @@ Adding A Book With A DOI And Seeing It
     Input Text  id=doi_citekey  doi_book_robot
     Click Button  id=doi_add
     Page Should Contain  Citation added
+
     Go To  http://${SERVER}/remove_book/doi_book_robot
     Click Button  Confirm
 
@@ -28,5 +30,6 @@ Adding An Inproceeding With A DOI And Seeing It
     Input Text  id=doi_citekey  doi_inproceeding_robot
     Click Button  id=doi_add
     Page Should Contain  Citation added
+
     Go To  http://${SERVER}/remove_inproceeding/doi_inproceeding_robot
     Click Button  Confirm
