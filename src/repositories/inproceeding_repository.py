@@ -10,13 +10,28 @@ def normalize(value):
     return None if value == "" else value
 
 
-def create_inproceeding(citekey, author, editor, title, booktitle, publisher, pages, year, volume, number, urldate, url, tag):
+def create_inproceeding(
+    citekey,
+    author,
+    editor,
+    title,
+    booktitle,
+    publisher,
+    pages,
+    year,
+    volume,
+    number,
+    urldate,
+    url,
+    tag,
+    pdf=None,
+):
     """Adds an inproceeding into the database"""
     # pylint: disable=too-many-arguments, too-many-positional-arguments
 
     sql = text("""
-    INSERT INTO inproceedings (citekey, author, editor, title, booktitle, publisher, pages, year, volume, number, urldate, url, tag)
-    VALUES (:citekey, :author, :editor, :title, :booktitle, :publisher, :pages, :year, :volume, :number, :urldate, :url, :tag)
+    INSERT INTO inproceedings (citekey, author, editor, title, booktitle, publisher, pages, year, volume, number, urldate, url, tag, pdf)
+    VALUES (:citekey, :author, :editor, :title, :booktitle, :publisher, :pages, :year, :volume, :number, :urldate, :url, :tag, :pdf)
 """)
     db.session.execute(
         sql,
@@ -33,7 +48,8 @@ def create_inproceeding(citekey, author, editor, title, booktitle, publisher, pa
             "number": normalize(number),
             "urldate": normalize(urldate),
             "url": normalize(url),
-            "tag": normalize(tag)
+            "tag": normalize(tag),
+            "pdf": pdf,
         },
     )
     db.session.commit()

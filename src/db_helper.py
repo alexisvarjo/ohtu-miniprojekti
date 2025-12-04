@@ -113,7 +113,6 @@ def filter_articles(material, keyword, year, search_term):
     if not material:
         return _filter_from_table("citations", keyword, year, search_term)
 
-
     # Otherwise → fetch from the selected table
     return _filter_from_table(table_map[material], keyword, year, search_term)
 
@@ -190,7 +189,7 @@ def modify_article(citekey: str, new_information: dict):
         "number",
         "urldate",
         "url",
-        "tag"
+        "tag",
     }
 
     # Filter out any invalid keys
@@ -218,21 +217,12 @@ def modify_article(citekey: str, new_information: dict):
     params = update_fields.copy()
     params["old_citekey"] = citekey
 
-
     # Execute safely with parameter binding
     db.session.execute(sql, params)
     db.session.commit()
 
     # Allowed fields to update
-    allowed_fields = {
-        "citekey",
-        "author",
-        "name",
-        "year",
-        "urldate",
-        "url",
-        "tag"
-    }
+    allowed_fields = {"citekey", "author", "name", "year", "urldate", "url", "tag"}
 
     # Filter out any invalid keys
     update_fields = {
@@ -276,6 +266,7 @@ def remove_article_from_database(citekey):
     db.session.execute(sql, {"citekey": citekey})
     db.session.commit()
 
+
 def get_book(citekey: str):
     """Returns all fields of a book identified by its citekey."""
 
@@ -304,6 +295,7 @@ def get_book(citekey: str):
 
     return dict(result)
 
+
 def modify_book(citekey: str, new_information: dict):
     """Modifies fields of an existing book identified by its citekey."""
     print(new_information)
@@ -325,7 +317,7 @@ def modify_book(citekey: str, new_information: dict):
         "number",
         "urldate",
         "url",
-        "tag"
+        "tag",
     }
 
     # Filter out any invalid keys
@@ -358,15 +350,7 @@ def modify_book(citekey: str, new_information: dict):
     db.session.commit()
 
     # Allowed fields to update
-    allowed_fields = {
-        "citekey",
-        "author",
-        "name",
-        "year",
-        "urldate",
-        "url",
-        "tag"
-    }
+    allowed_fields = {"citekey", "author", "name", "year", "urldate", "url", "tag"}
 
     # Filter out any invalid keys
     update_fields = {
@@ -398,6 +382,7 @@ def modify_book(citekey: str, new_information: dict):
     db.session.execute(sql, params)
     db.session.commit()
 
+
 def remove_book_from_database(citekey):
     """Removes a book from database based on given parameter"""
     if not check_if_citekey_exists(citekey):
@@ -409,6 +394,7 @@ def remove_book_from_database(citekey):
     sql = text("DELETE FROM citations WHERE citekey = :citekey")
     db.session.execute(sql, {"citekey": citekey})
     db.session.commit()
+
 
 def get_inproceeding(citekey: str):
     """Returns all fields of an inproceeding identified by its citekey."""
@@ -440,6 +426,7 @@ def get_inproceeding(citekey: str):
 
     return dict(result)
 
+
 def modify_inproceeding(citekey: str, new_information: dict):
     """Modifies fields of an existing inproceeding identified by its citekey."""
 
@@ -463,7 +450,7 @@ def modify_inproceeding(citekey: str, new_information: dict):
         "number",
         "urldate",
         "url",
-        "tag"
+        "tag",
     }
 
     # Filter out any invalid keys
@@ -496,15 +483,7 @@ def modify_inproceeding(citekey: str, new_information: dict):
     db.session.commit()
 
     # Allowed fields to update
-    allowed_fields = {
-        "citekey",
-        "author",
-        "name",
-        "year",
-        "urldate",
-        "url",
-        "tag"
-    }
+    allowed_fields = {"citekey", "author", "name", "year", "urldate", "url", "tag"}
 
     # Filter out any invalid keys
     update_fields = {
@@ -536,6 +515,7 @@ def modify_inproceeding(citekey: str, new_information: dict):
     db.session.execute(sql, params)
     db.session.commit()
 
+
 def remove_inproceeding_from_database(citekey):
     """removes an inproceeding from database based on given parameter"""
     if not check_if_citekey_exists(citekey):
@@ -566,7 +546,7 @@ def add_test_source():
         "number": number_generator(1, 10, 1),
         "urldate": string_generator(),
         "url": string_generator(),
-        "tag": string_generator()
+        "tag": string_generator(),
     }
 
     db.session.execute(
@@ -581,7 +561,7 @@ def add_test_source():
             "number": values["number"],
             "urldate": values["urldate"],
             "url": values["url"],
-            "tag": values["tag"]
+            "tag": values["tag"],
         },
     )
 
@@ -599,7 +579,7 @@ def add_test_source():
             "year": values["year"],
             "urldate": values["urldate"],
             "url": values["url"],
-            "tag": values["tag"]
+            "tag": values["tag"],
         },
     )
 

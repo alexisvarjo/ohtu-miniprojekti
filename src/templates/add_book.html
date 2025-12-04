@@ -1,13 +1,7 @@
-{% extends "layout.html" %}
-
-{% block title %}
-Remove inproceeding
-{% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} Add book {% endblock %} {% block
+content %}
 
 <form action="/create_book" method="post">
-
     <h1>Add book</h1>
 
     <p>Required fields are marked with *</p>
@@ -76,7 +70,6 @@ Remove inproceeding
         {% endfor %}
     </ul>
     {% endif %} {% endwith %}
-
 </form>
 
 <a href="{{ url_for('index') }}">Homepage</a>
