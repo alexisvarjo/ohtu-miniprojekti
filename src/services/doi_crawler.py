@@ -155,10 +155,10 @@ def _parse_add_inproceeding(data, citekey, tag):
 
     return
 
-def _doi_url_parser(doi_start_index, url):
+def _doi_url_parser(url):
     """Extracts the the DOI from a URL starting from a given index"""
 
-    return url[doi_start_index:]
+    return "/".join(url.split("/")[-2:])
 
 def citation_with_doi(doi, citekey, tag):
     """Adds a citation with a doi"""
@@ -182,10 +182,10 @@ def citation_with_doi(doi, citekey, tag):
 
     return "success"
 
-def citation_with_doi_in_url(doi_start_index, url, citekey, tag):
+def citation_with_doi_in_url(url, citekey, tag):
     """Adds a citation with a doi in the url"""
     
-    doi = _doi_url_parser(doi_start_index, url)
+    doi = _doi_url_parser(url)
 
     return citation_with_doi(doi, citekey, tag)
 
@@ -194,5 +194,5 @@ if __name__ == "__main__":
     citation_with_doi("10.1038/nature11631", "article", "article_tag") # article
     citation_with_doi("10.1007/978-3-031-45468-4", "book", "book_tag") # book
     citation_with_doi("10.1109/CVPR.2016.90", "inproceedings", "inproceedings_tag") # inproceeding
-    citation_with_doi_in_url(16, "https://doi.org/10.1000/xyz123", "doi_url", "doi_url_tag") # DOI org link
-    citation_with_doi_in_url(23, "https://dl.acm.org/doi/10.1145/3372390.3372409", "acm_in_url", "acm_url_tag") # ACM link
+    citation_with_doi_in_url("https://doi.org/10.1000/xyz123", "doi_url", "doi_url_tag") # DOI org link
+    citation_with_doi_in_url("https://dl.acm.org/doi/10.1145/3372390.3372409", "acm_in_url", "acm_url_tag") # ACM link
