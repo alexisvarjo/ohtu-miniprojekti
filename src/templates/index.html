@@ -65,6 +65,21 @@ Citation App
   <a href="{{ url_for('test_source') }}">Generate a random source (testing)</a>
 </div>
 
+<!-- ACM link citations -->
+<form action="/cite_acm" method="post">
+  <p>Add a citation with an ACM link (the information is fetched using the DOI):</p>
+  <label for="doi">*URL:</label>
+  <input type="text" placeholder="Enter URL" name="url" required>
+
+  <label for="citekey">*Citekey:</label>
+  <input type="text" placeholder="Enter citekey" name="citekey" required>
+
+  <label for="tag">Tag:</label>
+  <input type="text" placeholder="Enter tag" name="tag">
+
+  <input type="submit" value="Add citation">
+</form>
+
 <!-- DOI citations -->
 <form action="/cite_doi" method="post">
   <p>Add a citation with a DOI:</p>

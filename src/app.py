@@ -27,7 +27,9 @@ from db_helper import (
     remove_book_from_database,
     remove_inproceeding_from_database
 )
+
 from services.doi_crawler import citation_with_doi
+from services.acm_crawler import acm_with_doi_in_url
 from repositories.all_citations_repository import fetch_all_citations, create_citation
 from repositories.article_repository import create_article
 from repositories.book_repository import create_book
@@ -522,6 +524,21 @@ def cite_doi():
     tag = request.form.get("tag")
 
     message = citation_with_doi(doi, citekey, tag)
+    if message == "success":
+        flash("Citation added")
+    elif message != "success":
+        flash(message)
+
+    return redirect("/")
+
+@app.route("/cite_acm", methods=["POST"])
+def cite_acm():
+    """Adds a citation with an ACM Digital Library link"""
+    url = request.form.get("url")
+    citekey = request.form.get("citekey")
+    tag = request.form.get("tag")
+
+    message = acm_with_doi_in_url(url, citekey, tag)
     if message == "success":
         flash("Citation added")
     elif message != "success":
