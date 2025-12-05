@@ -10,13 +10,15 @@ def normalize(value):
     return None if value == "" else value
 
 
-def create_article(citekey, author, year, name, journal, volume, number, urldate, url, tag):
+def create_article(
+    citekey, author, year, name, journal, volume, number, urldate, url, tag, pdf=None
+):
     """Adds an article into the database"""
     # pylint: disable=too-many-arguments, too-many-positional-arguments
 
     sql = text("""
-    INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url, tag)
-    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url, :tag)
+    INSERT INTO articles (citekey, author, year, name, journal, volume, number, urldate, url, tag, pdf)
+    VALUES (:citekey, :author, :year, :name, :journal, :volume, :number, :urldate, :url, :tag, :pdf)
 """)
     db.session.execute(
         sql,
@@ -30,7 +32,8 @@ def create_article(citekey, author, year, name, journal, volume, number, urldate
             "number": normalize(number),
             "urldate": normalize(urldate),
             "url": normalize(url),
-            "tag": normalize(tag)
+            "tag": normalize(tag),
+            "pdf": pdf,
         },
     )
     db.session.commit()

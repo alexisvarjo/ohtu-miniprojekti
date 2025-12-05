@@ -19,7 +19,8 @@ CREATE TABLE articles (
   number INT,
   urldate TEXT,
   url TEXT,
-  tag TEXT
+  tag TEXT,
+  pdf BYTEA
 );
 
 CREATE TABLE books (
@@ -33,7 +34,8 @@ CREATE TABLE books (
   number INT,
   urldate TEXT,
   url TEXT,
-  tag TEXT
+  tag TEXT,
+  pdf BYTEA
 );
 
 CREATE TABLE inproceedings (
@@ -49,7 +51,8 @@ CREATE TABLE inproceedings (
   number INT,
   urldate TEXT,
   url TEXT,
-  tag TEXT
+  tag TEXT,
+  pdf BYTEA
 );
 
 CREATE TABLE miscs (
@@ -59,5 +62,6 @@ CREATE TABLE miscs (
   year INT,
   howpublished TEXT,
   urldate TEXT,
-  url TEXT
+  url TEXT,
+  pdf BYTEA
 );

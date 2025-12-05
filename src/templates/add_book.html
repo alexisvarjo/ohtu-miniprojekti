@@ -1,13 +1,7 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block title %} Add book {% endblock %} {% block
+content %}
 
-{% block title %}
-Remove inproceeding
-{% endblock %}
-
-{% block content %}
-
-<form action="/create_book" method="post">
-
+<form action="/create_book" method="post" enctype="multipart/form-data">
     <h1>Add book</h1>
 
     <p>Required fields are marked with *</p>
@@ -67,6 +61,11 @@ Remove inproceeding
         <input type="text" name="tag" />
     </div>
 
+    <div class="form-row">
+        <label>PDF:</label>
+        <input type="file" name="pdf" />
+    </div>
+
     <button type="submit">Create</button>
 
     {% with messages = get_flashed_messages() %} {% if messages %}
@@ -76,7 +75,6 @@ Remove inproceeding
         {% endfor %}
     </ul>
     {% endif %} {% endwith %}
-
 </form>
 
 <a href="{{ url_for('index') }}">Homepage</a>

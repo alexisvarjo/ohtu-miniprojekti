@@ -11,14 +11,25 @@ def normalize(value):
 
 
 def create_book(
-    citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag
+    citekey,
+    author,
+    editor,
+    title,
+    publisher,
+    year,
+    volume,
+    number,
+    urldate,
+    url,
+    tag,
+    pdf=None,
 ):
     """Adds a book into the database"""
     # pylint: disable=too-many-arguments, too-many-positional-arguments
 
     sql = text("""
-    INSERT INTO books (citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag)
-    VALUES (:citekey, :author, :editor, :title, :publisher, :year, :volume, :number, :urldate, :url, :tag)
+    INSERT INTO books (citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag, pdf)
+    VALUES (:citekey, :author, :editor, :title, :publisher, :year, :volume, :number, :urldate, :url, :tag, :pdf)
 """)
     db.session.execute(
         sql,
@@ -34,6 +45,7 @@ def create_book(
             "urldate": normalize(urldate),
             "url": normalize(url),
             "tag": normalize(tag),
+            "pdf": pdf,
         },
     )
     db.session.commit()

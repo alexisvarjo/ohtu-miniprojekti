@@ -1,7 +1,10 @@
 """Contains all routes of the app"""
 
+from io import BytesIO
+
 from flask import (
     Response,
+    abort,
     flash,
     redirect,
     render_template,
@@ -10,7 +13,6 @@ from flask import (
     url_for,
 )
 
-from services.bib_generating import generate_bib_browser, generate_bib_file
 from config import app, test_env
 from db_helper import (
     add_test_source,
@@ -25,15 +27,15 @@ from db_helper import (
     modify_inproceeding,
     remove_article_from_database,
     remove_book_from_database,
-    remove_inproceeding_from_database
+    remove_inproceeding_from_database,
 )
-
-from services.doi_crawler import citation_with_doi
-from services.acm_crawler import acm_with_doi_in_url
-from repositories.all_citations_repository import fetch_all_citations, create_citation
+from repositories.all_citations_repository import create_citation, fetch_all_citations
 from repositories.article_repository import create_article
 from repositories.book_repository import create_book
 from repositories.inproceeding_repository import create_inproceeding
+from services.acm_crawler import acm_with_doi_in_url
+from services.bib_generating import generate_bib_browser, generate_bib_file
+from services.doi_crawler import citation_with_doi
 from util import validate_citekey
 
 
@@ -78,9 +80,22 @@ def index(page=1):
     end = start + page_size
     records_page = records[start:end]
 
+    enriched_records = []
+
+    for row in records_page:
+        d = dict(row)  # make mutable copy
+
+        try:
+            table, item = get_item_any_table(d["citekey"])
+            d["pdf"] = item.get("pdf")
+        except Exception:
+            d["pdf"] = None
+
+        enriched_records.append(d)
+
     return render_template(
         "index.html",
-        records=records_page,
+        records=enriched_records,
         page=page,
         page_count=page_count,
         search_query=search_query,
@@ -92,9 +107,10 @@ def index(page=1):
             "year": "Year",
             "urldate": "URL Date",
             "url": "URL",
-            "tag": "Tag"
+            "tag": "Tag",
         },
     )
+
 
 @app.route("/add_type")
 def add_type():
@@ -138,8 +154,14 @@ def try_create_inproceeding():
         "Inproceeding name": title,
         "Booktitle": booktitle,
         "Year": year,
-        "Editor": editor
+        "Editor": editor,
     }
+
+    file = request.files.get("pdf")
+    if file and file.filename:
+        pdf_bytes = file.read()
+    else:
+        pdf_bytes = None
 
     for field_name, value in required_fields.items():
         if not value or value.strip() == "":
@@ -161,7 +183,8 @@ def try_create_inproceeding():
             number,
             urldate,
             url,
-            tag
+            tag,
+            pdf=pdf_bytes,
         )
         create_citation(
             citekey, "inproceedings", author, title, year, urldate, url, tag
@@ -203,6 +226,12 @@ def try_create_book():
         "Year": year,
     }
 
+    file = request.files.get("pdf")
+    if file and file.filename:
+        pdf_bytes = file.read()
+    else:
+        pdf_bytes = None
+
     for field_name, value in required_fields.items():
         if not value or value.strip() == "":
             flash(f"{field_name} is required.")
@@ -222,10 +251,9 @@ def try_create_book():
             urldate,
             url,
             tag,
+            pdf=pdf_bytes,
         )
-        create_citation(
-            citekey, "book", author, title, year, urldate, url, tag
-        )
+        create_citation(citekey, "book", author, title, year, urldate, url, tag)
         flash("Source added successfully")
         return redirect("add_book")
     except Exception as error:
@@ -277,13 +305,36 @@ def try_create_article():
             flash(f"{field_name} is required.")
             return redirect("add_article")
 
+    file = request.files.get("pdf")
+    if file and file.filename:
+        pdf_bytes = file.read()
+    else:
+        pdf_bytes = None
+
     try:
         validate_citekey(citekey)
         create_article(
-            citekey, author, year, name, journal, volume, number, urldate, url, tag
+            citekey,
+            author,
+            year,
+            name,
+            journal,
+            volume,
+            number,
+            urldate,
+            url,
+            tag,
+            pdf=pdf_bytes,
         )
         create_citation(
-            citekey, "article", author, name, year, urldate, url, tag
+            citekey,
+            "article",
+            author,
+            name,
+            year,
+            urldate,
+            url,
+            tag,
         )
         flash("Source added successfully")
         return redirect("add_article")
@@ -310,16 +361,6 @@ def edit_article(citekey):
 
 @app.route("/modified_article/<citekey>", methods=["POST"])
 def modified_article(citekey):
-    """Route for modifying an existing article.
-
-    Args:
-        citekey (str): The unique identifier for the article.
-
-    Returns:
-        str: Redirects to the landing page or back to the form on error.
-    """
-    # pylint: disable=broad-exception-caught, unexpected-keyword-arg, R0801
-
     fields = [
         "citekey",
         "author",
@@ -335,13 +376,17 @@ def modified_article(citekey):
 
     modified_fields = {field: request.form.get(field) or None for field in fields}
 
+    file = request.files.get("pdf")
+    if file and file.filename:
+        modified_fields["pdf"] = file.read()
+
     try:
         modify_article(citekey, modified_fields)
         flash("Article edited successfully")
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return redirect(url_for("edit_article"), citekey=citekey)
+        return redirect(url_for("edit_article", citekey=citekey))
 
 
 @app.route("/remove_article/<citekey>", methods=["GET", "POST"])
@@ -365,12 +410,14 @@ def remove_article(citekey):
 
     return render_template("error")
 
+
 @app.route("/edit_book/<citekey>")
 def edit_book(citekey):
     """Renders the edit book template."""
 
     book = get_book(citekey)
     return render_template("edit_book.html", book=book)
+
 
 @app.route("/modified_book/<citekey>", methods=["POST"])
 def modified_book(citekey):
@@ -395,12 +442,16 @@ def modified_book(citekey):
         "number",
         "urldate",
         "url",
-        "tag"
+        "tag",
     ]
 
     modified_fields = {field: request.form.get(field) or None for field in fields}
     # the modifier needs the name field with the title
     modified_fields["name"] = request.form.get("title") or None
+
+    file = request.files.get("pdf")
+    if file and file.filename:
+        modified_fields["pdf"] = file.read()
 
     try:
         modify_book(citekey, modified_fields)
@@ -432,12 +483,16 @@ def remove_book(citekey):
 
     return render_template("error")
 
+
 @app.route("/edit_inproceeding/<citekey>")
 def edit_inproceeding(citekey):
     """Renders the edit inproceeding template."""
 
     inproceeding = get_inproceeding(citekey)
-    return render_template("edit_inproceeding.html", inproceeding=inproceeding, citekey=citekey)
+    return render_template(
+        "edit_inproceeding.html", inproceeding=inproceeding, citekey=citekey
+    )
+
 
 @app.route("/modified_inproceeding/<citekey>", methods=["POST"])
 def modified_inproceeding(citekey):
@@ -464,12 +519,16 @@ def modified_inproceeding(citekey):
         "number",
         "urldate",
         "url",
-        "tag"
+        "tag",
     ]
 
     modified_fields = {field: request.form.get(field) or None for field in fields}
     # the modifier needs the name field with the title
     modified_fields["name"] = request.form.get("title") or None
+
+    file = request.files.get("pdf")
+    if file and file.filename:
+        modified_fields["pdf"] = file.read()
 
     try:
         modify_inproceeding(citekey, modified_fields)
@@ -478,6 +537,7 @@ def modified_inproceeding(citekey):
     except Exception as error:
         flash(str(error))
         return redirect(url_for("edit_inproceeding"), citekey=citekey)
+
 
 @app.route("/remove_inproceeding/<citekey>", methods=["GET", "POST"])
 def remove_inproceeding(citekey):
@@ -491,7 +551,9 @@ def remove_inproceeding(citekey):
     """
     if request.method == "GET":
         inproceeding = get_inproceeding(citekey)
-        return render_template("remove_inproceeding.html", inproceeding=inproceeding, citekey=citekey)
+        return render_template(
+            "remove_inproceeding.html", inproceeding=inproceeding, citekey=citekey
+        )
 
     if request.method == "POST":
         if "remove" in request.form:
@@ -531,6 +593,7 @@ def cite_doi():
 
     return redirect("/")
 
+
 @app.route("/cite_acm", methods=["POST"])
 def cite_acm():
     """Adds a citation with an ACM Digital Library link"""
@@ -545,6 +608,22 @@ def cite_acm():
         flash(message)
 
     return redirect("/")
+
+
+@app.route("/pdf/<citekey>", methods=["GET"])
+def serve_pdf(citekey):
+    table, item = get_item_any_table(citekey)
+
+    pdf_bytes = item.get("pdf")
+    if not pdf_bytes:
+        abort(404)
+
+    return send_file(
+        BytesIO(pdf_bytes),
+        mimetype="application/pdf",
+        as_attachment=False,
+        download_name=f"{citekey}.pdf",
+    )
 
 
 if test_env:

@@ -128,6 +128,15 @@ Citation App
           <div>Author: {{ row['author'] }}</div>
           <div>Year: {{ row['year'] }}</div>
           <div>Tag: {{ row['tag'] }}</div>
+          {% if row['pdf'] %}
+              <div>
+                  <a href="{{ url_for('serve_pdf', citekey=row['citekey']) }}" target="_blank">
+                      View file
+                  </a>
+              </div>
+          {% endif %}
+
+
 
           <a class="modify-link" href="{{ url_for('edit_article', citekey=row['citekey']) }}">
               Modify
@@ -150,6 +159,14 @@ Citation App
           <div>Author: {{ row['author'] }}</div>
           <div>Year: {{ row['year'] }}</div>
           <div>Tag: {{ row['tag'] }}</div>
+          {% if row['pdf'] %}
+              <div>
+                  <a href="{{ url_for('serve_pdf', citekey=row['citekey']) }}" target="_blank">
+                      View file
+                  </a>
+              </div>
+          {% endif %}
+
 
           <a class="modify-link" href="{{ url_for('edit_book', citekey=row['citekey']) }}">
               Modify
@@ -172,6 +189,14 @@ Citation App
           <div>Author: {{ row['author'] }}</div>
           <div>Year: {{ row['year'] }}</div>
           <div>Tag: {{ row['tag'] }}</div>
+          {% if row['pdf'] %}
+              <div>
+                  <a href="{{ url_for('serve_pdf', citekey=row['citekey']) }}" target="_blank">
+                      View file
+                  </a>
+              </div>
+          {% endif %}
+
 
           <a class="modify-link" href="{{ url_for('edit_inproceeding', citekey=row['citekey']) }}">
               Modify
