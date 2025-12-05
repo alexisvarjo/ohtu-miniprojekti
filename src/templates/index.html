@@ -25,6 +25,7 @@ Citation App
         <option value="">All</option>
         <option value="author">Author</option>
         <option value="title">Title</option>
+        <option value="title">Tag</option>
     </select>
 
     <!-- Year range -->
@@ -204,6 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const author = (cells[2].textContent || "").toLowerCase();
       const name = (cells[3].textContent || "").toLowerCase();
       const material = (cells[1].textContent || "").toLowerCase();
+      const tag = (cells[7].textContent || "").toLowerCase();
+
 
       let show = (year >= minYear && year <= maxYear);
 
@@ -220,6 +223,8 @@ document.addEventListener('DOMContentLoaded', () => {
           show = show && author.includes(search);
         } else if (searchType === "title") {
           show = show && name.includes(search);
+        } else if (searchType === "tag") {
+          show = show && tag.includes(search);
         } else {
           // keyword = "All" → haku molemmista
           show = show && (author.includes(search) || name.includes(search));
