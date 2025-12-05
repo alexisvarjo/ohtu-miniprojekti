@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block title %} Add book {% endblock %} {% block
 content %}
 
-<form action="/create_book" method="post">
+<form action="/create_book" method="post" enctype="multipart/form-data">
     <h1>Add book</h1>
 
     <p>Required fields are marked with *</p>
@@ -59,6 +59,11 @@ content %}
     <div class="form-row">
         <label>Tag:</label>
         <input type="text" name="tag" />
+    </div>
+
+    <div class="form-row">
+        <label>PDF:</label>
+        <input type="file" name="pdf" />
     </div>
 
     <button type="submit">Create</button>

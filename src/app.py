@@ -361,16 +361,6 @@ def edit_article(citekey):
 
 @app.route("/modified_article/<citekey>", methods=["POST"])
 def modified_article(citekey):
-    """Route for modifying an existing article.
-
-    Args:
-        citekey (str): The unique identifier for the article.
-
-    Returns:
-        str: Redirects to the landing page or back to the form on error.
-    """
-    # pylint: disable=broad-exception-caught, unexpected-keyword-arg, R0801
-
     fields = [
         "citekey",
         "author",
@@ -386,13 +376,17 @@ def modified_article(citekey):
 
     modified_fields = {field: request.form.get(field) or None for field in fields}
 
+    file = request.files.get("pdf")
+    if file and file.filename:
+        modified_fields["pdf"] = file.read()
+
     try:
         modify_article(citekey, modified_fields)
         flash("Article edited successfully")
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return redirect(url_for("edit_article"), citekey=citekey)
+        return redirect(url_for("edit_article", citekey=citekey))
 
 
 @app.route("/remove_article/<citekey>", methods=["GET", "POST"])
@@ -454,6 +448,10 @@ def modified_book(citekey):
     modified_fields = {field: request.form.get(field) or None for field in fields}
     # the modifier needs the name field with the title
     modified_fields["name"] = request.form.get("title") or None
+
+    file = request.files.get("pdf")
+    if file and file.filename:
+        modified_fields["pdf"] = file.read()
 
     try:
         modify_book(citekey, modified_fields)
@@ -527,6 +525,10 @@ def modified_inproceeding(citekey):
     modified_fields = {field: request.form.get(field) or None for field in fields}
     # the modifier needs the name field with the title
     modified_fields["name"] = request.form.get("title") or None
+
+    file = request.files.get("pdf")
+    if file and file.filename:
+        modified_fields["pdf"] = file.read()
 
     try:
         modify_inproceeding(citekey, modified_fields)

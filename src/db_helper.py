@@ -156,7 +156,8 @@ def get_article(citekey: str):
             number,
             urldate,
             url,
-            tag
+            tag,
+            pdf
         FROM articles
         WHERE citekey = :citekey
     """)
@@ -190,6 +191,7 @@ def modify_article(citekey: str, new_information: dict):
         "urldate",
         "url",
         "tag",
+        "pdf",
     }
 
     # Filter out any invalid keys
@@ -283,7 +285,8 @@ def get_book(citekey: str):
             number,
             urldate,
             url,
-            tag
+            tag,
+            pdf
         FROM books
         WHERE citekey = :citekey
     """)
@@ -318,6 +321,7 @@ def modify_book(citekey: str, new_information: dict):
         "urldate",
         "url",
         "tag",
+        "pdf",
     }
 
     # Filter out any invalid keys
@@ -414,7 +418,8 @@ def get_inproceeding(citekey: str):
             number,
             urldate,
             url,
-            tag
+            tag,
+            pdf
         FROM inproceedings
         WHERE citekey = :citekey
     """)
@@ -451,6 +456,7 @@ def modify_inproceeding(citekey: str, new_information: dict):
         "urldate",
         "url",
         "tag",
+        "pdf",
     }
 
     # Filter out any invalid keys

@@ -5,6 +5,7 @@ endblock %} {% block content %}
 <form
     action="{{ url_for('modified_article', citekey=article['citekey']) }}"
     method="post"
+    enctype="multipart/form-data"
 >
     <h1>Edit article</h1>
 
@@ -84,6 +85,26 @@ endblock %} {% block content %}
         <label>Tag:</label>
         <input type="text" name="tag" value="{{ article['tag'] or '' }}" />
     </div>
+
+    {% if article['pdf'] %}
+    <p>
+        Current PDF:
+        <a
+            href="{{ url_for('serve_pdf', citekey=article['citekey']) }}"
+            target="_blank"
+            >View</a
+        >
+
+        <label>Replace:</label>
+        <input type="file" name="pdf" />
+    </p>
+    {% else %}
+
+    <div class="form-row">
+        <label>Input a PDF file:</label>
+        <input type="file" name="pdf" />
+    </div>
+    {% endif %}
 
     <button type="submit">Edit</button>
 

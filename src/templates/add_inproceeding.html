@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block title %} Add inproceeding {% endblock %} {%
 block content %}
 
-<form action="/create_inproceeding" method="post">
+<form action="/create_inproceeding" method="post" enctype="multipart/form-data">
     <h1>Add inproceeding</h1>
 
     <p>Required fields are marked with *</p>
@@ -69,6 +69,11 @@ block content %}
     <div class="form-row">
         <label>Tag:</label>
         <input type="text" name="tag" />
+    </div>
+
+    <div class="form-row">
+        <label>PDF:</label>
+        <input type="file" name="pdf" />
     </div>
 
     <button type="submit">Create</button>
