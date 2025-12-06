@@ -187,7 +187,7 @@ def try_create_inproceeding():
             pdf=pdf_bytes,
         )
         create_citation(
-            citekey, "inproceedings", author, title, year, urldate, url, tag
+            citekey, "inproceeding", author, title, year, urldate, url, tag
         )
         flash("Source added successfully")
         return redirect("add_inproceeding")

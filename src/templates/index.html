@@ -8,6 +8,61 @@ Citation App
 
 <h1>Library search</h1>
 
+<style>
+.academia {
+    border-collapse: collapse;
+    width: 100%;
+    border-top: 2.27px solid black;
+    border-bottom: 2.27px solid black;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Solujen perusmuotoilu */
+.academia th,
+.academia td {
+    text-align: left;
+    vertical-align: middle;
+    padding: 0.51rem;
+}
+
+/* ⭐ Otsikkorivin muotoilu:
+   - ei yläreunaa
+   - ei sivureunoja
+   - vain ALAREUNA jää */
+.academia thead th {
+    background: none !important;
+    border: none !important;          /* Poistaa kaikki reunat */
+    border-bottom: 1.36px solid black !important; /* Jättää vain alin viivan */
+    font-weight: 700;
+}
+
+/* Poistetaan thead-tr:n ylimääräiset reunat */
+.academia thead tr {
+    border: none !important;
+}
+
+/* Datarivien ylä- ja alareunat */
+.academia tbody tr:first-child td {
+    border-top: 1.36px solid black;
+}
+
+.academia tbody tr:last-child td {
+    border-bottom: 1.36px solid black;
+}
+
+/* Vuorottelu ja hover-efektit */
+.academia tbody tr:nth-child(even) {
+    background-color: #ebecf1;
+}
+
+.academia tbody tr:hover td {
+    background-color: #f5f1da;
+}
+</style>
+
+
+
+
 <!-- Search form -->
 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
     <!-- Material -->
@@ -113,153 +168,84 @@ Citation App
 
 <hr>
 <!-- Three-column source display -->
-<div class="columns-container">
+<table id="sourceTable" class="academia" border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th>Tag</th>
+            <th>Citekey</th>
+            <th>PDF</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in records %}
+        <tr class="source-item"
+            data-type="{{ row['citation_type'] }}"
+            data-title="{{ row['title'] or row['name'] }}"
+            data-author="{{ row['author'] }}"
+            data-year="{{ row['year'] }}"
+            data-tag="{{ row['tag'] }}">
+            <td>{{ row['citation_type'] }}</td>
+            <td>
+                <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
+                    {{ row['title'] or row['name'] }}
+                </a>
+            </td>
+            <td>{{ row['author'] }}</td>
+            <td>{{ row['year'] }}</td>
+            <td>{{ row['tag'] }}</td>
+            <td>{{ row['citekey'] }}</td>
+            <td>
+                {% if row['pdf'] %}
+                    <a href="{{ url_for('serve_pdf', citekey=row['citekey']) }}" target="_blank">View file</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-  <!-- ARTICLES COLUMN -->
-  <div class="column">
-      <h2>Articles</h2>
-
-      {% for row in records if row['citation_type'] == 'article' %}
-      <div class="source-item">
-          <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
-              {{ row['title'] or row['name'] }}
-          </a>
-          <div>Citekey: {{ row['citekey'] }}</div>
-          <div>Author: {{ row['author'] }}</div>
-          <div>Year: {{ row['year'] }}</div>
-          <div>Tag: {{ row['tag'] }}</div>
-          {% if row['pdf'] %}
-              <div>
-                  <a href="{{ url_for('serve_pdf', citekey=row['citekey']) }}" target="_blank">
-                      View file
-                  </a>
-              </div>
-          {% endif %}
-
-
-
-          <a class="modify-link" href="{{ url_for('edit_article', citekey=row['citekey']) }}">
-              Modify
-          </a>
-      </div>
-      {% endfor %}
-  </div>
-
-
-  <!-- BOOKS COLUMN -->
-  <div class="column">
-      <h2>Books</h2>
-
-      {% for row in records if row['citation_type'] == 'book' %}
-      <div class="source-item">
-          <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
-              {{ row['title'] or row['name'] }}
-          </a>
-          <div>Citekey: {{ row['citekey'] }}</div>
-          <div>Author: {{ row['author'] }}</div>
-          <div>Year: {{ row['year'] }}</div>
-          <div>Tag: {{ row['tag'] }}</div>
-          {% if row['pdf'] %}
-              <div>
-                  <a href="{{ url_for('serve_pdf', citekey=row['citekey']) }}" target="_blank">
-                      View file
-                  </a>
-              </div>
-          {% endif %}
-
-
-          <a class="modify-link" href="{{ url_for('edit_book', citekey=row['citekey']) }}">
-              Modify
-          </a>
-      </div>
-      {% endfor %}
-  </div>
-
-
-  <!-- INPROCEEDINGS COLUMN -->
-  <div class="column">
-      <h2>Inproceedings</h2>
-
-      {% for row in records if row['citation_type'] == 'inproceedings' %}
-      <div class="source-item">
-          <a href="{{ url_for('view_item', citekey=row['citekey']) }}">
-              {{ row['title'] or row['name'] }}
-          </a>
-          <div>Citekey: {{ row['citekey'] }}</div>
-          <div>Author: {{ row['author'] }}</div>
-          <div>Year: {{ row['year'] }}</div>
-          <div>Tag: {{ row['tag'] }}</div>
-          {% if row['pdf'] %}
-              <div>
-                  <a href="{{ url_for('serve_pdf', citekey=row['citekey']) }}" target="_blank">
-                      View file
-                  </a>
-              </div>
-          {% endif %}
-
-
-          <a class="modify-link" href="{{ url_for('edit_inproceeding', citekey=row['citekey']) }}">
-              Modify
-          </a>
-      </div>
-      {% endfor %}
-  </div>
-
-</div>
-
-<p>
-  <a href="/{{ page - 1 }}">&lt;&lt;</a>
-  Page {{ page }}/{{ page_count }}
-  <a href="/{{ page + 1 }}">&gt;&gt;</a>
-</p>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const filterBtn = document.getElementById('filterBtn');
-  const table = document.getElementById('articlesTable');
-  filterBtn.addEventListener('click', () => {
-    const minYear = parseInt(document.getElementById('minYear').value) || 0;
-    const maxYear = parseInt(document.getElementById('maxYear').value) || 9999;
-    const search = (document.getElementById('search').value || "").toLowerCase();
-    const searchType = document.getElementById('keyword').value;
-    const materialType = document.getElementById('material_type').value;
+document.getElementById("filterBtn").addEventListener("click", function () {
+    const query = document.getElementById("search").value.toLowerCase();
+    const keyword = document.getElementById("keyword").value; // author/title/tag
+    const material = document.getElementById("material_type").value; // article/book/inproceeding
+    const minYear = parseInt(document.getElementById("minYear").value) || null;
+    const maxYear = parseInt(document.getElementById("maxYear").value) || null;
 
-    for (let row of table.tBodies[0].rows) {
-      const cells = row.cells;
-      const year = parseInt(cells[5].textContent) || 0;
-      const author = (cells[2].textContent || "").toLowerCase();
-      const name = (cells[3].textContent || "").toLowerCase();
-      const material = (cells[1].textContent || "").toLowerCase();
-      const tag = (cells[7].textContent || "").toLowerCase();
+    const rows = document.querySelectorAll("#sourceTable tbody .source-item");
 
+    rows.forEach(row => {
+        let textToSearch = '';
+        if (keyword === 'author') textToSearch = row.dataset.author;
+        else if (keyword === 'title') textToSearch = row.dataset.title;
+        else if (keyword === 'tag') textToSearch = row.dataset.tag;
+        else textToSearch = [row.dataset.title, row.dataset.author, row.dataset.tag].join(' ');
 
-      let show = (year >= minYear && year <= maxYear);
+        const matchesQuery = textToSearch.toLowerCase().includes(query);
 
-      if (materialType === "article") {
-        show = show && material === "article";
-      } else if (materialType === "book") {
-        show = show && material === "book";
-      } else if (materialType === "inproceeding") {
-        show = show && material === "inproceeding";
-      }
+        let matchesYear = true;
+        const year = parseInt(row.dataset.year);
+        if (minYear !== null) matchesYear = matchesYear && year >= minYear;
+        if (maxYear !== null) matchesYear = matchesYear && year <= maxYear;
 
-      if (search) {
-        if (searchType === "author") {
-          show = show && author.includes(search);
-        } else if (searchType === "title") {
-          show = show && name.includes(search);
-        } else if (searchType === "tag") {
-          show = show && tag.includes(search);
+        let matchesMaterial = true;
+        if (material) matchesMaterial = row.dataset.type === material;
+
+        if (matchesQuery && matchesYear && matchesMaterial) {
+            row.style.display = '';
         } else {
-          // keyword = "All" → haku molemmista
-          show = show && (author.includes(search) || name.includes(search));
+            row.style.display = 'none';
         }
-      }
-
-      row.style.display = show ? "" : "none";
-    }
-  });
+    });
 });
+
+
 </script>
+
 
 {% endblock %}
