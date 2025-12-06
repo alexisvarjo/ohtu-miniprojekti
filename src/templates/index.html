@@ -17,7 +17,6 @@ Citation App
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Solujen perusmuotoilu */
 .academia th,
 .academia td {
     text-align: left;
@@ -25,23 +24,17 @@ Citation App
     padding: 0.51rem;
 }
 
-/* ⭐ Otsikkorivin muotoilu:
-   - ei yläreunaa
-   - ei sivureunoja
-   - vain ALAREUNA jää */
 .academia thead th {
     background: none !important;
-    border: none !important;          /* Poistaa kaikki reunat */
-    border-bottom: 1.36px solid black !important; /* Jättää vain alin viivan */
+    border: none !important;
+    border-bottom: 1.36px solid black !important;
     font-weight: 700;
 }
 
-/* Poistetaan thead-tr:n ylimääräiset reunat */
 .academia thead tr {
     border: none !important;
 }
 
-/* Datarivien ylä- ja alareunat */
 .academia tbody tr:first-child td {
     border-top: 1.36px solid black;
 }
@@ -50,7 +43,6 @@ Citation App
     border-bottom: 1.36px solid black;
 }
 
-/* Vuorottelu ja hover-efektit */
 .academia tbody tr:nth-child(even) {
     background-color: #ebecf1;
 }
@@ -59,8 +51,6 @@ Citation App
     background-color: #f5f1da;
 }
 </style>
-
-
 
 
 <!-- Search form -->
@@ -166,6 +156,11 @@ Citation App
 </div>
 
 <hr>
+<h3 id="noResults" style="display:none; font-weight: bold; margin-top:10px;">
+    The search returned no results.
+</h3>
+<h3 id="resultCount" style="font-weight: bold; margin-top:10px; display: none;"></h3>
+<h3 id="totalCount" style="font-weight: bold; margin-top:10px;"></h3>
 <!-- Three-column source display -->
 <table id="sourceTable" class="academia" border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse;">
     <thead>
@@ -207,16 +202,34 @@ Citation App
     </tbody>
 </table>
 
-
 <script>
+
+// Näytetään sivun avattaessa kaikkien lähteiden määrä
+window.addEventListener('DOMContentLoaded', () => {
+    const rows = document.querySelectorAll("#sourceTable tbody .source-item");
+    const totalCountElem = document.getElementById("totalCount");
+    totalCountElem.textContent = `Total sources: ${rows.length}`;
+});
+
 document.getElementById("filterBtn").addEventListener("click", function () {
     const query = document.getElementById("search").value.toLowerCase();
-    const keyword = document.getElementById("keyword").value; // author/title/tag
-    const material = document.getElementById("material_type").value; // article/book/inproceeding
+    const keyword = document.getElementById("keyword").value;
+    const material = document.getElementById("material_type").value;
     const minYear = parseInt(document.getElementById("minYear").value) || null;
     const maxYear = parseInt(document.getElementById("maxYear").value) || null;
 
     const rows = document.querySelectorAll("#sourceTable tbody .source-item");
+    let visibleCount = 0;
+
+    const table = document.getElementById("sourceTable");
+    const noResults = document.getElementById("noResults");
+    const resultCount = document.getElementById("resultCount");
+    const totalCountElem = document.getElementById("totalCount");
+
+    // __Aluksi piilotetaan kaikki muut viestit__
+    noResults.style.display = 'none';
+    resultCount.style.display = 'none';
+    totalCountElem.style.display = 'none';  // Piilotetaan totalCount haun alkaessa
 
     rows.forEach(row => {
         let textToSearch = '';
@@ -237,11 +250,23 @@ document.getElementById("filterBtn").addEventListener("click", function () {
 
         if (matchesQuery && matchesYear && matchesMaterial) {
             row.style.display = '';
+            visibleCount++;
         } else {
             row.style.display = 'none';
         }
     });
+
+    if (visibleCount === 0) {
+        noResults.style.display = 'block';
+        table.style.display = 'none';
+    } else {
+        noResults.style.display = 'none';
+        table.style.display = 'table';
+        resultCount.style.display = 'block';
+        resultCount.textContent = `The search returned ${visibleCount} result${visibleCount > 1 ? 's' : ''}.`;
+    }
 });
+
 
 
 </script>
