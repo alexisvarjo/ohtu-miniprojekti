@@ -84,9 +84,8 @@ def index(page=1):
 
     for row in records_page:
         d = dict(row)  # make mutable copy
-
         try:
-            table, item = get_item_any_table(d["citekey"])
+            item = get_item_any_table(d["citekey"])[1]
             d["pdf"] = item.get("pdf")
         except Exception:
             d["pdf"] = None
@@ -119,9 +118,9 @@ def add_type():
     Returns:
         str: Rendered HTML template for adding a new source.
     """
-    type = request.args.get("add_type", "")
+    type_a = request.args.get("add_type", "")
 
-    return render_template(f"add_{type}.html")
+    return render_template(f"add_{type_a}.html")
 
 
 @app.route("/create_inproceeding", methods=["POST"])
@@ -186,9 +185,7 @@ def try_create_inproceeding():
             tag,
             pdf=pdf_bytes,
         )
-        create_citation(
-            citekey, "inproceeding", author, title, year, urldate, url, tag
-        )
+        create_citation(citekey, "inproceeding", author, title, year, urldate, url, tag)
         flash("Source added successfully")
         return redirect("add_inproceeding")
     except Exception as error:
@@ -361,6 +358,7 @@ def edit_article(citekey):
 
 @app.route("/modified_article/<citekey>", methods=["POST"])
 def modified_article(citekey):
+    """Displays the modified article."""
     fields = [
         "citekey",
         "author",
@@ -612,6 +610,7 @@ def cite_acm():
 
 @app.route("/pdf/<citekey>", methods=["GET"])
 def serve_pdf(citekey):
+    """route for serving a pdf to the client"""
     table, item = get_item_any_table(citekey)
 
     pdf_bytes = item.get("pdf")

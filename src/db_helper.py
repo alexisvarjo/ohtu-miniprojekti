@@ -58,7 +58,7 @@ def setup_db():
 
 def _filter_from_table(table, keyword, year, search_term):
     """helper function for filter_articles()"""
-    base = f"SELECT * FROM citations WHERE 1=1"
+    base = "SELECT * FROM citations WHERE 1=1"
     params = {}
 
     # Year filter
