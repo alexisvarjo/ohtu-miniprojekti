@@ -138,13 +138,13 @@ Citation App
       View bib in browser
     </button>
   </div>
-  
+
   <div style="margin-top: 10px;">
     <button type="button" onclick="window.location.href='{{ url_for('bib_file') }}'">
       Download a .bib file
     </button>
   </div>
-  
+
 <!-- Flash messages -->
 <div>
   {% with messages = get_flashed_messages() %}
