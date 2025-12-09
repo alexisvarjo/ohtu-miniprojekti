@@ -1,8 +1,27 @@
 [![CI badge](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml/badge.svg)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/ci.yaml) [![Lint (pylint)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/lint.yaml/badge.svg?branch=master)](https://github.com/alexisvarjo/ohtu-miniprojekti/actions/workflows/lint.yaml) [![codecov](https://codecov.io/gh/alexisvarjo/ohtu-miniprojekti/graph/badge.svg?token=WLCS6X4USN)](https://codecov.io/gh/alexisvarjo/ohtu-miniprojekti)
 
+## Viitteiden hallinta järjestelmä
+
 Ryhmä: Kvokaalit, ohtu miniprojekti syksy 2025 TKT20006
 
-Kuvaus: Järjestelmä, jonka avulla voidaan hallinnoida viitteitä helposti.
+Sovellus on verkkosivu, mikä mahdollistaa helpon viitteiden hallinnan.
+
+### Toiminnot
+
+- Article, Book ja Inproceeding-viitetyyppien lisääminen
+    - Manuaalinen
+    - ACM Digital Library linkki
+    - DOI tunniste
+- Viitteiden yhteydessä PDF:n lisäys
+- Viitteiden muokkaus ja poisto
+- Viitteiden listaus etusivulla
+- Viitteiden filteröinti
+    - Viitetyyppi
+    - Tekijä, otsikko ja tägi
+    - Vuosi
+- Viitteiden lataaminen
+    - BibTex selaimessa
+    - BibTex tiedosto
 
 Product backlog ja sprint backlog: https://docs.google.com/spreadsheets/d/1tK9AVzTZSkeHgW1EZFT_ms2w0wZbGu9LWFU_PPOqzLw/edit?gid=1#gid=1
 
@@ -20,7 +39,7 @@ Product backlog ja sprint backlog: https://docs.google.com/spreadsheets/d/1tK9AV
 - Ohjelma käynnistyy osoiteeseen `http://127.0.0.1:5001`
 
 ### Käyttöohje:
-Sovelluksen etusivulla näkyvät kaikki lisätyt viitteet uusimmasta vanhimpaan. Viitteitä pääsee lisäämään Add article-linkin kautta. Etusivulla voi myös suodattaa lisättyjä viitteitä.
+Sovelluksen etusivulla näkyvät kaikki lisätyt viitteet uusimmasta vanhimpaan. Add New valikon kautta. Etusivulla voi filteröidä lähteitä ja tulostaa BibTex tiedosto.
 
 ### Definition of done:
 - User storyilla hyväksymiskriteerit
