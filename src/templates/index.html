@@ -159,6 +159,10 @@ Citation App
 </div>
 
 <hr>
+<p style="font-size: 20px;">
+    <b>Total sources: {{ amount }}</b>
+</p>
+
 <h3 id="noResults" style="display:none; font-weight: bold; margin-top:10px;">
     The search returned no results.
 </h3>
@@ -211,7 +215,6 @@ Citation App
 window.addEventListener('DOMContentLoaded', () => {
     const rows = document.querySelectorAll("#sourceTable tbody .source-item");
     const totalCountElem = document.getElementById("totalCount");
-    totalCountElem.textContent = `Total sources: ${rows.length}`;
 });
 
 document.getElementById("filterBtn").addEventListener("click", function () {
@@ -274,5 +277,10 @@ document.getElementById("filterBtn").addEventListener("click", function () {
 
 </script>
 
+<p>
+  <a href="/{{ page - 1 }}">&lt;&lt;</a>
+  Page {{ page }}/{{ page_count }}
+  <a href="/{{ page + 1 }}">&gt;&gt;</a>
+</p>
 
 {% endblock %}

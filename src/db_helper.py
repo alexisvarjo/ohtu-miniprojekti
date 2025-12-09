@@ -531,6 +531,12 @@ def remove_inproceeding_from_database(citekey):
     db.session.execute(sql, {"citekey": citekey})
     db.session.commit()
 
+def sources_counter():
+    sql = text("SELECT COUNT(*) FROM citations")
+    amount = db.session.execute(sql).scalar()
+
+    return amount
+
 
 def add_test_source():
     """Adds a test source to the database"""

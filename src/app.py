@@ -28,6 +28,7 @@ from db_helper import (
     remove_article_from_database,
     remove_book_from_database,
     remove_inproceeding_from_database,
+    sources_counter
 )
 from repositories.all_citations_repository import create_citation, fetch_all_citations
 from repositories.article_repository import create_article
@@ -51,6 +52,8 @@ def index(page=1):
         str: Rendered HTML template for the landing page.
     """
     page_size = 20
+
+    amount = sources_counter()
 
     search_query = request.args.get("search", "")
 
@@ -94,6 +97,7 @@ def index(page=1):
 
     return render_template(
         "index.html",
+        amount=amount,
         records=enriched_records,
         page=page,
         page_count=page_count,
