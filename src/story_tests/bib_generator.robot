@@ -11,7 +11,7 @@ Bib Browser View
     Sleep    ${DELAY}
     Page Should Contain     bib_browser_robot
 
-    Click Link    View bib in browser
+    Click Button    View bib in browser
     Sleep    ${DELAY}
     Page Should Contain     bib_browser_robot
 
@@ -20,5 +20,5 @@ Bib File Download
     Sleep    ${DELAY}
     Page Should Contain     bib_file_robot
 
-    Click Link    Download a .bib file
+    Click Button    Download a .bib file
     Sleep    ${DELAY}
