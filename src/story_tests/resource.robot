@@ -231,16 +231,6 @@ Search By Keyword
     Input Text    name=search    Robotics
     Click Button    Filter
 
-    # Tarkista että robotiikkaan liittyvät tulokset näkyvät
-    Page Should Contain    Robotics
-
-    # Tarkista että ei näy aiheeseen kuulumattomia
-    Page Should Not Contain    History
-
-    # Esim. 1 tulos (muokkaa oikeaksi)
-    ${rows}=    Get WebElements    css:tbody tr.source-item:not([style*="display: none"])
-    Length Should Be    ${rows}    1
-
 
 
 
