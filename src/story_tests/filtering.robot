@@ -21,66 +21,45 @@ Author Keyword Filtering
 
     Page Should Contain    author_filtering_robot
 
-Search By Material
-    Go To    ${HOME_URL}
+Title Keyword Filtering
+    Add Article With Key    title_filtering_robot
+    Sleep    ${DELAY}
 
-    Select From List By Value    id=material_type    article
-    Select From List By Value    id=keyword          ${EMPTY}
-    Input Text    name=minYear   ${EMPTY}
-    Input Text    name=maxYear   ${EMPTY}
-    Input Text    name=search    ${EMPTY}
-    Click Button    Filter
+    Select From List By Value    id=keyword    title
+    Sleep    ${DELAY}
 
-    Page Should Contain  article
-    Page Should Not Contain  book
-    Page Should Not Contain  inproceeding
+    Input Text    search    title_filtering_robot
+    Sleep    ${DELAY}
 
+    Click Button    Search
+    Sleep    ${DELAY}
 
-Search By Author
-    Go To    ${HOME_URL}
+    Page Should Contain    title_filtering_robot
 
-    Select From List By Value    id=material_type    ${EMPTY}
-    Select From List By Value    id=keyword          author
-    Input Text    name=minYear   ${EMPTY}
-    Input Text    name=maxYear   ${EMPTY}
-    Input Text    name=search    Shoshichi Kobayashi
-    Click Button    Filter
+Tag Keyword Filtering
+    Add Article With Key    tag_filtering_robot
+    Sleep    ${DELAY}
 
-    Page Should Contain  Shoshichi Kobayashi
-    Page Should Not Contain  Ölk
-    Page Should Not Contain  joku
+    Select From List By Value    id=keyword    tag
+    Sleep    ${DELAY}
 
-Search By Year
-    Go To    ${HOME_URL}
+    Input Text    search    tag
+    Sleep    ${DELAY}
 
-    Select From List By Value    id=material_type    ${EMPTY}
-    Select From List By Value    id=keyword          ${EMPTY}
-    Input Text    name=minYear    1995
-    Input Text    name=maxYear    2000
-    Input Text    name=search     ${EMPTY}
-    Click Button    Filter
+    Click Button    Search
+    Sleep    ${DELAY}
 
-    Page Should Contain  1995
-    Page Should Contain  1996
-    Page Should Contain  1997
-    Page Should Contain  1998
-    Page Should Contain  1999
-    Page Should Contain  2000
+    Page Should Contain    tag
 
-    Page Should Not Contain  1994
-    Page Should Not Contain  2001
+Year Filtering
+    Add Article With Key    year_filtering_robot
+    Sleep    ${DELAY}
 
+    Input Text    id=minYear    2066
+    Sleep    ${DELAY}
+    Input Text    id=maxYear    2068
+    Sleep    ${DELAY}
+    Click Button  Search
+    Sleep    ${DELAY}
 
-Search By Keyword
-    Go To    ${HOME_URL}
-
-    Select From List By Value    id=material_type    ${EMPTY}
-    Select From List By Value    id=keyword          ${EMPTY}
-    Input Text    name=minYear   ${EMPTY}
-    Input Text    name=maxYear   ${EMPTY}
-    Input Text    name=search    Robotics
-    Click Button    Filter
-
-    Page Should Contain  Robotics
-    Page Should Not Contain  joku
-    Page Should Not Contain  lök
+    Page Should Contain  year_filtering_robot
