@@ -1,5 +1,6 @@
 *** Settings ***
-Library  SeleniumLibrary
+Library    SeleniumLibrary
+Resource   resource.robot
 
 *** Variables ***
 ${SERVER}     localhost:5001
@@ -191,6 +192,7 @@ Modify Inproceeding With Key
 
     Click Button  Edit
 
+*** Test Cases ***
 Search By Material
     Go To    ${HOME_URL}
 
