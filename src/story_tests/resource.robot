@@ -190,4 +190,47 @@ Modify Inproceeding With Key
     Input Text  name=tag        ${new_tag}
 
     Click Button  Edit
-    Sleep  ${DELAY}
+
+Search By Material
+    Go To    ${HOME_URL}
+
+    Select From List By Value    id=material_type    article
+    Select From List By Value    id=keyword          ${EMPTY}
+    Input Text    name=minYear   ${EMPTY}
+    Input Text    name=maxYear   ${EMPTY}
+    Input Text    name=search    ${EMPTY}
+    Click Button    Filter
+
+Search By Author
+    Go To    ${HOME_URL}
+
+    Select From List By Value    id=material_type    ${EMPTY}
+    Select From List By Value    id=keyword          author
+    Input Text    name=minYear   ${EMPTY}
+    Input Text    name=maxYear   ${EMPTY}
+    Input Text    name=search    Davidson
+    Click Button    Filter
+
+Search By Year
+    Go To    ${HOME_URL}
+
+    Select From List By Value    id=material_type    ${EMPTY}
+    Select From List By Value    id=keyword          ${EMPTY}
+    Input Text    name=minYear    1995
+    Input Text    name=maxYear    2010
+    Input Text    name=search     ${EMPTY}
+    Click Button    Filter
+
+Search By Keyword
+    Go To    ${HOME_URL}
+
+    Select From List By Value    id=material_type    ${EMPTY}
+    Select From List By Value    id=keyword          ${EMPTY}
+    Input Text    name=minYear   ${EMPTY}
+    Input Text    name=maxYear   ${EMPTY}
+    Input Text    name=search    Robotics
+    Click Button    Filter
+
+
+
+
