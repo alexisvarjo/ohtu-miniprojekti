@@ -18,7 +18,9 @@ def bib_generator(citations):
             single_bib = ""
             single_bib += f"@{short_citation}{{{citation["citekey"]},\n"
             for field in citation:
-                if citation[field] is not None and field != "citekey":
+                if field == "name" and citation_type == "articles":
+                    single_bib += f"  title={{{citation[field]}}},\n"
+                elif citation[field] is not None and field != "citekey":
                     single_bib += f"  {field}={{{citation[field]}}},\n"
             single_bib = single_bib[:-2]
             single_bib += "\n}\n\n"

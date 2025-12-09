@@ -6,7 +6,6 @@ using the DOI Citation Formatter HTTP API.
 https://citation.doi.org/api-docs.html
 """
 
-
 import requests
 
 from db_helper import check_if_citekey_exists
@@ -23,16 +22,10 @@ ARTICLE_TYPES = [
     "journal-article",
 ]
 
-BOOK_TYPES = [
-    "book",
-    "book-chapter",
-    "edited-book"
-]
+BOOK_TYPES = ["book", "book-chapter", "edited-book"]
 
-INPROCEEDING_TYPES = [
-    "proceedings-article",
-    "conference-paper"
-]
+INPROCEEDING_TYPES = ["proceedings-article", "conference-paper"]
+
 
 def _fetch_doi_citation(doi):
     """Fetches citation information with a DOI and turns the information into a JSON"""
@@ -44,16 +37,14 @@ def _fetch_doi_citation(doi):
         )
     except:
         return ("The URL doesn't exist", None)
-    
     if response.status_code == 404:
         return ("The requested DOI doesn't exist", None)
-    
     try:
         data = response.json()
     except:
         return ("Error", None)
-    
     return ("success", data)
+
 
 def _parse_add_article(data, citekey, tag):
     """Parses an article DOI"""
@@ -75,11 +66,10 @@ def _parse_add_article(data, citekey, tag):
     create_article(
         citekey, author, year, name, journal, volume, number, urldate, url, tag
     )
-    create_citation(
-        citekey, "article", author, name, year, urldate, url, tag
-    )
+    create_citation(citekey, "article", author, name, year, urldate, url, tag)
 
     return
+
 
 def _parse_add_book(data, citekey, tag):
     """Parses a book DOI"""
@@ -109,13 +99,20 @@ def _parse_add_book(data, citekey, tag):
     url = data.get("URL", "")
 
     create_book(
-        citekey, author, editor, title, publisher, year, volume, number, urldate, url, tag
+        citekey,
+        author,
+        editor,
+        title,
+        publisher,
+        year,
+        volume,
+        number,
+        urldate,
+        url,
+        tag,
     )
-    create_citation(
-        citekey, "book", author, title, year, urldate, url, tag
-    )
+    create_citation(citekey, "book", author, title, year, urldate, url, tag)
 
-    return
 
 def _parse_add_inproceeding(data, citekey, tag):
     """Parses an inproceeding DOI"""
@@ -147,18 +144,28 @@ def _parse_add_inproceeding(data, citekey, tag):
     url = data.get("URL", "")
 
     create_inproceeding(
-        citekey, author, editor, title, booktitle, publisher, pages, year, volume, number, urldate, url, tag
+        citekey,
+        author,
+        editor,
+        title,
+        booktitle,
+        publisher,
+        pages,
+        year,
+        volume,
+        number,
+        urldate,
+        url,
+        tag,
     )
-    create_citation(
-        citekey, "inproceedings", author, title, year, urldate, url, tag
-    )
+    create_citation(citekey, "inproceedings", author, title, year, urldate, url, tag)
 
-    return
 
 def _doi_url_parser(url):
     """Extracts the the DOI from a URL starting from a given index"""
 
     return "/".join(url.split("/")[-2:])
+
 
 def citation_with_doi(doi, citekey, tag):
     """Adds a citation with a doi"""
@@ -167,9 +174,9 @@ def citation_with_doi(doi, citekey, tag):
 
     data = _fetch_doi_citation(doi)
     if data[0] != "success":
-        return data[0] # error message
+        return data[0]  # error message
     else:
-        data = data[1] # data
+        data = data[1]  # data
 
     if data["type"] in ARTICLE_TYPES:
         _parse_add_article(data, citekey, tag)
@@ -182,17 +189,24 @@ def citation_with_doi(doi, citekey, tag):
 
     return "success"
 
+
 def citation_with_doi_in_url(url, citekey, tag):
     """Adds a citation with a doi in the url"""
-    
+
     doi = _doi_url_parser(url)
 
     return citation_with_doi(doi, citekey, tag)
 
 
 if __name__ == "__main__":
-    citation_with_doi("10.1038/nature11631", "article", "article_tag") # article
-    citation_with_doi("10.1007/978-3-031-45468-4", "book", "book_tag") # book
-    citation_with_doi("10.1109/CVPR.2016.90", "inproceedings", "inproceedings_tag") # inproceeding
-    citation_with_doi_in_url("https://doi.org/10.1000/xyz123", "doi_url", "doi_url_tag") # DOI org link
-    citation_with_doi_in_url("https://dl.acm.org/doi/10.1145/3372390.3372409", "acm_in_url", "acm_url_tag") # ACM link
+    citation_with_doi("10.1038/nature11631", "article", "article_tag")  # article
+    citation_with_doi("10.1007/978-3-031-45468-4", "book", "book_tag")  # book
+    citation_with_doi(
+        "10.1109/CVPR.2016.90", "inproceedings", "inproceedings_tag"
+    )  # inproceeding
+    citation_with_doi_in_url(
+        "https://doi.org/10.1000/xyz123", "doi_url", "doi_url_tag"
+    )  # DOI org link
+    citation_with_doi_in_url(
+        "https://dl.acm.org/doi/10.1145/3372390.3372409", "acm_in_url", "acm_url_tag"
+    )  # ACM link

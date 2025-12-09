@@ -26,17 +26,21 @@ Open And Configure Browser
     ELSE
         Set Selenium Speed  ${DELAY}
     END
-    # Open directly on home page
     Open Browser  ${HOME_URL}  browser=${BROWSER}  options=${options}
+    Sleep  ${DELAY}
 
 Delete Robot Sources
     Go To  ${DELETE_ROBOT_SOURCES_URL}
+    Sleep  ${DELAY}
 
 Add Article With Key
     [Arguments]  ${citekey}
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
     Select From List By Value  id=add_type  article
     Click Button  Add
+    Sleep  ${DELAY}
+
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     robot
     Input Text  name=year       2077
@@ -47,14 +51,20 @@ Add Article With Key
     Input Text  name=urldate    2077-01-01
     Input Text  name=url        https://www.youtube.com/watch?v=dQw4w9WgXcQ
     Input Text  name=tag        tag
+
     Click Button  Create
+    Sleep  ${DELAY}
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
 
 Add Book With Key
     [Arguments]  ${citekey}
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
     Select From List By Value  id=add_type  book
     Click Button  Add
+    Sleep  ${DELAY}
+
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     robot
     Input Text  name=editor     robots
@@ -66,14 +76,20 @@ Add Book With Key
     Input Text  name=urldate    2077-01-01
     Input Text  name=url        https://www.youtube.com/watch?v=dQw4w9WgXcQ
     Input Text  name=tag        tag
+
     Click Button  Create
+    Sleep  ${DELAY}
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
 
 Add Inproceeding With Key
     [Arguments]  ${citekey}
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
     Select From List By Value  id=add_type  inproceeding
     Click Button  Add
+    Sleep  ${DELAY}
+
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     robot
     Input Text  name=editor     robots
@@ -87,8 +103,11 @@ Add Inproceeding With Key
     Input Text  name=urldate    2077-01-01
     Input Text  name=url        https://www.youtube.com/watch?v=dQw4w9WgXcQ
     Input Text  name=tag        tag
+
     Click Button  Create
+    Sleep  ${DELAY}
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
 
 Modify Article With Key
     [Arguments]    ${citekey}    ${new_author}    ${new_year}    ${new_title}
@@ -96,8 +115,11 @@ Modify Article With Key
     ...            ${new_urldate}    ${new_url}    ${new_tag}
 
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
     Go To  ${VIEW_URL}/${citekey}
+    Sleep  ${DELAY}
     Click Button  Edit
+    Sleep  ${DELAY}
 
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     ${new_author}
@@ -111,6 +133,7 @@ Modify Article With Key
     Input Text  name=tag        ${new_tag}
 
     Click Button  Edit
+    Sleep  ${DELAY}
 
 Modify Book With Key
     [Arguments]    ${citekey}    ${new_author}    ${new_editor}    ${new_title}
@@ -118,8 +141,11 @@ Modify Book With Key
     ...            ${new_urldate}   ${new_url}   ${new_tag}
 
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
     Go To  ${VIEW_URL}/${citekey}
+    Sleep  ${DELAY}
     Click Button  Edit
+    Sleep  ${DELAY}
 
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     ${new_author}
@@ -134,6 +160,7 @@ Modify Book With Key
     Input Text  name=tag        ${new_tag}
 
     Click Button  Edit
+    Sleep  ${DELAY}
 
 Modify Inproceeding With Key
     [Arguments]    ${citekey}    ${new_author}    ${new_editor}    ${new_title}
@@ -142,8 +169,11 @@ Modify Inproceeding With Key
     ...            ${new_urldate}   ${new_url}   ${new_tag}
 
     Go To  ${HOME_URL}
+    Sleep  ${DELAY}
     Go To  ${VIEW_URL}/${citekey}
+    Sleep  ${DELAY}
     Click Button  Edit
+    Sleep  ${DELAY}
 
     Input Text  name=citekey    ${citekey}
     Input Text  name=author     ${new_author}
@@ -162,44 +192,55 @@ Modify Inproceeding With Key
     Click Button  Edit
 
 Search By Material
-    Go To  ${HOME_URL}
+    Go To    ${HOME_URL}
 
-    Select From List By Value  id=material_type  article
-    Select From List By Value  id=keyword  ${EMPTY}
-    Input Text  name=minYear  ${EMPTY}
-    Input Text  name=maxYear  ${EMPTY}
-    Input Text  name=search  ${EMPTY}
-    Click Button  Filter
+    Select From List By Value    id=material_type    article
+    Select From List By Value    id=keyword          ${EMPTY}
+    Input Text    name=minYear   ${EMPTY}
+    Input Text    name=maxYear   ${EMPTY}
+    Input Text    name=search    ${EMPTY}
+    Click Button    Filter
 
 Search By Author
-    Go To  ${HOME_URL}
+    Go To    ${HOME_URL}
 
-    Select From List By Value  id=material_type  ${EMPTY}
-    Select From List By Value  id=keyword  ${EMPTY}
-    Input Text  name=minYear  ${EMPTY}
-    Input Text  name=maxYear  ${EMPTY}
-    Input Text  name=search  Davidson
-    Click Button  Filter
+    Select From List By Value    id=material_type    ${EMPTY}
+    Select From List By Value    id=keyword          author
+    Input Text    name=minYear   ${EMPTY}
+    Input Text    name=maxYear   ${EMPTY}
+    Input Text    name=search    Davidson
+    Click Button    Filter
 
 Search By Year
-    Go To  ${HOME_URL}
+    Go To    ${HOME_URL}
 
-    Select From List By Value  id=material_type  ${EMPTY}
-    Select From List By Value  id=keyword  ${EMPTY}
-    Input Text  name=minYear  1995
-    Input Text  name=maxYear  2010
-    Input Text  name=search  ${EMPTY}
-    Click Button  Filter
+    Select From List By Value    id=material_type    ${EMPTY}
+    Select From List By Value    id=keyword          ${EMPTY}
+    Input Text    name=minYear    1995
+    Input Text    name=maxYear    2010
+    Input Text    name=search     ${EMPTY}
+    Click Button    Filter
 
 Search By Keyword
-    Go To  ${HOME_URL}
+    Go To    ${HOME_URL}
 
-    Select From List By Value  id=material_type  ${EMPTY}
-    Select From List By Value  id=keyword  ${EMPTY}
-    Input Text  name=minYear  ${EMPTY}
-    Input Text  name=maxYear  ${EMPTY}
-    Input Text  name=search  Robotics
-    Click Button  Filter
+    Select From List By Value    id=material_type    ${EMPTY}
+    Select From List By Value    id=keyword          ${EMPTY}
+    Input Text    name=minYear   ${EMPTY}
+    Input Text    name=maxYear   ${EMPTY}
+    Input Text    name=search    Robotics
+    Click Button    Filter
+
+    # Tarkista että robotiikkaan liittyvät tulokset näkyvät
+    Page Should Contain    Robotics
+
+    # Tarkista että ei näy aiheeseen kuulumattomia
+    Page Should Not Contain    History
+
+    # Esim. 1 tulos (muokkaa oikeaksi)
+    ${rows}=    Get WebElements    css:tbody tr.source-item:not([style*="display: none"])
+    Length Should Be    ${rows}    1
+
 
 
 
