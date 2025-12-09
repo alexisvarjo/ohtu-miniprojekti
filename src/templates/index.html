@@ -100,13 +100,6 @@ Citation App
 <input type="submit" value="Add"/>
 </p>
 
-</form>
-<div style="margin-top: 10px;">
-  <a href="{{ url_for('bib_view') }}">View bib in browser</a>
-<div style="margin-top: 10px;">
-  <a href="{{ url_for('bib_file') }}">Download a .bib file</a>
-</div>
-
 <!-- ACM link citations -->
 <form action="/cite_acm" method="post">
   <p>Add a citation with an ACM Digital Library link:</p>
@@ -139,6 +132,18 @@ Citation App
   <input id="doi_add" type="submit" value="Add citation">
 </form>
 
+<div style="margin-top: 10px;">
+    <button type="button" onclick="window.location.href='{{ url_for('bib_view') }}'">
+      View bib in browser
+    </button>
+  </div>
+  
+  <div style="margin-top: 10px;">
+    <button type="button" onclick="window.location.href='{{ url_for('bib_file') }}'">
+      Download a .bib file
+    </button>
+  </div>
+  
 <!-- Flash messages -->
 <div>
   {% with messages = get_flashed_messages() %}
