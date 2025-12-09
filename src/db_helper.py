@@ -301,7 +301,6 @@ def get_book(citekey: str):
 
 def modify_book(citekey: str, new_information: dict):
     """Modifies fields of an existing book identified by its citekey."""
-    print(new_information)
     # pylint: disable=R0801
 
     # Check that book exists
@@ -369,7 +368,6 @@ def modify_book(citekey: str, new_information: dict):
     # Build SET clause from whitelisted columns
     # This is safe because column names are fixed, not user-provided
     set_clause = ", ".join(f"{col} = :{col}" for col in update_fields)
-    print(set_clause)
 
     # Create parameterized SQL
     sql = text(f"""
@@ -504,7 +502,6 @@ def modify_inproceeding(citekey: str, new_information: dict):
     # Build SET clause from whitelisted columns
     # This is safe because column names are fixed, not user-provided
     set_clause = ", ".join(f"{col} = :{col}" for col in update_fields)
-    print(set_clause)
 
     # Create parameterized SQL
     sql = text(f"""
