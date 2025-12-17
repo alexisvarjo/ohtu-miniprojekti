@@ -6,6 +6,8 @@ Ryhmä: Kvokaalit, ohtu miniprojekti syksy 2025 TKT20006
 
 Sovellus on verkkosivu, mikä mahdollistaa helpon viitteiden hallinnan.
 
+Projektin [raportti](report.md).
+
 ### Toiminnot
 
 - Article, Book ja Inproceeding-viitetyyppien lisääminen
