@@ -2,7 +2,11 @@
 
 #### Alexander Algrund, Alexis Varjo, Atos Ikonen, Erik Vormala, Iida Kivilahti ja Kristjan Kaasik
 
+### Kuvaus
+
 Ohjelmistotuotanto-kurssin miniprojektina toteutimme ohjelman, jossa väitöskirjaopiskelija pystyy pitämään tutkielman kirjoittamiseen käyttämiään lähteitä muistissa, sekä saamaan lähteensä ulos LaTeX:ille sopivana BibTeX-tiedostona. 
+
+### Työnkulku
 
 Ensimmäisen sprintin aikana loimme projektille tietokannan, johon ohjelman käyttäjä voi lisätä artikkelin viitetiedot lomakkeen kautta. Loimme myös taulukon, jonka kautta käyttäjä pystyy tarkastelemaan lisäämiään lähteitä, sekä hakuominaisuuden, jonka avulla käyttäjä voi hakea haluamaansa artikkelia esimerkiksi julkaisuvuoden tai avainsanan perusteella. Pidimme sprintin päätteeksi retrospektiivin, jossa totesimme, että työnjakomme oli jokseenkin epätasainen ja että kommunikaatiota tulisi parantaa. Olimme jakaneet työt niin, että noin puolet ryhmästä teki tietokantaa ja artikkelin lisäystä ennen ensimmäistä Daily Scrum –tapaamista, ja toinen puoli jatkoi siitä mihin työt olivat jääneet. Totesimme, että tämä oli alkuunpääsyn kannalta tarpeellinen tapa, mutta että se tuskin olisi jatkon kannalta toimiva taktiikka. Päätimme pitää Daily Scrum –tapaamisen lisäksi myös jokaisen sprintin alussa tapaamisen, jossa sopisimme työnjaosta ja sprintin tehtävistä tarkemmin kasvotusten.  
 
